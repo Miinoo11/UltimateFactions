@@ -1,0 +1,143 @@
+# Plugin by Miinoo_
+# https://www.spigotmc.org/members/kayloot.188238/
+# Do not sell, decompile or leak this plugin
+Settings:
+  Other:
+    # Maximal length of faction name
+    factionNameLenght: 16
+  # Set boolean to true if you want to enable faction warps outside a claimed chunk
+  Warps:
+    outsideFactionChunk: false
+  # Map Settings
+  Map:
+    # Recommended height: 10
+    # Recommended width: 30
+    Height: 10
+    Width: 30
+    Colors:
+      Indicators:
+        player: AQUA
+        border: BLACK
+      empty: BLUE
+      enemy: DARK_RED
+      truce: GOLD
+      ally: LIGHT_PURPLE
+      ownFaction: GREEN
+      hostile: RED
+  # Game Settings
+  Game:
+    # enable info scoreboard (right display site)
+    enableScoreboard: true
+    # set delay to 0 to disable teleport delay
+    teleportDelay: 6
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    #                                FactionsTop Settings                           #
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    TopFactions:
+      # every # minutes the faction top gets updated
+      # time in min
+      updaterCount: 5
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    #                                  Townhall Settings                            #
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    TownHall:
+      # define if the townhall should be enabled or not
+      # if its disabled, you can use the /f bank and /f energy command!
+      # if its enabled, you can't use these commands
+      enabled: true
+      # default health of townhall NPC
+      defaultHealth: 100.0
+      # define when a player can move the townhall
+      # move Cooldown in hours
+      moveCooldown: 24
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    #                                    Claim Settings                               #
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    Claims:
+      maxClaims: 100
+      # default price of the first # chunks
+      defaultPrice: 100
+      # every # claims the price gets multiplied with the price multiplier
+      PriceStreak: 5
+      PriceMultiplier: 1.5
+      # time until all claims gets unclaimed
+      # timer in days
+      energyTimer: 15
+      # energy upgrade multiplier = # * amount of claims
+      energyMultiplier: 50
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    #                                    Power Settings                               #
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    Power:
+      # power increase value when a player joins the faction
+      powerJoinIncrease: 10
+      # power decrease value when a player left faction
+      powerLeaveDecrease: 10
+      # power increase value when the faction killed a player
+      powerKillIncrease: 5
+      # power decrease value when a faction player died
+      powerKillDecrease: 5
+      # maximum power of faction
+      maxPower: 200
+      # minimum power of faction
+      minPower: -25
+      # player 1 join power increase value
+      player1Power: 35
+      # player 2 join increase value
+      player2Power: 25
+      # player 3 join increase value
+      player3Power: 15
+      # timer after power regenerate
+      powerRegenCount: 600
+      # power regenerate value
+      powerRegenValue: 15
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    #                                   Warpiece Settings                               #
+    #           you gain warpieces by killing a player of a other faction               #
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    WarPieces:
+      # maximum warpieces you can have with a faction
+      maxWarPiece: 25
+      # minimum warpieces you can have with a faction
+      minWarPiece: -25
+      # duration of a siege in minutes
+      siegeCount: 30
+      # warpieces you need to siege a faction
+      siegePieceNeeded: 25
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    #                                   Interact Settings                               #
+    #        configure which blocks can be used by other players in a claimed chunk     #
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    InteractAll:
+      chest: false
+      trapped_chest: false
+      ender_chest: false
+      shulker: false
+      trapdoor: false
+      door: false
+      button: false
+      lever: false
+      fence_gate: false
+      oven: false
+      dispenser: false
+      dropper: false
+      anvil: false
+      comparator: false
+      repeater: false
+      hopper: false
+      barrel: false
+      fillBucket: false
+      emptyBucket: false
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  #                                   Tablist Settings                                #
+  #                        you can use same variables in scoreboard                   #
+  # variables:                                                                        #
+  # %faction% - shows your currently faction                                          #
+  # %claims% - shows your currently claim size                                        #
+  # %power% - shows your currently faction power                                      #
+  # %online% - shows currently online players                                         #
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  Tab:
+    enabled: true
+    header: '&5&lThis is a &e&lHeader\n&9Edit everything!'
+    footer: '&5&lThis is a &e&lFooter\n&9Online: &e%count%\n&9Power: &e%power%!'
