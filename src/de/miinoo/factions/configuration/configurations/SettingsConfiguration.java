@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.List;
 
 /**
  * @author Mino
@@ -112,6 +113,14 @@ public class SettingsConfiguration extends Configuration {
         return configuration.getInt("Settings.Map.Width");
     }
     public int getTopUpdater() { return configuration.getInt("Settings.Game.TopFactions.updaterCount"); }
+    public boolean wildIsEnabled() { return configuration.getBoolean("Settings.Game.Wild.enabled"); }
+    public double wildCosts() {return configuration.getDouble("Settings.Game.Wild.costs"); }
+    public int wildDelay() { return configuration.getInt("Settings.Game.Wild.delay"); }
+    public boolean wildTeleportSafe() { return configuration.getBoolean("Settings.Game.Wild.teleport-safe"); }
+    public int wildMaxX() { return configuration.getInt("Settings.Game.Wild.wildMaxX"); }
+    public int wildMaxZ() { return configuration.getInt("Settings.Game.Wild.wildMaxZ"); }
+    public List<String> wildDisabledWorlds() { return configuration.getStringList("Settings.Game.Wild.disabled-worlds"); }
+    public List<String> wildDisabledBiomes() { return configuration.getStringList("Settings.Game.Wild.disabled-biomes"); }
     public boolean townhallIsEnabled() { return configuration.getBoolean("Settings.Game.TownHall.enabled"); }
     public int getMoveCooldown() { return configuration.getInt("Settings.Game.TownHall.moveCooldown");}
     public double getDefaultHealth() { return configuration.getDouble("Settings.Game.TownHall.defaultHealth");}

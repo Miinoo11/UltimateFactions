@@ -5,6 +5,7 @@ import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.commands.subcommands.AutoClaimCommand;
 import de.miinoo.factions.commands.subcommands.HomeCommand;
 import de.miinoo.factions.commands.subcommands.WarpCommand;
+import de.miinoo.factions.commands.subcommands.WildCommand;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
@@ -78,6 +79,12 @@ public class MoveListener implements Listener {
                     return;
                 }
                 HomeCommand.delay.remove(player);
+            }
+            if (WildCommand.teleportDelay.containsKey(player)) {
+                if (event.getFrom().getBlockX() == event.getTo().getBlockX() && event.getFrom().getBlockZ() == event.getTo().getBlockZ()) {
+                    return;
+                }
+                WildCommand.teleportDelay.remove(player);
             }
             // AutoClaim
             if (autoclaim.containsKey(player)) {

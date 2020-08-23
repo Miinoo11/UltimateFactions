@@ -131,6 +131,8 @@ public enum ErrorMessage {
     Regions_Not_Found("&cNo regions found!"),
     Empty_Bucket_Error("&cYou can't empty your bucket here!"),
     Fill_Bucket_Error("&cYou can't fill your bucket here!"),
+    Wild_Teleport_Error("&cThe wild command is disabled on this server!"),
+    Wild_Teleport_World_Error("&cYou can't use wild teleport in this world!"),
     ;
 
     private String message;

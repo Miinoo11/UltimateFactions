@@ -54,6 +54,7 @@ public class FactionCommand extends PlayerCommand {
         addCommand(new ReloadCommand());
         addCommand(new WandCommand());
         addCommand(new RegionCommand());
+        addCommand(new WildCommand());
 
     }
 

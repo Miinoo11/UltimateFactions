@@ -35,8 +35,36 @@ Settings:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     TopFactions:
       # every # minutes the faction top gets updated
-      # time in min
+      # time in minutes
       updaterCount: 5
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    #                                   /f Wild Settings                            #
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    Wild:
+      # define if the /f wild command should be enabled or not
+      enabled: true
+      # define if a player can randomly teleported in an enemy factions territory
+      # set to true if a player shouldn't be abled to random teleport into other territories
+      # set to false if a player should be abled to random teleport into other territories
+      teleport-safe: true
+      # set the cost for each teleport (using VAULT)
+      # set to 0 if you don't want users to pay for a random teleport
+      costs: 100
+      # teleport delay
+      # set delay to 0 to disable teleport delay
+      delay: 10
+      # teleport range max for the maximum X and Z value
+      wildMaxX: 1000
+      # teleport range min for the minimum X and Z value
+      wildMaxZ: 1000
+      # disabled worlds
+      disabled-worlds:
+        - world_nether
+        - world_end
+      # disabled biomes
+      disabled-biomes:
+        - DEEP_OCEAN
+        - OCEAN
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     #                                  Townhall Settings                            #
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

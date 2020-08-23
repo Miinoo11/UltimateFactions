@@ -32,6 +32,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * @author Mino
@@ -46,6 +47,7 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
     private static SettingsConfiguration settings;
     private static BankConfiguration bank;
     private static Economy economy;
+    private static Random random;
 
     private static ServerVersion version;
     public static FactionsAdapter adapter;
@@ -166,6 +168,8 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
             faction.getTownHall().startMoveTask();
         }
 
+        random = new Random();
+
     }
 
     @Override
@@ -229,6 +233,10 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
     private void updateFactionTop() {
         TopUtil.calculate();
         TopUtil.startUpdateTask();
+    }
+
+    public static Random getRandom() {
+        return random;
     }
 
     @Override
