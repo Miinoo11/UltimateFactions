@@ -1,9 +1,7 @@
 package de.miinoo.factions.api.nbtapi.utils.nmsmappings;
 
-import java.util.logging.Level;
-import org.bukkit.Bukkit;
-
 import de.miinoo.factions.api.nbtapi.utils.MinecraftVersion;
+import org.bukkit.Bukkit;
 
 /**
  * Wraps NMS and CRAFT classes

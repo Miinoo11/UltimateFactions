@@ -7,7 +7,7 @@ import de.miinoo.factions.api.command.CommandRegistry;
 import de.miinoo.factions.api.ui.UIs;
 import de.miinoo.factions.api.ui.manager.EmptyLockManager;
 import de.miinoo.factions.api.ui.manager.GUIManager;
-import de.miinoo.factions.api.updatechecker.UpdateChecker;
+import de.miinoo.factions.updatechecker.UpdateChecker;
 import de.miinoo.factions.commands.FactionCommand;
 import de.miinoo.factions.configuration.Messages;
 import de.miinoo.factions.configuration.configurations.BankConfiguration;

@@ -55,7 +55,7 @@ public class RelationsGUI extends GUI {
         }
 
         addElement(0, new GUIArea(9, 3).
-                fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial()).setDisplayName("§r").getItem())));
+                fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
 
         addElement(11, new GUIItem(Items.createItem(XMaterial.MUSHROOM_STEW.parseMaterial()).
                 setDisplayName(GUITags.Info_Truces.getMessage()).setLore(faction.getTrucesRelation().isEmpty() ? trucesNotFound : trucesList).getItem()));

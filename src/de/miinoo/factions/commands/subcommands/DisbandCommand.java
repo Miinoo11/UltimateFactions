@@ -15,7 +15,6 @@ import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.RankPermission;
 import de.miinoo.factions.model.WarPiece;
 import de.miinoo.factions.model.guis.ConfirmationGUI;
-import de.miinoo.factions.util.ScoreboardUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

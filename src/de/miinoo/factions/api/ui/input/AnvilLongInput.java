@@ -6,9 +6,9 @@ package de.miinoo.factions.api.ui.input;
  */
 
 import de.miinoo.factions.api.item.Items;
-import de.miinoo.factions.api.ui.gui.GUIItem;
 import de.miinoo.factions.api.ui.gui.anvil.AnvilGUI_v1_15_R1;
 import de.miinoo.factions.api.xutils.XMaterial;
+import de.miinoo.factions.api.ui.gui.GUIItem;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

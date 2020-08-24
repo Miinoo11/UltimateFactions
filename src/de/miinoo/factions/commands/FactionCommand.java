@@ -1,6 +1,9 @@
 package de.miinoo.factions.commands;
 
-import de.miinoo.factions.api.command.*;
+import de.miinoo.factions.api.command.ArgumentParser;
+import de.miinoo.factions.api.command.Command;
+import de.miinoo.factions.api.command.HelpCommand;
+import de.miinoo.factions.api.command.PlayerCommand;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.commands.subcommands.*;
 import org.bukkit.entity.Player;

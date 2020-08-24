@@ -1,6 +1,6 @@
 name: UltimateFactions
 main: de.miinoo.factions.FactionsSystem
-version: 3.7.8
+version: 3.7.9
 api-version: 1.13
 author: Miinoo_
 softdepend:

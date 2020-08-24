@@ -5,9 +5,9 @@ import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.util.UUID;
 
+import de.miinoo.factions.api.nbtapi.NbtApiException;
 import org.bukkit.inventory.ItemStack;
 
-import de.miinoo.factions.api.nbtapi.NbtApiException;
 import de.miinoo.factions.api.nbtapi.utils.MinecraftVersion;
 
 /**

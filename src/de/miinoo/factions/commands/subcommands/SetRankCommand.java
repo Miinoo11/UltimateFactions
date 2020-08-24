@@ -57,9 +57,7 @@ public class SetRankCommand extends PlayerCommand {
             }
 
             new SetRankGUI(player, faction, target).open();
-        }
-
-        if(args.hasExactly(2)) {
+        } else if(args.hasExactly(2)) {
             Player target = Bukkit.getPlayer(args.get(0));
 
             if(!(target != null && target.isOnline())) {
@@ -93,6 +91,8 @@ public class SetRankCommand extends PlayerCommand {
 
             player.sendMessage(SuccessMessage.Successfully_Set_Rank.getMessage().replace("%player%", target.getName()).replace("%rank%", rank.getName()));
             target.sendMessage(OtherMessages.Player_Received_Rank.getMessage().replace("%rank%", rank.getName()));
+        } else {
+            player.sendMessage(ErrorMessage.Set_Rank_Syntax.getMessage());
         }
         return true;
     }

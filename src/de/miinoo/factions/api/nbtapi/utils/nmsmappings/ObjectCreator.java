@@ -1,7 +1,6 @@
 package de.miinoo.factions.api.nbtapi.utils.nmsmappings;
 
 import java.lang.reflect.Constructor;
-import java.util.logging.Level;
 
 import de.miinoo.factions.api.nbtapi.NbtApiException;
 import de.miinoo.factions.api.nbtapi.utils.MinecraftVersion;

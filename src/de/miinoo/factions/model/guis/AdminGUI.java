@@ -19,7 +19,7 @@ public class AdminGUI extends GUI {
     public AdminGUI(Player player) {
         super(player, "Admin GUI", 27);
 
-        addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial()).setDisplayName("§r").getItem())));
+        addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
 
         addElement(11, new GUIItem(Items.createItem(XMaterial.DIAMOND.parseMaterial()).setDisplayName(GUITags.Toggle_Advanced_Permissions.getMessage())
                 .setLore(GUITags.Admin_Get_Advanced_Permissions_Lore.getMessage()).getItem(), () ->{

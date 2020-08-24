@@ -63,6 +63,9 @@ public class PistonListener implements Listener {
         if (blockFaction != null && faction != null) {
             return faction.getId().equals(blockFaction.getId());
         }
+        if(blockFaction == null && faction == null) {
+            return true;
+        }
         return false;
     }
 

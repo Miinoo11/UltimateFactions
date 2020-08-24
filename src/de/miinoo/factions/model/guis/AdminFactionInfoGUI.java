@@ -28,7 +28,7 @@ public class AdminFactionInfoGUI extends GUI {
     public AdminFactionInfoGUI(Player player, Faction faction) {
         super(player, "Faction: " + faction.getName(), 27);
 
-        addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial()).setDisplayName("§r").getItem())));
+        addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
 
         addElement(10, new GUIItem(Items.createItem(XMaterial.DIAMOND.parseMaterial()).setDisplayName(GUITags.Admin_Get_Permissions.getMessage()).getItem(), () -> {
             if(AdminUtil.bypassAllMode.contains(player)) {

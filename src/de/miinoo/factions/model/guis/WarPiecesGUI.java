@@ -22,8 +22,8 @@ public class WarPiecesGUI extends GUI {
     public WarPiecesGUI(Player player, Faction faction) {
         super(player, "WarPieces", 27);
 
-        addElement(0, new GUIArea(9, 3).fill(0, 0, 9, 1, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial()).setDisplayName(" ").getItem()))
-                .fill(0, 2, 9, 3, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial()).setDisplayName("§r").getItem())));
+        addElement(0, new GUIArea(9, 3).fill(0, 0, 9, 1, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName(" ").getItem()))
+                .fill(0, 2, 9, 3, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
 
 
         UIList<WarPiece> list1 = new GUIList<WarPiece>(9, 1, faction.getWarPieces(), warPiece -> new GUIItem(Items.createItem(XMaterial.SLIME_BALL.parseMaterial())
@@ -38,8 +38,8 @@ public class WarPiecesGUI extends GUI {
 
         if (faction.getWarPieces().size() > 9) {
             addElement(19, new GUIScrollBar(GUIScrollBar.HORIZONTAL, 7, list1,
-                    new GUIItem(Items.createHead("MHF_ArrowLeft").setDisplayName(GUITags.Back.getMessage()).getItem()),
-                    new GUIItem(Items.createHead("MHF_ArrowRight").setDisplayName(GUITags.Next.getMessage()).getItem())));
+                    new GUIItem(Items.createSkull("MHF_ArrowLeft").setDisplayName(GUITags.Back.getMessage()).getItem()),
+                    new GUIItem(Items.createSkull("MHF_ArrowRight").setDisplayName(GUITags.Next.getMessage()).getItem())));
         }
     }
 }

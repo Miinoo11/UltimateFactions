@@ -8,10 +8,9 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import org.bukkit.inventory.ItemStack;
-
 import de.miinoo.factions.api.nbtapi.utils.MinecraftVersion;
 import de.miinoo.factions.api.nbtapi.utils.nmsmappings.ReflectionMethod;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Base class representing NMS Compounds. For a standalone implementation check

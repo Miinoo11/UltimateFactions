@@ -8,11 +8,13 @@ package de.miinoo.factions.api.item;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
+import de.miinoo.factions.api.xutils.SkullUtils;
 import de.miinoo.factions.api.xutils.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Skull;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -45,6 +47,21 @@ public class Items {
 		ItemStack item = new ItemStack(XMaterial.PLAYER_HEAD.parseMaterial());
 		SkullMeta meta = (SkullMeta) item.getItemMeta();
 		meta.setOwner("MHF_ArrowLeft");
+		item.setItemMeta(meta);
+		return new ItemCreator(item);
+	}
+
+	public static ItemBuilder createSkull(String owner) {
+		if (owner.length() > 16) {
+			ItemStack head = XMaterial.PLAYER_HEAD.parseItem();
+			ItemMeta meta = (SkullMeta) head.getItemMeta();
+			SkullUtils.applySkin(meta, owner);
+			head.setItemMeta(meta);
+			return new ItemCreator(head);
+		}
+		ItemStack item = new ItemStack(XMaterial.PLAYER_HEAD.parseMaterial());
+		SkullMeta meta = (SkullMeta) item.getItemMeta();
+		meta.setOwner(owner);
 		item.setItemMeta(meta);
 		return new ItemCreator(item);
 	}

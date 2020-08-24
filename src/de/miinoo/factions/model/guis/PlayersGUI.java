@@ -20,11 +20,11 @@ public class PlayersGUI extends GUI {
     public PlayersGUI(Player player, Faction faction) {
         super(player, "Members", 27);
 
-        addElement(0, new GUIArea(9, 3).fill(0, 0, 9, 1, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial()).setDisplayName(" ").getItem()))
-                .fill(0, 2, 9, 3, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial()).setDisplayName("§r").getItem())));
+        addElement(0, new GUIArea(9, 3).fill(0, 0, 9, 1, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName(" ").getItem()))
+                .fill(0, 2, 9, 3, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
 
         UIList<UUID> list = new GUIList<UUID>(9, 1, faction.getPlayers(), uuid ->
-                new GUIItem(Items.createHead(Bukkit.getOfflinePlayer(uuid).getName())
+                new GUIItem(Items.createSkull(Bukkit.getOfflinePlayer(uuid).getName())
                         .setDisplayName(Bukkit.getPlayer(uuid) != null && Bukkit.getPlayer(uuid).getPlayer().isOnline() ?
                                 Bukkit.getPlayer(uuid).getPlayer().getName() : Bukkit.getOfflinePlayer(uuid).getName() + " §8(§cOffline§8)")
                         .setLore("§7- " + faction.getRankOfPlayer(uuid).getPrefix()).getItem()));
@@ -33,8 +33,8 @@ public class PlayersGUI extends GUI {
 
         if (faction.getPlayers().size() > 9) {
             addElement(19, new GUIScrollBar(GUIScrollBar.HORIZONTAL, 7, list,
-                    new GUIItem(Items.createHead("MHF_ArrowLeft").setDisplayName(GUITags.Back.getMessage()).getItem()),
-                    new GUIItem(Items.createHead("MHF_ArrowRight").setDisplayName(GUITags.Next.getMessage()).getItem())));
+                    new GUIItem(Items.createSkull("MHF_ArrowLeft").setDisplayName(GUITags.Back.getMessage()).getItem()),
+                    new GUIItem(Items.createSkull("MHF_ArrowRight").setDisplayName(GUITags.Next.getMessage()).getItem())));
         }
     }
 }

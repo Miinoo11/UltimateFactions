@@ -1,9 +1,9 @@
 package de.miinoo.factions.api.ui.gui.anvil;
 
 import de.miinoo.factions.api.ui.UIs;
-import de.miinoo.factions.api.ui.ui.AnvilUI;
 import de.miinoo.factions.api.ui.ui.UIElement;
 import de.miinoo.factions.api.ui.ui.UIItem;
+import de.miinoo.factions.api.ui.ui.AnvilUI;
 import net.minecraft.server.v1_8_R3.*;
 import org.apache.commons.lang.Validate;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;

@@ -39,7 +39,7 @@ public class TownHallGUI extends GUI {
         UIElement element, element1;
         int slot, slot1;
 
-        addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial()).setDisplayName("§r").getItem())));
+        addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
 
         addElement(slot = 11, element = new DependGUIItem(() -> Items.createItem(XMaterial.EMERALD.parseMaterial())
                 .setDisplayName(GUITags.Townhall_Energy.getMessage())

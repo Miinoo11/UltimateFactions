@@ -6,12 +6,12 @@ package de.miinoo.factions.api.gui;
  */
 
 import de.miinoo.factions.api.item.Items;
-import de.miinoo.factions.api.ui.gui.GUI;
-import de.miinoo.factions.api.ui.gui.GUIItem;
 import de.miinoo.factions.api.ui.gui.GUIList;
-import de.miinoo.factions.api.ui.gui.GUIScrollBar;
 import de.miinoo.factions.api.ui.ui.UIItem;
 import de.miinoo.factions.api.ui.ui.UIList;
+import de.miinoo.factions.api.ui.gui.GUI;
+import de.miinoo.factions.api.ui.gui.GUIItem;
+import de.miinoo.factions.api.ui.gui.GUIScrollBar;
 import de.miinoo.factions.configuration.messages.GUITags;
 import org.bukkit.entity.Player;
 
@@ -32,8 +32,8 @@ public class ListGUI<E> extends GUI {
 		addElement(0, list);
 		if (elements.size() > 54) {
 			addElement(46, new GUIScrollBar(GUIScrollBar.HORIZONTAL, 7, list,
-					new GUIItem(Items.createHead("MHF_ArrowLeft").setDisplayName(GUITags.Back.getMessage()).getItem()),
-					new GUIItem(Items.createHead("MHF_ArrowRight").setDisplayName(GUITags.Next.getMessage()).getItem())));
+					new GUIItem(Items.createSkull("MHF_ArrowLeft").setDisplayName(GUITags.Back.getMessage()).getItem()),
+					new GUIItem(Items.createSkull("MHF_ArrowRight").setDisplayName(GUITags.Next.getMessage()).getItem())));
 		}
 	}
 

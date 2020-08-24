@@ -24,8 +24,8 @@ public class FactionsGUI extends GUI {
     public FactionsGUI(Player player) {
         super(player, "Factions", 45);
 
-        addElement(0, new GUIArea(9, 5).fill(0, 0, 9, 1, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial()).setDisplayName(" ").getItem()))
-                .fill(0, 4, 9, 5, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial()).setDisplayName("§r").getItem())));
+        addElement(0, new GUIArea(9, 5).fill(0, 0, 9, 1, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName(" ").getItem()))
+                .fill(0, 4, 9, 5, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
 
         if(player.hasPermission("ultimatefactions.admin")) {
             addElement(4, new GUIItem(Items.createItem(XMaterial.ENCHANTED_GOLDEN_APPLE.parseMaterial())
@@ -67,8 +67,8 @@ public class FactionsGUI extends GUI {
         addElement(9, list);
         if (factions.getFactions().size() > 9) {
             addElement(19, new GUIScrollBar(GUIScrollBar.HORIZONTAL, 7, list,
-                    new GUIItem(Items.createHead("MHF_ArrowLeft").setDisplayName(GUITags.Back.getMessage()).getItem()),
-                    new GUIItem(Items.createHead("MHF_ArrowRight").setDisplayName(GUITags.Next.getMessage()).getItem())));
+                    new GUIItem(Items.createSkull("MHF_ArrowLeft").setDisplayName(GUITags.Back.getMessage()).getItem()),
+                    new GUIItem(Items.createSkull("MHF_ArrowRight").setDisplayName(GUITags.Next.getMessage()).getItem())));
         }
     }
 }

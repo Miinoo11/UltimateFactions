@@ -8,11 +8,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
+import de.miinoo.factions.api.configuration.json.JsonConfiguration;
 import org.apache.commons.lang.Validate;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-
-import de.miinoo.factions.api.configuration.json.JsonConfiguration;
 
 public class Configuration implements ConfigurationSection {
 

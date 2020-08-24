@@ -30,9 +30,9 @@ public class FactionInfoGUI extends GUI {
         int slot;
 
         if (faction.getPlayers().contains(player.getUniqueId())) {
-            addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial()).setDisplayName("§r").getItem())));
+            addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
 
-            addElement(9, new GUIItem(Items.createHead(player.getName()).setDisplayName(GUITags.Info_Members.getMessage()).setLore(GUITags.Info_Click_Lore.getMessage()).getItem(), () -> {
+            addElement(9, new GUIItem(Items.createSkull(player.getName()).setDisplayName(GUITags.Info_Members.getMessage()).setLore(GUITags.Info_Click_Lore.getMessage()).getItem(), () -> {
                 new PlayersGUI(player, faction).open();
             }));
 
@@ -58,7 +58,7 @@ public class FactionInfoGUI extends GUI {
             }));
 
         } else {
-            addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial()).setDisplayName("§r").getItem())));
+            addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
 
             addElement(slot = 12, element = new DependGUIItem(() -> Items.createItem(XMaterial.OAK_SIGN.parseMaterial()).setDisplayName(GUITags.Info_All.getMessage())
                     .setLore(GUITags.Info_All_Name.getMessage().replace("%name%", faction.getName()),

@@ -35,7 +35,7 @@ public class AlliesEditGUI extends GUI {
         permissions = RelationPermission.getValues(faction.getRelation(ally.getId()).getPermissions());
 
         addElement(0, new GUIArea(9, 3).
-                fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial()).setDisplayName("§r").getItem())));
+                fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
         addElement(10, new GUIItem(Items.createItem(XMaterial.PAPER.parseMaterial()).setDisplayName("§c" + ally.getName()).getItem(), () -> {
             new FactionInfoGUI(player, ally).open();
         }));
@@ -63,7 +63,7 @@ public class AlliesEditGUI extends GUI {
                     new RelationPermissionsGUI(player, permissions, this).open();
                 }));
 
-        addElement(22, new GUIItem(Items.createHead(
+        addElement(22, new GUIItem(Items.createSkull(
                 "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTMwZjQ1MzdkMjE0ZDM4NjY2ZTYzMDRlOWM4NTFjZDZmN2U0MWEwZWI3YzI1MDQ5YzlkMjJjOGM1ZjY1NDVkZiJ9fX0=")
                 .setDisplayName(GUITags.Save.getMessage()).getItem()).setOnClickListener((player1, item, event) -> {
 

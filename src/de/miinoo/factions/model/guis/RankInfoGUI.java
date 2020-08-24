@@ -20,9 +20,9 @@ public class RankInfoGUI extends GUI {
 
     public RankInfoGUI(Player player, Faction faction, Rank rank) {
         super(player, rank.getName(), 27);
-        addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial()).setDisplayName("§r").getItem())));
+        addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
 
-        //addElement(11, new GUIItem(Items.createHead(player.getName()).setDisplayName(GUITags.Edit_Players.getMessage()).getItem(), () -> new EditPlayersGUI(player, faction, rank).open()));
+        //addElement(11, new GUIItem(Items.createSkull(player.getName()).setDisplayName(GUITags.Edit_Players.getMessage()).getItem(), () -> new EditPlayersGUI(player, faction, rank).open()));
         //addElement(15, new GUIItem(Items.createItem(XMaterial.ANVIL.parseMaterial()).setDisplayName(GUITags.Edit_Rank.getMessage()).getItem(), () -> new CreateRankGUI(player, faction, rank).open()));
 
         if(rank != faction.getHighestRank()) {

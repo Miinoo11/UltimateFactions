@@ -28,8 +28,8 @@ public class SetRankGUI extends GUI {
     public SetRankGUI(Player player, Faction faction, Player target) {
         super(player, "Set Rank: " + target.getName(), 27);
 
-        addElement(0, new GUIArea(9, 3).fill(0, 0, 9, 1, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial()).setDisplayName(" ").getItem()))
-                .fill(0, 2, 9, 3, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial()).setDisplayName("§r").getItem())));
+        addElement(0, new GUIArea(9, 3).fill(0, 0, 9, 1, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName(" ").getItem()))
+                .fill(0, 2, 9, 3, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
         UIList<Rank> list = new GUIList<Rank>(9, 1, faction.getRanks(), rank -> new GUIItem(Items.createItem(rank.getMaterial())
                 .setDisplayName(rank.getPrefix()).setLore(GUITags.Set_Rank_Confirm_Lore.getMessage().replace("%rank%", rank.getName()).replace("%player%", target.getName())).getItem(),
                 () -> new ConfirmationGUI(player, Items.createItem(XMaterial.PAPER.parseMaterial())

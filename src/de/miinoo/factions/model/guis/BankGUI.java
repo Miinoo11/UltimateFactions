@@ -24,16 +24,16 @@ public class BankGUI extends GUI {
     public BankGUI(Player player, Faction faction) {
         super(player, "Bank", 27);
 
-        addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial()).setDisplayName(" ").getItem())));
+        addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName(" ").getItem())));
 
-        addElement(11, new GUIItem(Items.createHead("MHF_ArrowUP")
+        addElement(11, new GUIItem(Items.createSkull("MHF_ArrowUP")
                 .setDisplayName(GUITags.Bank_Deposit.getMessage())
                 .setLore(GUITags.Info_Click_Lore.getMessage()).getItem(), () -> new DepositGUI(player, faction, FactionsSystem.getBank().getMaterialsCollection()).open()));
         addElement(13, new GUIItem(Items.createItem(XMaterial.OAK_SIGN.parseMaterial())
                 .setDisplayName(GUITags.Bank_Info.getMessage())
                 .setLore(GUITags.Info_Click_Lore.getMessage(), GUITags.Bank_Info_Lore.getMessage().replace("%amount%",faction.getBank() > 0 ? formatter.format(faction.getBank()) : "0.0")
                 ).getItem(), () -> new BankInfoGUI(player, faction, FactionsSystem.getBank().getMaterialsCollection()).open()));
-        addElement(15, new GUIItem(Items.createHead("MHF_ArrowDown")
+        addElement(15, new GUIItem(Items.createSkull("MHF_ArrowDown")
                 .setDisplayName(GUITags.Bank_Withdraw.getMessage())
                 .setLore(GUITags.Info_Click_Lore.getMessage()).getItem(), () -> new WithdrawGUI(player, faction, FactionsSystem.getBank().getMaterialsCollection()).open()));
 

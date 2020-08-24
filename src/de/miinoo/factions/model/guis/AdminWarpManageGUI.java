@@ -21,7 +21,7 @@ public class AdminWarpManageGUI extends GUI {
     public AdminWarpManageGUI(Player player, Faction faction, FactionWarp factionWarp) {
         super(player, "Manage Warp", 27);
 
-        addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial()).setDisplayName("§r").getItem())));
+        addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
 
         addElement(10, new GUIItem(Items.createItem(XMaterial.ENDER_PEARL.parseMaterial())
                 .setDisplayName(GUITags.Admin_Warps_Warp_Teleport.getMessage())

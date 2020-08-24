@@ -75,6 +75,10 @@ public enum RankPermission{
                     values.add(new RankPermissionValue(permission));
                 }
             }
+        } else {
+            for(RankPermission permission : values()) {
+                values.add(new RankPermissionValue(permission));
+            }
         }
         return values;
     }

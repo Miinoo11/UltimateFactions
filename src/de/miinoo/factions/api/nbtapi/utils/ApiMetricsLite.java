@@ -20,7 +20,6 @@ import java.util.Collection;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
-import java.util.logging.Level;
 import java.util.zip.GZIPOutputStream;
 //import static de.tr7zw.changeme.nbtapi.utils.MinecraftVersion.logger;
 

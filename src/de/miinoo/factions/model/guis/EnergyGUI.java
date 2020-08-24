@@ -24,10 +24,10 @@ public class EnergyGUI extends GUI {
     public EnergyGUI(Player player, Faction faction) {
         super(player, "Energy", 27);
 
-        addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial()).setDisplayName("§r").getItem())));
+        addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
 
         addElement(13, new GUIItem(
-                Items.createHead(
+                Items.createSkull(
                         "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2VkZDIwYmU5MzUyMDk0OWU2Y2U3ODlkYzRmNDNlZmFlYjI4YzcxN2VlNmJmY2JiZTAyNzgwMTQyZjcxNiJ9fX0=")
         .setDisplayName(GUITags.Townhall_Buy_Energy.getMessage()).setLore(GUITags.Townhall_Buy_Energy_Lore.getMessage()
                         .replace("%costs%", Double.toString(faction.getClaimed().size() * FactionsSystem.getSettings().getEnergyMultiplier()))).getItem(), () -> {

@@ -43,7 +43,7 @@ public class CreateRankGUI extends GUI {
         } else {
             permissions = RankPermission.getValues();
         }
-        addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial()).setDisplayName("§r").getItem())));
+        addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
         addElement(10, new DependGUIItem(() -> Items.createItem(material).setDisplayName(GUITags.Set_Icon.getMessage()).getItem(),
                 () -> new ListGUI<>(player, "Edit Icon", Arrays.asList(RankIcon.values()), icon -> new GUIItem(Items.createItem(icon.getMaterial()).getItem()),
                         (player2, list, index, element, event) -> {
@@ -69,7 +69,7 @@ public class CreateRankGUI extends GUI {
                 .setLore(permissions.stream().filter(RankPermissionValue::getValue).map(per -> "§8- §7" + per.getPermission().getName()).collect(Collectors.toList())).getItem(),
                 () -> new PermissionsGUI(player, permissions, this).open()));
 
-        addElement(22, new GUIItem(Items.createHead(
+        addElement(22, new GUIItem(Items.createSkull(
                 "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTMwZjQ1MzdkMjE0ZDM4NjY2ZTYzMDRlOWM4NTFjZDZmN2U0MWEwZWI3YzI1MDQ5YzlkMjJjOGM1ZjY1NDVkZiJ9fX0=")
                 .setDisplayName(GUITags.Save.getMessage()).getItem(),() -> {
 

@@ -27,7 +27,7 @@ public class AdminTownHallGUI extends GUI{
     public AdminTownHallGUI(Player player, Faction faction) {
         super(player, "Townhall options", 27);
 
-        addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial()).setDisplayName("§r").getItem())));
+        addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
 
         addElement(11, new GUIItem(Items.createItem(XMaterial.VILLAGER_SPAWN_EGG.parseMaterial())
                 .setDisplayName(GUITags.Admin_TownHall_Get_Egg.getMessage())

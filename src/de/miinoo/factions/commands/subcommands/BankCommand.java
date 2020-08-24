@@ -6,7 +6,6 @@ import de.miinoo.factions.api.command.PlayerCommand;
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
-import de.miinoo.factions.configuration.messages.SuccessMessage;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.guis.BankGUI;
 import org.bukkit.entity.Player;

@@ -8,7 +8,6 @@ import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
 import de.miinoo.factions.model.ColorHelper;
 import de.miinoo.factions.model.Faction;
-import de.miinoo.factions.util.ScoreboardUtil;
 import org.bukkit.entity.Player;
 
 /**
