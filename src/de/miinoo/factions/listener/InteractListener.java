@@ -40,7 +40,7 @@ public class InteractListener implements Listener {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (factions.isClaimedChunk(chunk)) {
 
-                if (ServerVersion.getServerVersion().equals(ServerVersion.VERSION_1_8_R3) || ServerVersion.getServerVersion().equals(ServerVersion.VERSION_1_8_R1)) {
+                if (ServerVersion.isLegacy()) {
                     if (block.getType().equals(XMaterial.STONE_BUTTON.parseMaterial()) || block.getType().equals(XMaterial.OAK_BUTTON.parseMaterial())) {
                         if (!FactionsSystem.getSettings().canUseButton()) {
                             check(faction, player, RelationPermission.USE_BUTTONS, RankPermission.USE_BUTTONS, ErrorMessage.Interact_Button_Error.getMessage(), event);

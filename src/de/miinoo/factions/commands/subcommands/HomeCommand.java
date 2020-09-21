@@ -39,11 +39,11 @@ public class HomeCommand extends PlayerCommand {
             return true;
         }
 
-        delay.put(player, FactionsSystem.getSettings().getTeleportDelay());
-        player.sendMessage(OtherMessages.Teleport_Start.getMessage().replace("%s", Integer.toString(FactionsSystem.getSettings().getTeleportDelay())));
+        delay.put(player, FactionsSystem.getFactionLevels().getWarpCooldown(faction.getLevel()));
+        player.sendMessage(OtherMessages.Teleport_Start.getMessage().replace("%s", Integer.toString(FactionsSystem.getFactionLevels().getWarpCooldown(faction.getLevel()))));
 
         new BukkitRunnable() {
-            int count = FactionsSystem.getSettings().getTeleportDelay();
+            int count = FactionsSystem.getFactionLevels().getWarpCooldown(faction.getLevel());
             @Override
             public void run() {
                 if(delay.containsKey(player)) {

@@ -38,11 +38,12 @@ public class FactionInfoGUI extends GUI {
 
             addElement(slot = 11, element = new DependGUIItem(() -> Items.createItem(XMaterial.OAK_SIGN.parseMaterial()).setDisplayName(GUITags.Info_All.getMessage())
                     .setLore(GUITags.Info_All_Name.getMessage().replace("%name%", faction.getName()),
+                            GUITags.Info_All_Level.getMessage().replace("%level%", String.valueOf(faction.getLevel())),
                             GUITags.Info_All_Description.getMessage().replace("%description%", faction.getDescription()),
-                            GUITags.Info_All_Members.getMessage().replace("%count%", "" + faction.getPlayers().size()),
+                            GUITags.Info_All_Members.getMessage().replace("%count%", "" + faction.getPlayers().size()).replace("%max%", String.valueOf(FactionsSystem.getFactionLevels().getMaxMember(faction.getLevel()))),
                             GUITags.Info_All_Power.getMessage().replace("%count%", "" + faction.getPower() + "§8 / §e" + faction.getPowerCap()),
                             GUITags.Info_All_Claims.getMessage().replace("%count%", "" + (faction.getClaimed().isEmpty() ? "0" : "" + faction.getClaimed().size()))
-                                    .replace("%maxclaims%", "" + FactionsSystem.getSettings().getMaxClaims()),
+                                    .replace("%maxclaims%", "" + FactionsSystem.getFactionLevels().getMaxClaims(faction.getLevel())),
                             GUITags.Info_Claim_Energy.getMessage().replace("%count%", "" + TimeUtil.convertSeconds(faction.getEnergy()))).getItem()));
 
             addElement(13, new GUIItem(Items.createItem(XMaterial.MUSHROOM_STEW.parseMaterial()).setDisplayName(GUITags.Info_WarPieces.getMessage()).setLore(GUITags.Info_WarPieces_Lore.getMessage()).getItem(), () -> {
@@ -63,10 +64,10 @@ public class FactionInfoGUI extends GUI {
             addElement(slot = 12, element = new DependGUIItem(() -> Items.createItem(XMaterial.OAK_SIGN.parseMaterial()).setDisplayName(GUITags.Info_All.getMessage())
                     .setLore(GUITags.Info_All_Name.getMessage().replace("%name%", faction.getName()),
                             GUITags.Info_All_Description.getMessage().replace("%description%", faction.getDescription()),
-                            GUITags.Info_All_Members.getMessage().replace("%count%", "" + faction.getPlayers().size()),
+                            GUITags.Info_All_Members.getMessage().replace("%count%", "" + faction.getPlayers().size()).replace("%max%", String.valueOf(FactionsSystem.getFactionLevels().getMaxMember(faction.getLevel()))),
                             GUITags.Info_All_Power.getMessage().replace("%count%", "" + faction.getPower() + "§8 / §e" + faction.getPowerCap()),
                             GUITags.Info_All_Claims.getMessage().replace("%count%", "" + (faction.getClaimed().isEmpty() ? "0" : "" + faction.getClaimed().size()))
-                                    .replace("%maxclaims%", "" + FactionsSystem.getSettings().getMaxClaims()),
+                                    .replace("%maxclaims%", "" + FactionsSystem.getFactionLevels().getMaxClaims(faction.getLevel())),
                             GUITags.Info_Claim_Energy.getMessage().replace("%count%", "" + TimeUtil.convertSeconds(faction.getEnergy()))).getItem()));
 
             addElement(14, new GUIItem(Items.createItem(XMaterial.PAPER.parseMaterial()).setDisplayName(GUITags.Info_Relations.getMessage()).getItem(), () -> {

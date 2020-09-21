@@ -1,5 +1,6 @@
 package de.miinoo.factions.util;
 
+import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.adapter.ServerVersion;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -46,7 +47,7 @@ public class ItemUtil {
     }
 
     public static boolean hasAvailableSlot(Player player, int howmanyclear) {
-        if(ServerVersion.getServerVersion().equals(ServerVersion.VERSION_1_8_R3) || ServerVersion.getServerVersion().equals(ServerVersion.VERSION_1_8_R1)) {
+        if (ServerVersion.is1_8_X() || ServerVersion.isLegacy()) {
             Inventory inv = player.getInventory();
             int check = 0;
             for (ItemStack item : inv.getContents()) {
@@ -65,6 +66,53 @@ public class ItemUtil {
             }
             return check >= howmanyclear;
         }
+    }
+
+    public static boolean hasAvailableSlot(Inventory inv, int howmanyclear) {
+        if (ServerVersion.is1_8_X() || ServerVersion.isLegacy()) {
+            int check = 0;
+            for (ItemStack item : inv.getContents()) {
+                if (item == null) {
+                    check++;
+                }
+            }
+            return check >= howmanyclear;
+        } else {
+            int check = 0;
+            for (ItemStack item : inv.getStorageContents()) {
+                if (item == null) {
+                    check++;
+                }
+            }
+            return check >= howmanyclear;
+        }
+    }
+
+    public static boolean takeItem(Inventory inventory, ItemStack stack, int amount) {
+        if (inventory == null)
+            return false;
+        if (stack == null)
+            return false;
+        int toTake = amount;
+        for (int i = 0; i < inventory.getContents().length; i++) {
+            ItemStack current = inventory.getItem(i);
+            if (current != null && current.isSimilar(stack)) {
+                if (toTake - current.getAmount() > 0) {
+                    //System.out.println("Stack ist kleiner: "+toTake+">"+current.getAmount());
+                    toTake -= current.getAmount();
+                    inventory.setItem(i, null);
+                } else if (toTake - current.getAmount() < 0) {
+                    //System.out.println("Stack ist größer: "+toTake+">"+current.getAmount());
+                    current.setAmount(current.getAmount() - toTake);
+                    break;
+                } else {
+                    //System.out.println("Stack ist gleich: "+toTake+"="+current.getAmount());
+                    inventory.setItem(i, null);
+                    return true;
+                }
+            }
+        }
+        return true;
     }
 
 

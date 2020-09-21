@@ -2,10 +2,7 @@ package de.miinoo.factions.listener;
 
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
-import de.miinoo.factions.commands.subcommands.AutoClaimCommand;
-import de.miinoo.factions.commands.subcommands.HomeCommand;
-import de.miinoo.factions.commands.subcommands.WarpCommand;
-import de.miinoo.factions.commands.subcommands.WildCommand;
+import de.miinoo.factions.commands.subcommands.*;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
@@ -18,7 +15,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Mino
@@ -33,6 +33,8 @@ public class MoveListener implements Listener {
 
     private double multiplier = FactionsSystem.getSettings().getClaimPriceMultiplier();
     private double price = FactionsSystem.getSettings().getClaimDefaultPrice() * multiplier;
+
+    private List<UUID> flyMessageStorage = new ArrayList<>();
 
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
@@ -64,6 +66,21 @@ public class MoveListener implements Listener {
             } else {
                 move.put(player, "wilderness");
                 player.sendMessage(OtherMessages.Entering_Wilderness.getMessage());
+            }
+            if(FlyCommand.flyList.contains(player.getUniqueId())) {
+                if(!flyMessageStorage.contains(player.getUniqueId())) {
+                    flyMessageStorage.add(player.getUniqueId());
+                    player.sendMessage(OtherMessages.Fly_Left_Chunk.getMessage());
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            player.setAllowFlight(false);
+                            FlyCommand.flyList.remove(player.getUniqueId());
+                            player.sendMessage(OtherMessages.Disabled_Fly.getMessage());
+                            flyMessageStorage.remove(player.getUniqueId());
+                        }
+                    }.runTaskLaterAsynchronously(FactionsSystem.getPlugin(), 20*3);
+                }
             }
         }
         runAsync(() -> {

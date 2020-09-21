@@ -45,7 +45,7 @@ public class WildCommand extends PlayerCommand {
             }
         }
 
-        teleportDelay.put(player, FactionsSystem.getSettings().getTeleportDelay());
+        teleportDelay.put(player, FactionsSystem.getSettings().wildDelay());
         if(FactionsSystem.getSettings().wildCosts() > 0) {
             player.sendMessage(OtherMessages.Teleport_Pay.getMessage().replace("%costs%", Double.toString(FactionsSystem.getSettings().wildCosts())));
         }

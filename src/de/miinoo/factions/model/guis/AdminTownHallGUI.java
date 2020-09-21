@@ -12,15 +12,21 @@ import de.miinoo.factions.configuration.messages.GUITags;
 import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
 import de.miinoo.factions.model.Faction;
+import de.miinoo.factions.model.FactionChunk;
 import de.miinoo.factions.util.ItemUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Mino
  * 15.05.2020
  */
-public class AdminTownHallGUI extends GUI{
+public class AdminTownHallGUI extends GUI {
 
     private Factions factions = FactionsSystem.getFactions();
 
@@ -33,7 +39,7 @@ public class AdminTownHallGUI extends GUI{
                 .setDisplayName(GUITags.Admin_TownHall_Get_Egg.getMessage())
                 .setLore(GUITags.Admin_TownHall_Get_Egg_Lore1.getMessage(), GUITags.Admin_TownHall_Get_Egg_Lore2.getMessage())
                 .getItem(), () -> {
-            if(!ItemUtil.hasAvailableSlot(player, 1)) {
+            if (!ItemUtil.hasAvailableSlot(player, 1)) {
                 player.sendMessage(ErrorMessage.Inventory_Full_Error.getMessage());
                 close();
                 return;
@@ -46,13 +52,21 @@ public class AdminTownHallGUI extends GUI{
         addElement(15, new GUIItem(Items.createItem(XMaterial.TNT.parseMaterial())
                 .setDisplayName(GUITags.Admin_TownHall_Remove.getMessage())
                 .setLore(GUITags.Admin_TownHall_Remove_Lore.getMessage()).getItem(), () -> {
-            if(faction.getTownHall() != null && Bukkit.getEntity(faction.getTownHall().getEntityUUID()) != null) {
-                Bukkit.getEntity(faction.getTownHall().getEntityUUID()).remove();
-                faction.getTownHall().stopMoveTask();
-                faction.removeTownHall();
-                factions.saveFaction(faction);
-                player.sendMessage(SuccessMessage.Successfully_Removed_TownHall.getMessage());
+            Entity townhall = null;
+            for (FactionChunk c : faction.getClaimed()) {
+                for (Entity e : c.getBukkitChunk().getEntities()) {
+                    if (e.getUniqueId().equals(faction.getTownHall().getEntityUUID())) {
+                        townhall = e;
+                    }
+                }
             }
+            if (faction.townHallExists() && townhall != null) {
+                townhall.remove();
+            }
+            faction.getTownHall().stopMoveTask();
+            faction.removeTownHall();
+            factions.saveFaction(faction);
+            player.sendMessage(SuccessMessage.Successfully_Removed_TownHall.getMessage());
             close();
         }));
     }

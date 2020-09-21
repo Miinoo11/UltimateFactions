@@ -14,7 +14,7 @@ public class FactionPlaceholders extends PlaceholderExpansion {
 
     @Override
     public String getIdentifier() {
-        return "ultimatefaction";
+        return "ultimatefactions";
     }
 
     @Override
@@ -25,11 +25,9 @@ public class FactionPlaceholders extends PlaceholderExpansion {
         return FactionsSystem.getPlugin().getDescription().getVersion();
     }
 
-    private Factions factions = FactionsSystem.getFactions();
-
     @Override
     public String onPlaceholderRequest(Player player, String s) {
-        final Faction faction = factions.getFaction(player);
+        Faction faction = FactionsSystem.getFactions().getFaction(player);
         if (faction == null) {
             return "N/A";
         }
@@ -40,12 +38,30 @@ public class FactionPlaceholders extends PlaceholderExpansion {
             return String.valueOf(faction.getPower());
         }
         if (s.equals("faction_claims")) {
-            return String.valueOf(faction.getClaimed());
+            return String.valueOf(faction.getClaimed().size());
         }
-        if (!s.equals("faction_role")) {
-            return null;
+        if (s.equals("faction_role")) {
+            return faction.getRankOfPlayer(player.getUniqueId()).getName();
         }
-        return faction.getRankOfPlayer(player.getUniqueId()).getName();
+        if (s.equals("faction_members")) {
+            return String.valueOf(faction.getPlayers().size());
+        }
+        if (s.equals("faction_level")) {
+            return String.valueOf(faction.getLevel());
+        }
+        if (s.equals("faction_leader")) {
+            return String.valueOf(faction.getLeader().getName());
+        }
+        if (s.equals("faction_description")) {
+            return faction.getDescription();
+        }
+        if (s.equals("faction_powercap")) {
+            return String.valueOf(faction.getPowerCap());
+        }
+        if (s.equals("faction_bank")) {
+            return String.valueOf(faction.getBank());
+        }
+        return null; // if wrong placeholder was used
     }
 
     @Override

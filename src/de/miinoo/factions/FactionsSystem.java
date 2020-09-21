@@ -7,6 +7,7 @@ import de.miinoo.factions.api.command.CommandRegistry;
 import de.miinoo.factions.api.ui.UIs;
 import de.miinoo.factions.api.ui.manager.EmptyLockManager;
 import de.miinoo.factions.api.ui.manager.GUIManager;
+import de.miinoo.factions.configuration.configurations.FactionLevelConfiguration;
 import de.miinoo.factions.updatechecker.UpdateChecker;
 import de.miinoo.factions.commands.FactionCommand;
 import de.miinoo.factions.configuration.Messages;
@@ -15,6 +16,7 @@ import de.miinoo.factions.configuration.configurations.SettingsConfiguration;
 import de.miinoo.factions.hooks.placeholderapi.FactionPlaceholders;
 import de.miinoo.factions.listener.*;
 import de.miinoo.factions.model.*;
+import de.miinoo.factions.util.RegionUtil;
 import de.miinoo.factions.util.ResourceUtil;
 import de.miinoo.factions.util.TopUtil;
 import net.milkbowl.vault.economy.Economy;
@@ -45,12 +47,16 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
     private static Regions regions;
     private static Messages messages;
     private static SettingsConfiguration settings;
+    private static FactionLevelConfiguration factionLevels;
     private static BankConfiguration bank;
     private static Economy economy;
     private static Random random;
+    private static RegionUtil regionUtil;
 
     private static ServerVersion version;
     public static FactionsAdapter adapter;
+
+    public static boolean isPlaceHolderAPIFound = false;
 
     public static FactionsSystem getPlugin() {
         return plugin;
@@ -80,6 +86,10 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
         return economy;
     }
 
+    public static RegionUtil getRegionUtil() {
+        return regionUtil;
+    }
+
     private final Map<String, Command> commands = new HashMap<>();
 
     @Override
@@ -94,6 +104,7 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
         ConfigurationSerialization.registerClass(FactionWarp.class);
         ConfigurationSerialization.registerClass(Region.class);
         ConfigurationSerialization.registerClass(Cuboid.class);
+        ConfigurationSerialization.registerClass(FactionLevel.class);
         plugin = this;
 
         version = ServerVersion.getServerVersion();
@@ -135,13 +146,17 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
         File file = new File(getDataFolder(), "settings.yml");
         ResourceUtil.createAndWrite("/settings.yml", file);
         settings = new SettingsConfiguration(file);
+        file = new File(getDataFolder(), "faction_levels.yml");
+        ResourceUtil.createAndWrite("/faction_levels.yml", file);
+        factionLevels = new FactionLevelConfiguration(file);
         bank = new BankConfiguration(this, "bank.yml", "");
 
         bank.initFile();
-        registerPlaceholders();
 
         factions = new Factions(this);
         regions = new Regions(this);
+
+        registerPlaceholders();
 
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
         Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
@@ -154,6 +169,8 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
         Bukkit.getPluginManager().registerEvents(new RegionListener(), this);
         Bukkit.getPluginManager().registerEvents(new TeleportListener(), this);
         Bukkit.getPluginManager().registerEvents(new PistonListener(), this);
+        Bukkit.getPluginManager().registerEvents(new FillListener(), this);
+        Bukkit.getPluginManager().registerEvents(new FactionUpgradeListener(), this);
 
         registerCommand(new FactionCommand());
 
@@ -169,6 +186,8 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
         }
 
         random = new Random();
+        regionUtil = new RegionUtil();
+
 
     }
 
@@ -228,6 +247,7 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
             //Bukkit.getPluginManager().disablePlugin(this);
         }
         new FactionPlaceholders().register();
+        isPlaceHolderAPIFound = true;
     }
 
     private void updateFactionTop() {
@@ -237,6 +257,10 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
 
     public static Random getRandom() {
         return random;
+    }
+
+    public static FactionLevelConfiguration getFactionLevels() {
+        return factionLevels;
     }
 
     @Override

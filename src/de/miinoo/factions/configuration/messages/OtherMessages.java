@@ -39,6 +39,13 @@ public enum OtherMessages {
     Energy_Limit_Reached("&cThe energy of your faction hit 0! All your chunks are unclaimed"),
     TownHall_DisplayName("&bTownhall: &e%faction%"),
 
+    Enabled_Fly("&aEnabled &7fly mode!"),
+    Disabled_Fly("&cDisabled &7fly mode!"),
+    Fly_Left_Chunk("&cYou left your faction territory while having fly enabled! It will be disabled in 3 seconds!"),
+
+    Enabled_Fill("&aEnabled &7fill mode! Right-Click a storage container to fill it with tnt out of your inventory!"),
+    Disabled_Fill("&cDisabled &7fill mode!"),
+
     Regions_Header("&8&m     [&r&cRegions&8]&m     "),
 
     Scoreboard_Header("&b&lScoreboard"),

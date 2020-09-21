@@ -34,17 +34,19 @@ public class CreateCommand extends PlayerCommand {
             return true;
         }
 
-        if(FactionsSystem.getFactions().exists(args.get(0))) {
-           player.sendMessage(ErrorMessage.Faction_Already_Exists.getMessage());
-           return true;
-        }
-
-        if(!(args.get(0).matches("[A-Za-z0-9]+"))) {
-            player.sendMessage(ErrorMessage.Create_Error_Alphanumeric.getMessage());
+        if (FactionsSystem.getFactions().exists(args.get(0))) {
+            player.sendMessage(ErrorMessage.Faction_Already_Exists.getMessage());
             return true;
         }
 
-        if(args.get(0).length() > FactionsSystem.getSettings().getFactionNameMaximalLength()) {
+        if (FactionsSystem.getSettings().onlyCharacter()) {
+            if (!(args.get(0).matches("[A-Za-z0-9]+"))) {
+                player.sendMessage(ErrorMessage.Create_Error_Alphanumeric.getMessage());
+                return true;
+            }
+        }
+
+        if (args.get(0).length() > FactionsSystem.getSettings().getFactionNameMaximalLength()) {
             player.sendMessage(ErrorMessage.Create_Error_Length.getMessage());
             return true;
         }
@@ -57,9 +59,9 @@ public class CreateCommand extends PlayerCommand {
 
         FactionsSystem.adapter.sendScoreboard(player);
 
-        if(FactionsSystem.getSettings().enableTablist()) {
+        if (FactionsSystem.getSettings().enableTablist()) {
             FactionsSystem.adapter.sendTabListHeaderFooter(player, ColorHelper.colorize(FactionsSystem.getSettings().tabHeader(player)),
-                ColorHelper.colorize(FactionsSystem.getSettings().tabFooter(player)));
+                    ColorHelper.colorize(FactionsSystem.getSettings().tabFooter(player)));
         }
         player.sendMessage(SuccessMessage.Successfully_Created.getMessage().replace("%faction%", faction.getName()));
 

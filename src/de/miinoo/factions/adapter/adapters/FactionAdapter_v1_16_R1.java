@@ -27,4 +27,5 @@ public class FactionAdapter_v1_16_R1 extends FactionsAdapter {
     public void sendScoreboard(Player player) {
         ScoreboardUtil.sendScoreboard(player);
     }
+
 }

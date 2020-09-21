@@ -45,6 +45,11 @@ public class JoinCommand extends PlayerCommand {
             return true;
         }
 
+        if(faction.getPlayers().size() == FactionsSystem.getFactionLevels().getMaxMember(faction.getLevel())) {
+            player.sendMessage(ErrorMessage.Join_Error.getMessage());
+            return true;
+        }
+
         for (UUID uuid : faction.getPlayers()) {
             OfflinePlayer all = Bukkit.getOfflinePlayer(uuid);
             if (all.getPlayer() != null && all.isOnline()) {

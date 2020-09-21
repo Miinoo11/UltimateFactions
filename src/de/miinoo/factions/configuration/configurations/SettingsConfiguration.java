@@ -125,7 +125,6 @@ public class SettingsConfiguration extends Configuration {
     public int getMoveCooldown() { return configuration.getInt("Settings.Game.TownHall.moveCooldown");}
     public double getDefaultHealth() { return configuration.getDouble("Settings.Game.TownHall.defaultHealth");}
     public int getEnergyTimer() { return configuration.getInt("Settings.Game.Claims.energyTimer");}
-    public int getMaxClaims() { return configuration.getInt("Settings.Game.Claims.maxClaims");}
     public int getClaimDefaultPrice() { return configuration.getInt("Settings.Game.Claims.defaultPrice");}
     public int getClaimPriceStreak() { return configuration.getInt("Settings.Game.Claims.PriceStreak");}
     public double getClaimPriceMultiplier() { return configuration.getDouble("Settings.Game.Claims.PriceMultiplier");}
@@ -163,7 +162,6 @@ public class SettingsConfiguration extends Configuration {
     public int getMaxWarPiece() {
         return configuration.getInt("Settings.Game.WarPieces.maxWarPiece");
     }
-    public int getTeleportDelay() { return configuration.getInt("Settings.Game.teleportDelay");}
 
     public boolean canSetWarpOutSideFactionChunk() {
         return configuration.getBoolean("Settings.Warps.outsideFactionChunk");
@@ -225,6 +223,8 @@ public class SettingsConfiguration extends Configuration {
     public boolean canEmptyBucket() {
         return configuration.getBoolean("Settings.Game.InteractAll.emptyBucket");
     }
+
+    public boolean onlyCharacter() { return configuration.getBoolean("Settings.Other.onlyCharacter"); }
 
     public String tabHeader(Player player) {
         Faction faction = FactionsSystem.getFactions().getFaction(player);

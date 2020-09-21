@@ -22,6 +22,7 @@ public class Faction implements ConfigurationSerializable {
 
     private final UUID id;
     private String name;
+    private FactionLevel level;
     private UUID leader;
     private String description;
     private double power;
@@ -44,6 +45,7 @@ public class Faction implements ConfigurationSerializable {
     public Faction(String name, UUID leader, String description) {
         id = UUID.randomUUID();
         this.name = name;
+        this.level = new FactionLevel(0);
         this.leader = leader;
         this.description = description;
 
@@ -73,6 +75,7 @@ public class Faction implements ConfigurationSerializable {
     public Faction(Map<String, Object> args) {
         id = UUID.fromString((String) args.get("id"));
         name = (String) args.get("name");
+        level = (FactionLevel) args.get("level");
         leader = UUID.fromString((String) args.get("leader"));
         description = (String) args.get("description");
         power = (double) args.get("power");
@@ -99,6 +102,10 @@ public class Faction implements ConfigurationSerializable {
 
     public String getName() {
         return name;
+    }
+
+    public int getLevel() {
+        return level.getLevel();
     }
 
     public OfflinePlayer getLeader() {
@@ -508,11 +515,28 @@ public class Faction implements ConfigurationSerializable {
         warps.remove(factionWarp);
     }
 
+    public boolean hasFly() {
+        return level.hasFly;
+    }
+
+    public boolean hasFill() {
+        return level.hasFill;
+    }
+
+    public int getNextLevel() {
+        return level.nextLevel();
+    }
+
+    public void setLevel(FactionLevel level) {
+        this.level = level;
+    }
+
     @Override
     public Map<String, Object> serialize() {
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("id", id.toString());
         result.put("name", name);
+        result.put("level", level);
         result.put("leader", leader.toString());
         result.put("description", description);
         result.put("power", power);

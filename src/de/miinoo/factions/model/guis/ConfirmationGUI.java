@@ -20,7 +20,7 @@ public class ConfirmationGUI extends GUI {
         super(player, "Confirm", 9);
 
         addElement(0, new GUIField<Boolean>(9,1,
-                value -> new GUIItem(Items.createItem(value ? XMaterial.GREEN_TERRACOTTA.parseMaterial() : XMaterial.RED_TERRACOTTA.parseMaterial())
+                value -> new GUIItem(Items.createItem(value ? XMaterial.GREEN_TERRACOTTA.parseItem() : XMaterial.RED_TERRACOTTA.parseItem())
                         .setDisplayName(value ? GUITags.Confirm.getMessage() : GUITags.Cancel.getMessage()).getItem()))
                 .fill(0, 3, false).fill(6, 9, true).setOnClickListener(((player1, field, element, event) -> {
                     if(element == null) return false;

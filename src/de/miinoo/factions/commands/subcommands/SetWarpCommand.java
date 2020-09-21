@@ -53,6 +53,11 @@ public class SetWarpCommand extends PlayerCommand {
             return true;
         }
 
+        if(faction.getWarps().size() == FactionsSystem.getFactionLevels().getMaxWarps(faction.getLevel())) {
+            player.sendMessage(ErrorMessage.Faction_SetWarp_Limit_Error.getMessage());
+            return true;
+        }
+
         if (FactionsSystem.getSettings().canSetWarpOutSideFactionChunk()) {
             if (args.hasExactly(1)) {
                 faction.addWarp(args.get(0), null, player.getLocation());

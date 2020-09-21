@@ -16,10 +16,12 @@ public class RegionUtil {
     public static HashMap<Player, Location> pos1 = new HashMap<>();
     public static HashMap<Player, Location> pos2 = new HashMap<>();
 
-    public static ItemStack wand = Items.createItem(XMaterial.STICK.parseMaterial()).setDisplayName("§8» §cUF §7| §cWand")
+    public RegionUtil() {}
+
+    public ItemStack wand = Items.createItem(XMaterial.STICK.parseMaterial()).setDisplayName("§8» §cUF §7| §cWand")
             .setLore(GUITags.Regions_Lore.getMessage(), GUITags.Regions_Lore1.getMessage()).addGlow().getItem();
 
-    public static boolean isInRegion(Player player) {
+    public boolean isInRegion(Player player) {
         for(Region region : FactionsSystem.getRegions().getRegions()) {
             return region.getCuboid().contains(player.getLocation());
         }

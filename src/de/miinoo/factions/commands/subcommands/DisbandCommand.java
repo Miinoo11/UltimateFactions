@@ -12,10 +12,12 @@ import de.miinoo.factions.configuration.messages.GUITags;
 import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
 import de.miinoo.factions.model.Faction;
+import de.miinoo.factions.model.FactionChunk;
 import de.miinoo.factions.model.RankPermission;
 import de.miinoo.factions.model.WarPiece;
 import de.miinoo.factions.model.guis.ConfirmationGUI;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -51,40 +53,50 @@ public class DisbandCommand extends PlayerCommand {
                 }
             }
 
-            if (faction.townHallExists() && Bukkit.getEntity(faction.getTownHall().getEntityUUID()) != null) {
-                Bukkit.getEntity(faction.getTownHall().getEntityUUID()).remove();
+            Entity townhall = null;
+            for (FactionChunk c : faction.getClaimed()) {
+                for (Entity e : c.getBukkitChunk().getEntities()) {
+                    if (faction.getTownHall() != null) {
+                        if (e.getUniqueId().equals(faction.getTownHall().getEntityUUID())) {
+                            townhall = e;
+                        }
+                    }
+                }
+            }
+            if (faction.townHallExists() && townhall != null) {
+                townhall.remove();
             }
 
-            for(UUID uuid : faction.getEnemyRelation()) {
+            for (UUID uuid : faction.getEnemyRelation()) {
                 Faction enemy = factions.getFaction(uuid);
                 factions.removeRelation(faction, enemy.getId());
                 factions.removeRelation(enemy, faction.getId());
                 factions.saveFaction(enemy);
             }
 
-            for(UUID allyID : faction.getAlliesRelation()) {
+            for (UUID allyID : faction.getAlliesRelation()) {
                 Faction ally = factions.getFaction(allyID);
                 factions.removeRelation(faction, ally.getId());
                 factions.removeRelation(ally, faction.getId());
                 factions.saveFaction(ally);
             }
 
-            for(UUID truceID : faction.getTrucesRelation()) {
+            for (UUID truceID : faction.getTrucesRelation()) {
                 Faction truce = factions.getFaction(truceID);
                 factions.removeRelation(faction, truce.getId());
                 factions.removeRelation(truce, faction.getId());
                 factions.saveFaction(truce);
             }
 
-            for(WarPiece warPiece : faction.getWarPieces()) {
-                if(warPiece.getUuid().equals(faction.getId())) {
+            for (WarPiece warPiece : faction.getWarPieces()) {
+                if (warPiece.getUuid().equals(faction.getId())) {
                     continue;
                 }
-                if(faction.getWarPieces() == null || faction.getWarPieces().isEmpty()) {
+                if (faction.getWarPieces() == null || faction.getWarPieces().isEmpty()) {
                     return;
                 }
                 Faction enemy = factions.getFaction(warPiece.getUuid());
-                if(enemy.getWarPieces(faction) != null) {
+                if (enemy.getWarPieces(faction) != null) {
                     enemy.removeWarPieces(faction);
                 }
                 factions.saveFaction(enemy);

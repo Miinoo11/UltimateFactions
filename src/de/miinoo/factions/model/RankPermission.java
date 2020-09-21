@@ -11,7 +11,7 @@ import java.util.Collection;
  * @author Mino
  * 06.04.2020
  */
-public enum RankPermission{
+public enum RankPermission {
 
     CHAT("Chat", XMaterial.PAPER.parseMaterial()),
     BUILD("Build", XMaterial.GRASS_BLOCK.parseMaterial()),
@@ -56,27 +56,44 @@ public enum RankPermission{
     HIT_ALLIES("Hit Allies", XMaterial.IRON_SWORD.parseMaterial()),
     HIT_TRUCE("Hit Truces", XMaterial.GOLDEN_SWORD.parseMaterial()),
     SIEGE("Siege", XMaterial.FIRE_CHARGE.parseMaterial()),
+    FLY("Fly", XMaterial.FEATHER.parseMaterial()),
+    FILL("Fill", XMaterial.TNT_MINECART.parseMaterial()),
     CHANGE_INFO("Change Info", XMaterial.OAK_SIGN.parseMaterial());
 
     public static RankPermission forName(String name) {
-        for(RankPermission permission : values()){
-            if(permission.name.equals(name)) {
+        for (RankPermission permission : values()) {
+            if (permission.name.equals(name)) {
                 return permission;
             }
         }
         return null;
     }
 
+    // BARREL ADDED IN 1.14
+    // SHULKER ADDED IN 1.11
+
     public static Collection<RankPermissionValue> getValues() {
         Collection<RankPermissionValue> values = new ArrayList<>();
-        if(ServerVersion.getServerVersion().equals(ServerVersion.VERSION_1_8_R3) || ServerVersion.getServerVersion().equals(ServerVersion.VERSION_1_8_R1)) {
-            for(RankPermission permission : values()) {
-                if(!permission.name.equals("Open Shulker") && !permission.name.equals("Use Barrel")) {
+        if (ServerVersion.isLegacy()) {
+            if (ServerVersion.hasShulker()) {
+                for (RankPermission permission : values()) {
+                    if (!permission.name.equals("Use Barrel")) {
+                        values.add(new RankPermissionValue(permission));
+                    }
+                }
+            }
+            if (ServerVersion.hasBarrel()) {
+                for (RankPermission permission : values()) {
+                    values.add(new RankPermissionValue(permission));
+                }
+            }
+            for (RankPermission permission : values()) {
+                if (!permission.name.equals("Use Barrel") && !permission.name.equals("Open Shulker")) {
                     values.add(new RankPermissionValue(permission));
                 }
             }
         } else {
-            for(RankPermission permission : values()) {
+            for (RankPermission permission : values()) {
                 values.add(new RankPermissionValue(permission));
             }
         }
@@ -85,9 +102,9 @@ public enum RankPermission{
 
     public static Collection<RankPermissionValue> getValues(Collection<RankPermission> permissions) {
         Collection<RankPermissionValue> values = new ArrayList<>();
-        for(RankPermission permission : values()) {
+        for (RankPermission permission : values()) {
             RankPermissionValue value = new RankPermissionValue(permission);
-            if(permissions.contains(permission)) {
+            if (permissions.contains(permission)) {
                 value.setValue(true);
             }
             values.add(value);

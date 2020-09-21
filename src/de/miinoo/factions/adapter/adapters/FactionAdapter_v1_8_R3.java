@@ -25,7 +25,6 @@ public class FactionAdapter_v1_8_R3 extends FactionsAdapter {
 
     @Override
     public void sendTabListHeaderFooter(Player player, String msg, String msg2) {
-
         IChatBaseComponent tabTitle = IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + msg+ "\"}");
         IChatBaseComponent tabSubTitle = IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + msg2 + "\"}");
 
@@ -44,6 +43,6 @@ public class FactionAdapter_v1_8_R3 extends FactionsAdapter {
 
     @Override
     public void sendScoreboard(Player player) {
-        ScoreboardUtil.sendScoreboard118(player);
+        ScoreboardUtil.sendLegacyScoreboard(player);
     }
 }

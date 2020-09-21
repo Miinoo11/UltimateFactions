@@ -104,7 +104,7 @@ class ItemCreator implements ItemBuilder {
 	}
 
 	public ItemBuilder addGlow() {
-		if(ServerVersion.getServerVersion().equals(ServerVersion.VERSION_1_8_R3) || ServerVersion.getServerVersion().equals(ServerVersion.VERSION_1_8_R1)) {
+		if(ServerVersion.is1_8_X()) {
 			meta.addEnchant(Enchantment.DAMAGE_ALL, 0, true);
 		} else {
 			meta.addEnchant(Enchantment.LURE, 0, true);

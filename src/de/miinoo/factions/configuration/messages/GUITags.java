@@ -30,8 +30,9 @@ public enum GUITags {
     Info_Relations("&eRelations"),
     Info_Ranks("&eFaction ranks"),
     Info_All_Name("&eName: &a%name%"),
+    Info_All_Level("&eLevel: &a%level%"),
     Info_All_Description("&eDescription: &a%description%"),
-    Info_All_Members("&eMembers: &a%count%"),
+    Info_All_Members("&eMembers: &a%count% &8/ &e%max%"),
     Info_All_Power("&ePower: &a%count%"),
     Info_All_Claims("&eClaims: &a%count% / %maxclaims%"),
     Info_Click_Lore("&7&o- Click to open -"),
@@ -124,7 +125,28 @@ public enum GUITags {
 
     Regions_Lore("&8» &7Left-Click to set &cpos1"),
     Regions_Lore1("&8» &7Right-Click to set &cpos2"),
-    Regions_Delete_Description("&7Click to delete region &e%name%")
+    Regions_Delete_Description("&7Click to delete region &e%name%"),
+
+    Upgrade_Info_Lore("&8» &ecurrent level: &6%level%"),
+    Upgrade_Info_Lore1("&8» &anext level: &2%level%"),
+    Upgrade_Info_Lore2("&8» &c$%cost%"),
+    Upgrade_Title("&aUpgrade"),
+    Upgrade_Lore("&7&o- Click to upgrade -"),
+    Upgrade_Maxed("&cMaxed!"),
+    Upgrade_Upgrades("&bSee all upgrades!"),
+
+    Upgrades_Fly("&eFaction fly"),
+    Upgrades_Fill("&eFaction Fill"),
+    Upgrades_MemberCount("&eMember Count &7(max: &a%value%&7)"),
+    Upgrades_ClaimCount("&eClaim Count &7(max: &a%value%&7)"),
+    Upgrades_TeleportDelay("&eTeleport delay &7(&a%value%&7s)"),
+    Upgrades_MobDropMultiplayer("&eMobDrop Multiplier &7(&a%value%)"),
+    Upgrades_Soon("&cComming soon"),
+    Upgrades_WarpCount("&eWarp Count &7(max: &a%value%&7)"),
+    Upgrades_Lore_Unlocked("&8» &aunlocked"),
+    Upgrades_Lore_Locked("&8» &clocked"),
+    Upgrades_Lore_Next_Value("&8» &6next&7: &e%value%"),
+
     ;
 
     private String message;

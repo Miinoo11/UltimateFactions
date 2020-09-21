@@ -35,7 +35,7 @@ public class FactionCommand extends PlayerCommand {
         addCommand(new DisbandCommand());
         addCommand(new ClaimCommand());
         addCommand(new AutoClaimCommand());
-        addCommand(new ChunkSeeCommand());
+        //addCommand(new ChunkSeeCommand());
         addCommand(new UnClaimCommand());
         addCommand(new WarpCommand());
         addCommand(new SetWarpCommand());
@@ -58,6 +58,10 @@ public class FactionCommand extends PlayerCommand {
         addCommand(new WandCommand());
         addCommand(new RegionCommand());
         addCommand(new WildCommand());
+        addCommand(new UpgradeCommand());
+        addCommand(new FlyCommand());
+        addCommand(new FillCommand());
+        addCommand(new EnergyCommand());
 
     }
 

@@ -9,6 +9,7 @@ import de.miinoo.factions.configuration.messages.SuccessMessage;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.FactionChunk;
 import de.miinoo.factions.model.RankPermission;
+import de.miinoo.factions.util.RegionUtil;
 import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
@@ -41,7 +42,12 @@ public class ClaimCommand extends PlayerCommand {
             return true;
         }
 
-        if (faction.getClaimed().size() == FactionsSystem.getSettings().getMaxClaims()) {
+        if(FactionsSystem.getRegionUtil().isInRegion(player)) {
+            player.sendMessage(ErrorMessage.Claim_Error_Region.getMessage());
+            return true;
+        }
+
+        if (faction.getClaimed().size() == FactionsSystem.getFactionLevels().getMaxClaims(faction.getLevel())) {
             player.sendMessage(ErrorMessage.Max_Claim_Error.getMessage());
             return true;
         }

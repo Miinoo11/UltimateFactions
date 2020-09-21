@@ -37,14 +37,14 @@ public class TownhallListener implements Listener {
 
     @EventHandler
     public void onDamage1(EntityDamageByEntityEvent event) {
-        if (event.getEntity() instanceof Villager) {
+        if (event.getEntity().getType().equals(EntityType.VILLAGER)) {
             if (event.getDamager() instanceof Player) {
                 Player player = (Player) event.getDamager();
                 Entity entity = event.getEntity();
                 Faction faction = null;
                 for (Faction faction1 : factions.getFactions()) {
                     if (faction1.getTownHall() != null) {
-                        if (faction1.getTownHall().getLocation().equals(entity.getLocation())) {
+                        if (faction1.getTownHall().getEntityUUID().equals(entity.getUniqueId())) {
                             faction = faction1;
                         }
                     }
@@ -71,7 +71,7 @@ public class TownhallListener implements Listener {
 
                 faction.getTownHall().removeHealth(event.getDamage());
                 entity.setCustomName(OtherMessages.TownHall_DisplayName.getMessage().replace("%faction%", faction.getName())
-                        + " §8(§e" + faction.getTownHall().getHealth() + "§7 / §e" + FactionsSystem.getSettings().getDefaultHealth() + "§8)");
+                        + " §8(§e" + Math.round(faction.getTownHall().getHealth()) + "§7 / §e" + FactionsSystem.getSettings().getDefaultHealth() + "§8)");
                 if (faction.getTownHall().getHealth() <= 0) {
                     if (!faction.getBankItems().isEmpty()) {
                         for (Material material : faction.getBankItems().keySet()) {
@@ -81,9 +81,9 @@ public class TownhallListener implements Listener {
                     }
                     faction.getTownHall().stopMoveTask();
 
-                    if (ServerVersion.getServerVersion().equals(ServerVersion.VERSION_1_8_R3) || ServerVersion.getServerVersion().equals(ServerVersion.VERSION_1_8_R1)) {
-                        for(Entity en : player.getWorld().getEntities()) {
-                            if(en.getUniqueId().equals(faction.getTownHall().getEntityUUID())) {
+                    if (ServerVersion.isLegacy()) {
+                        for (Entity en : player.getWorld().getEntities()) {
+                            if (en.getUniqueId().equals(faction.getTownHall().getEntityUUID())) {
                                 en.remove();
                             }
                         }
@@ -125,7 +125,7 @@ public class TownhallListener implements Listener {
             if (!(event.getEntity().getLastDamageCause() instanceof Player)) {
                 for (Faction faction : factions.getFactions()) {
                     if (faction.getTownHall() != null) {
-                        if (faction.getTownHall().getLocation().equals(event.getEntity().getLocation())) {
+                        if (faction.getTownHall().getEntityUUID().equals(event.getEntity().getUniqueId())) {
                             event.setCancelled(true);
                         }
                     }
@@ -136,22 +136,36 @@ public class TownhallListener implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractAtEntityEvent event) {
-        runAsync(() -> {
-            FactionsSystem.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask(FactionsSystem.getPlugin(), () -> {
-                Player player = event.getPlayer();
-                Faction faction = factions.getFaction(player);
-                if (faction == null) {
-                    return;
-                }
-                if (event.getRightClicked() instanceof Villager) {
-                    if (faction.getTownHall() != null) {
-                        if (faction.getTownHall().getLocation().equals(event.getRightClicked().getLocation())) {
-                            new TownHallGUI(player, faction).open();
+        if (event.getRightClicked().getType() != EntityType.VILLAGER) {
+            return;
+        }
+        Player player = event.getPlayer();
+        Faction faction = factions.getFaction(player);
+        if (faction == null) {
+            return;
+        }
+        if (faction.getTownHall() != null) {
+            if (FactionsSystem.getSettings().townhallIsEnabled()) {
+                if (faction.getTownHall().getEntityUUID().equals(event.getRightClicked().getUniqueId())) {
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                player.closeInventory();
+                                new TownHallGUI(player, faction).open();
+                            } catch (IllegalStateException exception) {}
                         }
-                    }
+                    }.runTask(FactionsSystem.getPlugin());
                 }
-            });
-        });
+            } else {
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        player.closeInventory();
+                    }
+                }.runTask(FactionsSystem.getPlugin());
+            }
+        }
     }
 
     @EventHandler
@@ -166,7 +180,7 @@ public class TownhallListener implements Listener {
             ItemMeta meta = is.getItemMeta();
             if (is.getType() == XMaterial.VILLAGER_SPAWN_EGG.parseMaterial() && meta != null &&
                     meta.getDisplayName().equalsIgnoreCase(OtherMessages.TownHall_DisplayName.getMessage().replace("%faction%", faction.getName()))) {
-                if (ServerVersion.getServerVersion().equals(ServerVersion.VERSION_1_8_R3) || ServerVersion.getServerVersion().equals(ServerVersion.VERSION_1_8_R1)) {
+                if (ServerVersion.is1_8_X()) {
                     if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                         Location location = event.getClickedBlock().getLocation().add(0, 1, 0);
                         Entity entity = player.getWorld().spawnEntity(location, EntityType.VILLAGER);
@@ -217,14 +231,5 @@ public class TownhallListener implements Listener {
                 }
             }
         }
-    }
-
-    private void runAsync(final Runnable runnable) {
-        BukkitRunnable r = new BukkitRunnable() {
-            public void run() {
-                runnable.run();
-            }
-        };
-        r.runTaskAsynchronously(FactionsSystem.getPlugin());
     }
 }

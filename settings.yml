@@ -5,6 +5,8 @@ Settings:
   Other:
     # Maximal length of faction name
     factionNameLenght: 16
+    # Only use Numbers and Letters in faction name
+    onlyCharacter: true
   # Set boolean to true if you want to enable faction warps outside a claimed chunk
   Warps:
     outsideFactionChunk: false
@@ -28,8 +30,6 @@ Settings:
   Game:
     # enable info scoreboard (right display site)
     enableScoreboard: true
-    # set delay to 0 to disable teleport delay
-    teleportDelay: 6
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     #                                FactionsTop Settings                           #
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -82,7 +82,6 @@ Settings:
     #                                    Claim Settings                               #
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     Claims:
-      maxClaims: 100
       # default price of the first # chunks
       defaultPrice: 100
       # every # claims the price gets multiplied with the price multiplier

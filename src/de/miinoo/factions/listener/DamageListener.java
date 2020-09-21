@@ -113,7 +113,7 @@ public class DamageListener implements Listener {
 
 
 
-        if(RegionUtil.isInRegion(player)) {
+        if(FactionsSystem.getRegionUtil().isInRegion(player)) {
             return;
         }
 

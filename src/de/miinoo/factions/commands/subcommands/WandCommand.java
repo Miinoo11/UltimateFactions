@@ -1,5 +1,6 @@
 package de.miinoo.factions.commands.subcommands;
 
+import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.api.command.ArgumentParser;
 import de.miinoo.factions.api.command.CommandDescription;
 import de.miinoo.factions.api.command.PlayerCommand;
@@ -26,7 +27,7 @@ public class WandCommand extends PlayerCommand {
             return true;
         }
 
-        player.getInventory().addItem(RegionUtil.wand);
+        player.getInventory().addItem(FactionsSystem.getRegionUtil().wand);
         player.sendMessage(SuccessMessage.Successfully_Received_RegionWand.getMessage());
 
         return true;

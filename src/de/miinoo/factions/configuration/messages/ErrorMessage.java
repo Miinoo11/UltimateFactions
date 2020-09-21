@@ -1,6 +1,7 @@
 package de.miinoo.factions.configuration.messages;
 
 import de.miinoo.factions.FactionsSystem;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
 
 public enum ErrorMessage {
@@ -32,6 +33,7 @@ public enum ErrorMessage {
     Faction_SetHome_Error("&cYou can't set your faction home outside a claimed chunk!"),
     Faction_SetWarp_Error("&cYou can't set a warp outside a claimed chunk!"),
     Faction_SetWarp_Name_Error("&cYou can't name a warp like this!"),
+    Faction_SetWarp_Limit_Error("&cYou can't set more warps because your faction has reached the warp amount limit!"),
     Faction_Warp_Error("&cThis warp has a password. Please use /f warp <name> <password>"),
     Faction_Warp_Wrong_Password("&cWrong password!"),
     Warp_Not_Found("&cWarp not found!"),
@@ -62,6 +64,7 @@ public enum ErrorMessage {
     Chunk_Not_Claimed("&cThis chunk is not claimed!"),
     Claim_Error_Nether("&cYou can't claim a chunk in the nether!"),
     Claim_Error_End("&cYou can't claim a chunk in the end!"),
+    Claim_Error_Region("&cYou can't claim this chunk because it is in a blocked region!"),
     Chunk_Not_Connected("&cThis chunk is not connected with your faction!"),
     Not_Your_Chunk("&cThis chunk is not yours!"),
     Faction_Hit_Error("&cYou can not hit a player of your own faction!"),
@@ -133,13 +136,25 @@ public enum ErrorMessage {
     Fill_Bucket_Error("&cYou can't fill your bucket here!"),
     Wild_Teleport_Error("&cThe wild command is disabled on this server!"),
     Wild_Teleport_World_Error("&cYou can't use wild teleport in this world!"),
+    Join_Error("&cThe faction is full!"),
+    Upgrade_Needed_Error("&cYou can't use this feature! You have to upgrade your faction first!"),
+    Fly_Chunk_Error("&cYou have to be in a faction chunk to use this feature!"),
+    Fill_Block_Error("&cThis is not a valid block to fill!"),
+    Fill_Block_Amount_Error("&cYou have no TNT in your inventory!"),
+    Fill_Block_Full_Error("&cThis Block is full!"),
     ;
 
     private String message;
-    ErrorMessage(String msg){
+
+    ErrorMessage(String msg) {
         this.message = msg;
     }
 
-    public String getDefaultMessage(){return this.message;}
-    public String getMessage(){return ChatColor.translateAlternateColorCodes('&', FactionsSystem.getMessages().getMessage("Error_Messages."+this.name()));}
+    public String getDefaultMessage() {
+        return this.message;
+    }
+
+    public String getMessage() {
+        return ChatColor.translateAlternateColorCodes('&', FactionsSystem.getMessages().getMessage("Error_Messages." + this.name()));
+    }
 }

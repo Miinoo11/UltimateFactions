@@ -60,6 +60,8 @@ public enum SuccessMessage {
     Successfully_Set_Pos2("&aSuccessfully set position 2 &8(&c%coords%&8)!"),
     Successfully_Created_Region("&aSuccessfully created region &e%name%&a!"),
     Successfully_Deleted_Region("&aSuccessfully deleted region &e%name%&a!"),
+
+    Successfully_Upgraded_Faction("&aSuccessfully upgraded faction to level: &e%level% &7(&c$%cost%&7)!"),
     ;
 
     private String message;

@@ -1,5 +1,6 @@
 package de.miinoo.factions.commands.subcommands;
 
+import de.miinoo.factions.adapter.FactionsAdapter;
 import de.miinoo.factions.api.command.ArgumentParser;
 import de.miinoo.factions.api.command.CommandDescription;
 import de.miinoo.factions.api.command.PlayerCommand;
@@ -45,9 +46,11 @@ public class SetNameCommand extends PlayerCommand {
             return true;
         }
 
-        if(!(args.get(0).matches("[A-Za-z0-9]+"))) {
-            player.sendMessage(ErrorMessage.Create_Error_Alphanumeric.getMessage());
-            return true;
+        if (FactionsSystem.getSettings().onlyCharacter()) {
+            if (!(args.get(0).matches("[A-Za-z0-9]+"))) {
+                player.sendMessage(ErrorMessage.Create_Error_Alphanumeric.getMessage());
+                return true;
+            }
         }
 
         if(args.get(0).length() > FactionsSystem.getSettings().getFactionNameMaximalLength()) {
@@ -62,7 +65,7 @@ public class SetNameCommand extends PlayerCommand {
             }
         }
 
-        Bukkit.getOnlinePlayers().forEach(ScoreboardUtil::sendScoreboard);
+        Bukkit.getOnlinePlayers().forEach(p -> FactionsSystem.adapter.sendScoreboard(p));
 
         faction.setName(args.get(0));
         factions.saveFaction(faction);

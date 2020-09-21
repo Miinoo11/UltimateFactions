@@ -78,10 +78,10 @@ public class WarpCommand extends PlayerCommand {
 
     private void teleportPlayer(Player player, Faction faction, String name) {
         teleportDelay.add(player.getUniqueId());
-        player.sendMessage(OtherMessages.Teleport_Start.getMessage().replace("%s", Integer.toString(FactionsSystem.getSettings().getTeleportDelay())));
+        player.sendMessage(OtherMessages.Teleport_Start.getMessage().replace("%s", Integer.toString(FactionsSystem.getFactionLevels().getWarpCooldown(faction.getLevel()))));
 
         new BukkitRunnable() {
-            int i = FactionsSystem.getSettings().getTeleportDelay();
+            int i = FactionsSystem.getFactionLevels().getWarpCooldown(faction.getLevel());
 
             @Override
             public void run() {
