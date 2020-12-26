@@ -1,12 +1,9 @@
 package de.miinoo.factions.adapter;
 
-import de.miinoo.factions.Factions;
-import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.adapter.adapters.*;
 import org.bukkit.Bukkit;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.function.Supplier;
 
 /**
  * @author Miinoo_
@@ -25,16 +22,13 @@ public enum ServerVersion {
     VERSION_1_13_R2(FactionAdapter_v1_13_R2.class),
     VERSION_1_14(FactionAdapter_v1_14_R1.class),
     VERSION_1_15_R1(FactionAdapter_v1_15_R1.class),
-    VERSION_1_16(FactionAdapter_v1_16_R1.class);
+    VERSION_1_16_R1(FactionAdapter_v1_16_R1.class),
+    VERSION_1_16_R2(FactionAdapter_v1_16_R2.class),
+    VERSION_1_16_R3(FactionAdapter_v1_16_R3.class);
 
     public static boolean is1_8_X() {
         String version = getServerVersion().toString();
         return version.equals(VERSION_1_8_R1.toString()) || version.equals(VERSION_1_8_R3.toString());
-    }
-
-    public static boolean is1_9_X() {
-        String version = getServerVersion().toString();
-        return version.equals(VERSION_1_9_R1.toString());
     }
 
     public static boolean hasShulker() {
@@ -48,7 +42,6 @@ public enum ServerVersion {
     }
 
     public static boolean hasBarrel() {
-        String version = getServerVersion().toString();
         return !isLegacy();
     }
 

@@ -2,10 +2,14 @@ package de.miinoo.factions.util;
 
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.adapter.ServerVersion;
+import de.miinoo.factions.api.xutils.XMaterial;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Mino
@@ -115,5 +119,16 @@ public class ItemUtil {
         return true;
     }
 
+    public static List<ItemStack> getItemsAsList(Inventory inv) {
+        List<ItemStack> items = new ArrayList<>();
+
+        for(int i = 0; i < inv.getSize(); i++) {
+            if(inv.getItem(i) != null && inv.getItem(i).getType() != XMaterial.AIR.parseMaterial()) {
+                items.add(inv.getItem(i));
+            }
+        }
+
+        return items;
+    }
 
 }

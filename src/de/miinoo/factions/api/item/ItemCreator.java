@@ -15,6 +15,7 @@ import org.bukkit.material.MaterialData;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 class ItemCreator implements ItemBuilder {
@@ -85,6 +86,13 @@ class ItemCreator implements ItemBuilder {
 
 	public ItemBuilder addEnchantment(Enchantment enchantment, int level) {
 		meta.addEnchant(enchantment, level, true);
+		return this;
+	}
+
+	public ItemBuilder addEnchantments(Map<Enchantment, Integer> enchantments) {
+		for(Enchantment enchantment : enchantments.keySet()) {
+			meta.addEnchant(enchantment, enchantments.get(enchantment), true);
+		}
 		return this;
 	}
 

@@ -16,18 +16,22 @@ import java.util.stream.Collectors;
 public class Rank implements Comparable<Rank>, ConfigurationSerializable {
 
     public static final Rank LEADER = new Rank("Leader", "§cLeader", XMaterial.DIAMOND_CHESTPLATE.parseMaterial(), Arrays.asList(RankPermission.values()));
+
     public static final Rank GENERAL = new Rank("General", "§dGeneral", XMaterial.GOLDEN_CHESTPLATE.parseMaterial(), Arrays.asList(RankPermission.CHAT,
             RankPermission.BUILD, RankPermission.BREAK, RankPermission.OPEN_DOOR, RankPermission.OPEN_CHEST,
             RankPermission.HOME, RankPermission.SET_HOME, RankPermission.WARP, RankPermission.MANAGE_WARPS, RankPermission.KICK,
             RankPermission.INVITE, RankPermission.CLAIM, RankPermission.UNCLAIM, RankPermission.ALLY,
             RankPermission.ASSIGN_ROLES, RankPermission.CHANGE_INFO));
+
     public static final Rank LIEUTENANT = new Rank("Lieutenant", "§eLieutenant", XMaterial.IRON_CHESTPLATE.parseMaterial(), Arrays.asList(RankPermission.CHAT,
             RankPermission.BUILD, RankPermission.BREAK, RankPermission.OPEN_DOOR, RankPermission.OPEN_CHEST,
             RankPermission.HOME, RankPermission.SET_HOME, RankPermission.WARP, RankPermission.KICK,
             RankPermission.INVITE, RankPermission.CLAIM, RankPermission.UNCLAIM, RankPermission.ALLY, RankPermission.CHANGE_INFO));
+
     public static final Rank MEMBER = new Rank("Member", "§9Member", XMaterial.CHAINMAIL_CHESTPLATE.parseMaterial(), Arrays.asList(RankPermission.CHAT,
             RankPermission.BUILD, RankPermission.BREAK, RankPermission.OPEN_DOOR, RankPermission.OPEN_CHEST,
             RankPermission.HOME, RankPermission.WARP, RankPermission.INVITE));
+
     public static final Rank RECRUIT = new Rank("Recruit", "§fRecruit", XMaterial.LEATHER_CHESTPLATE.parseMaterial(), Arrays.asList(RankPermission.CHAT,
             RankPermission.BUILD, RankPermission.OPEN_DOOR, RankPermission.WARP));
 

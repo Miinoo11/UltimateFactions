@@ -61,6 +61,9 @@ public class FactionPlaceholders extends PlaceholderExpansion {
         if (s.equals("faction_bank")) {
             return String.valueOf(faction.getBank());
         }
+        if (s.equals("faction_player")) {
+            return player.getDisplayName();
+        }
         return null; // if wrong placeholder was used
     }
 

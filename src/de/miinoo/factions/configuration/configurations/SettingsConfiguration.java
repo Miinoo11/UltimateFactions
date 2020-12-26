@@ -225,6 +225,17 @@ public class SettingsConfiguration extends Configuration {
     }
 
     public boolean onlyCharacter() { return configuration.getBoolean("Settings.Other.onlyCharacter"); }
+    public boolean useExtendedChatFormat() { return configuration.getBoolean("Settings.Other.extendedChatFormat.enabled"); }
+    public boolean enableShop() {return configuration.getBoolean("Settings.Other.enableShop"); }
+
+    public String getFactionColor() { return configuration.getString("Settings.Other.extendedChatFormat.factionColor"); }
+    public String getAllyColor() { return configuration.getString("Settings.Other.extendedChatFormat.allyColor"); }
+    public String getEnemyColor() { return configuration.getString("Settings.Other.extendedChatFormat.enemyColor"); }
+    public String getTruceColor() { return configuration.getString("Settings.Other.extendedChatFormat.truceColor"); }
+    public String getDefaultColor() { return configuration.getString("Settings.Other.extendedChatFormat.defaultColor"); }
+    public String getExtendedFormat() { return configuration.getString("Settings.Other.extendedChatFormat.format"); }
+    public String getExtendedFormat2() { return configuration.getString("Settings.Other.extendedChatFormat.format2"); }
+
 
     public String tabHeader(Player player) {
         Faction faction = FactionsSystem.getFactions().getFaction(player);

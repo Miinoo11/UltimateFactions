@@ -2,7 +2,11 @@
 # https://www.spigotmc.org/members/kayloot.188238/
 # Do not sell, decompile or leak this plugin
 
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#
+# You can simply add a faction level by copying an existing level and changing some options
+#
 # example:
 #
 # 1: # this is the level of the faction

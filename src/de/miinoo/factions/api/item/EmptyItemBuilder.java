@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 final class EmptyItemBuilder implements ItemBuilder {

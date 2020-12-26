@@ -62,6 +62,14 @@ public enum SuccessMessage {
     Successfully_Deleted_Region("&aSuccessfully deleted region &e%name%&a!"),
 
     Successfully_Upgraded_Faction("&aSuccessfully upgraded faction to level: &e%level% &7(&c$%cost%&7)!"),
+
+    Successfully_Added_ShopCategory("&aSuccessfully added a ShopCategory!"),
+    Successfully_Edited_ShopCategory("&aSuccessfully edited a ShopCategory!"),
+    Successfully_Bought_ShopItem("&aSuccessfully bought %amount%x %item%!"),
+    Successfully_Sold_ShopItem("&aSuccessfully sold %amount% x %item%!"),
+    Successfully_Added_ShopItem("&aSuccessfully added a Shop Item!"),
+    Successfully_Removed_ShopItem("&aSuccessfully removed a ShopItem!"),
+    Successfully_Removed_ShopCategory("&aSuccessfully removed a ShopCategory!"),
     ;
 
     private String message;

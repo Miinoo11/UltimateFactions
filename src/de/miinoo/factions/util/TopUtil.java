@@ -103,11 +103,11 @@ public class TopUtil {
                         .replace("%amount%", Integer.toString(materialCount.get(material))));
             }
         }
-        if(materialCount.get(XMaterial.SPAWNER) != null && materialCount.get(XMaterial.SPAWNER) > 0) {
+        if(materialCount.get(XMaterial.SPAWNER.parseMaterial()) != null && materialCount.get(XMaterial.SPAWNER.parseMaterial()) > 0) {
             String mat = "Spawner";
             lores.add(GUITags.TopFactions_PlacedBlock.getMessage()
                     .replace("%block%",mat.substring(0, 1).toUpperCase() + mat.substring(1).toLowerCase())
-                    .replace("%amount%", Integer.toString(materialCount.get(XMaterial.SPAWNER))));
+                    .replace("%amount%", Integer.toString(materialCount.get(XMaterial.SPAWNER.parseMaterial()))));
         }
         return lores;
     }

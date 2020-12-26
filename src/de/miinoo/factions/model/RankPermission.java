@@ -16,7 +16,7 @@ public enum RankPermission {
     CHAT("Chat", XMaterial.PAPER.parseMaterial()),
     BUILD("Build", XMaterial.GRASS_BLOCK.parseMaterial()),
     BREAK("Break", XMaterial.DIAMOND_PICKAXE.parseMaterial()),
-    OPEN_DOOR("Open Door", XMaterial.OAK_DOOR.parseMaterial()),
+    OPEN_DOOR("Open Door", XMaterial.IRON_DOOR.parseMaterial()),
     OPEN_CHEST("Open Chest", XMaterial.CHEST.parseMaterial()),
     OPEN_TRAPPED_CHEST("Open Trapped Chest", XMaterial.TRAPPED_CHEST.parseMaterial()),
     OPEN_ENDER_CHEST("Open Ender Chest", XMaterial.ENDER_CHEST.parseMaterial()),
@@ -39,7 +39,6 @@ public enum RankPermission {
     ASSIGN_ROLES("Assign Roles", XMaterial.DIAMOND.parseMaterial()),
     FILL_BUCKET("Fill bucket", XMaterial.WATER_BUCKET.parseMaterial()),
     EMPTY_BUCKET("Empty bucket", XMaterial.BUCKET.parseMaterial()),
-    OPEN_SHULKER("Open Shulker", XMaterial.GRAY_SHULKER_BOX.parseMaterial()),
     USE_BUTTONS("Use Buttons", XMaterial.OAK_BUTTON.parseMaterial()),
     USE_LEVER("Use Levers", XMaterial.LEVER.parseMaterial()),
     USE_TRAPDOOR("Use Trapdoors", XMaterial.DARK_OAK_TRAPDOOR.parseMaterial()),
@@ -47,7 +46,6 @@ public enum RankPermission {
     USE_COMPARATOR("Use Comparator", XMaterial.COMPARATOR.parseMaterial()),
     USE_DISPENSER("Use Dispenser", XMaterial.DISPENSER.parseMaterial()),
     USE_DROPPER("Use Dropper", XMaterial.DROPPER.parseMaterial()),
-    USE_BARREL("Use Barrel", XMaterial.BARREL.parseMaterial()),
     USE_HOPPER("Use Hopper", XMaterial.HOPPER.parseMaterial()),
     USE_FURNACE("Use Furnace", XMaterial.FURNACE.parseMaterial()),
     USE_FENCE_GATE("Use Fence Gate", XMaterial.BIRCH_FENCE_GATE.parseMaterial()),
@@ -58,8 +56,9 @@ public enum RankPermission {
     SIEGE("Siege", XMaterial.FIRE_CHARGE.parseMaterial()),
     FLY("Fly", XMaterial.FEATHER.parseMaterial()),
     FILL("Fill", XMaterial.TNT_MINECART.parseMaterial()),
-    CHANGE_INFO("Change Info", XMaterial.OAK_SIGN.parseMaterial());
+    CHANGE_INFO("Change Info", XMaterial.OAK_SIGN.parseMaterial()),
 
+    ;
     public static RankPermission forName(String name) {
         for (RankPermission permission : values()) {
             if (permission.name.equals(name)) {

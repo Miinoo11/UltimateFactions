@@ -63,6 +63,10 @@ public class FactionCommand extends PlayerCommand {
         addCommand(new FillCommand());
         addCommand(new EnergyCommand());
 
+        addCommand(new ShopCommand());
+
+        //addCommand(new TestCommand());
+
     }
 
     @Override

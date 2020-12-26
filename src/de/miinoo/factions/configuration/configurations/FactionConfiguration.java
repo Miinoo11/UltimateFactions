@@ -36,6 +36,6 @@ public class FactionConfiguration extends Configuration {
     }
 
     public Collection getFactionsByUUID() {
-        return (Collection) getValues().values();
+        return getValues().values();
     }
 }

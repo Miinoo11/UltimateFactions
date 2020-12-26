@@ -7,6 +7,20 @@ Settings:
     factionNameLenght: 16
     # Only use Numbers and Letters in faction name
     onlyCharacter: true
+    # You can see in chat if a faction is a enemy, ally or truce
+    # You can use the following variables in the extended Format:
+    extendedChatFormat:
+      enabled: false
+      defaultColor: "&9"
+      allyColor: "&a"
+      enemyColor: "&c"
+      truceColor: "&2"
+      factionColor: "&e"
+      format: "&7[%color%%faction%&7] &e%player%&8: &f%message%"
+      # used if the player which send a message is not in a faction
+      format2: "&7[] &e%player%&8: &f%message%"
+    # Set to false if you want to disable the /f shop function
+    enableShop: true
   # Set boolean to true if you want to enable faction warps outside a claimed chunk
   Warps:
     outsideFactionChunk: false

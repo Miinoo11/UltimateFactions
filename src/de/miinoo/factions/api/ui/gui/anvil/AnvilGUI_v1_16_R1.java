@@ -36,7 +36,7 @@ public class AnvilGUI_v1_16_R1 implements AnvilUI {
     public void open() {
         UIs.getUIManager().open(player, this);
         EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-        ContainerAnvil container = new AnvilGUI_v1_16_R1.AnvilContainer(entityPlayer);
+        ContainerAnvil container = new AnvilContainer(entityPlayer);
         inventory = container.getBukkitView().getTopInventory();
         for (Map.Entry<Integer, UIItem> entry : items.entrySet()) {
             UIItem item = entry.getValue();
@@ -79,7 +79,7 @@ public class AnvilGUI_v1_16_R1 implements AnvilUI {
         return inventory;
     }
 
-    private final class AnvilContainer extends ContainerAnvil {
+    private class AnvilContainer extends ContainerAnvil {
 
         public AnvilContainer(EntityPlayer entity) {
             super(entity.nextContainerCounter(), entity.inventory,
@@ -92,6 +92,14 @@ public class AnvilGUI_v1_16_R1 implements AnvilUI {
         public void e() {
             super.e();
             this.levelCost.set(0);
+        }
+
+        @Override
+        public void b(EntityHuman entityhuman) {
+        }
+
+        @Override
+        protected void a(EntityHuman entityhuman, World world, IInventory iinventory) {
         }
 
     }

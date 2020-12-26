@@ -7,15 +7,15 @@ import de.miinoo.factions.api.command.CommandRegistry;
 import de.miinoo.factions.api.ui.UIs;
 import de.miinoo.factions.api.ui.manager.EmptyLockManager;
 import de.miinoo.factions.api.ui.manager.GUIManager;
-import de.miinoo.factions.configuration.configurations.FactionLevelConfiguration;
-import de.miinoo.factions.updatechecker.UpdateChecker;
 import de.miinoo.factions.commands.FactionCommand;
 import de.miinoo.factions.configuration.Messages;
-import de.miinoo.factions.configuration.configurations.BankConfiguration;
-import de.miinoo.factions.configuration.configurations.SettingsConfiguration;
+import de.miinoo.factions.configuration.configurations.*;
 import de.miinoo.factions.hooks.placeholderapi.FactionPlaceholders;
 import de.miinoo.factions.listener.*;
 import de.miinoo.factions.model.*;
+import de.miinoo.factions.shop.ShopCategory;
+import de.miinoo.factions.shop.ShopItem;
+import de.miinoo.factions.updatechecker.UpdateChecker;
 import de.miinoo.factions.util.RegionUtil;
 import de.miinoo.factions.util.ResourceUtil;
 import de.miinoo.factions.util.TopUtil;
@@ -49,6 +49,7 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
     private static SettingsConfiguration settings;
     private static FactionLevelConfiguration factionLevels;
     private static BankConfiguration bank;
+    private static ShopConfiguration shop;
     private static Economy economy;
     private static Random random;
     private static RegionUtil regionUtil;
@@ -82,12 +83,20 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
         return bank;
     }
 
+    public static ShopConfiguration getShopConfiguration() {
+        return shop;
+    }
+
     public static Economy getEconomy() {
         return economy;
     }
 
     public static RegionUtil getRegionUtil() {
         return regionUtil;
+    }
+
+    public static FactionsAdapter getAdapter() {
+        return adapter;
     }
 
     private final Map<String, Command> commands = new HashMap<>();
@@ -105,6 +114,8 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
         ConfigurationSerialization.registerClass(Region.class);
         ConfigurationSerialization.registerClass(Cuboid.class);
         ConfigurationSerialization.registerClass(FactionLevel.class);
+        ConfigurationSerialization.registerClass(ShopItem.class);
+        ConfigurationSerialization.registerClass(ShopCategory.class);
         plugin = this;
 
         version = ServerVersion.getServerVersion();
@@ -128,8 +139,7 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
                         "&a[UltimateFactions] You are running the newest version!"));
             } else {
                 Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        "&4[UltimateFactions] There is a new update available! Please download the newer version!\n"
-                + "https://www.spigotmc.org/resources/ultimatefactions-unique-faction-plugin-1-8-1-13-1-16-fully-configurable.81103/"));
+                        "&4[UltimateFactions] There is a new update available! Please download the newer version!"));
             }
         });
 
@@ -143,15 +153,19 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
         UIs.load(this, new GUIManager(), new EmptyLockManager());
 
         messages = new Messages(this, "messages.yml", "/language");
+
         File file = new File(getDataFolder(), "settings.yml");
         ResourceUtil.createAndWrite("/settings.yml", file);
         settings = new SettingsConfiguration(file);
+
         file = new File(getDataFolder(), "faction_levels.yml");
         ResourceUtil.createAndWrite("/faction_levels.yml", file);
         factionLevels = new FactionLevelConfiguration(file);
-        bank = new BankConfiguration(this, "bank.yml", "");
 
+        bank = new BankConfiguration(this, "bank.yml", "");
         bank.initFile();
+
+        shop = new ShopConfiguration();
 
         factions = new Factions(this);
         regions = new Regions(this);
@@ -187,7 +201,6 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
 
         random = new Random();
         regionUtil = new RegionUtil();
-
 
     }
 

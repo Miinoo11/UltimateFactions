@@ -123,7 +123,7 @@ public class InteractListener implements Listener {
                         }
                     } else if (block.getType().getKey().getKey().contains("shulker") && !block.getType().getKey().getKey().contains("shulker_shell")) {
                         if (!settings.canUseShulker()) {
-                            check(faction, player, RelationPermission.OPEN_SHULKER, RankPermission.OPEN_SHULKER, ErrorMessage.Interact_Shulker_Error.getMessage(), event);
+                            check(faction, player, RelationPermission.OPEN_SHULKER, RankPermission.OPEN_CHEST, ErrorMessage.Interact_Shulker_Error.getMessage(), event);
                         }
                     } else if (block.getType().getKey().getKey().contains("chest") && !block.getType().getKey().getKey().contains("trapped_chest")
                             && !block.getType().getKey().getKey().contains("ender_chest")) {
@@ -172,7 +172,7 @@ public class InteractListener implements Listener {
                         }
                     } else if (block.getType().getKey().getKey().contains("barrel")) {
                         if (!settings.canUseBarrel()) {
-                            check(faction, player, RelationPermission.USE_BARREL, RankPermission.USE_BARREL, ErrorMessage.Interact_Barrel_Error.getMessage(), event);
+                            check(faction, player, RelationPermission.USE_BARREL, RankPermission.OPEN_CHEST, ErrorMessage.Interact_Barrel_Error.getMessage(), event);
                         }
                     }
                 }

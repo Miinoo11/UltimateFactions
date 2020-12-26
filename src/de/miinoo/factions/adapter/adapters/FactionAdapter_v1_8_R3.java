@@ -4,8 +4,9 @@ import de.miinoo.factions.adapter.FactionsAdapter;
 import de.miinoo.factions.api.ui.gui.anvil.AnvilGUI_v1_8_R3;
 import de.miinoo.factions.api.ui.ui.AnvilUI;
 import de.miinoo.factions.util.ScoreboardUtil;
-import net.minecraft.server.v1_8_R3.IChatBaseComponent;
-import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerListHeaderFooter;
+import net.minecraft.server.v1_8_R3.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
@@ -44,5 +45,17 @@ public class FactionAdapter_v1_8_R3 extends FactionsAdapter {
     @Override
     public void sendScoreboard(Player player) {
         ScoreboardUtil.sendLegacyScoreboard(player);
+    }
+
+    @Override
+    public void shootParticle(String particle, Location loc, float xOffset, float yOffset, float zOffset, float speed, int count) {
+        final EnumParticle enumParticle = EnumParticle.valueOf(particle);
+        final float x = (float)loc.getX();
+        final float y = (float)loc.getY();
+        final float z = (float)loc.getZ();
+        final PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(enumParticle, false, x, y, z, xOffset, yOffset, zOffset, speed, count, (int[])null);
+        for (final Player p : Bukkit.getOnlinePlayers()) {
+            ((CraftPlayer)p).getHandle().playerConnection.sendPacket(packet);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package de.miinoo.factions.adapter;
 
 import de.miinoo.factions.api.ui.ui.AnvilUI;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 /**
@@ -18,4 +19,5 @@ public abstract class FactionsAdapter {
 
     public abstract void sendScoreboard(Player player);
 
+    public abstract void shootParticle(final String particle, final Location loc, final float xOffset, final float yOffset, final float zOffset, final float speed, final int count);
 }

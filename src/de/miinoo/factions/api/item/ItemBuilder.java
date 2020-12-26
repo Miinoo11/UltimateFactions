@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public interface ItemBuilder {
@@ -37,7 +38,7 @@ public interface ItemBuilder {
 	ItemBuilder setUnbreakable(boolean unbreakable);
 	
 	ItemBuilder addEnchantment(Enchantment enchantment, int level);
-	
+
 	ItemBuilder removeEnchantment(Enchantment enchantment);
 	
 	ItemBuilder addItemFlags(ItemFlag... flags);

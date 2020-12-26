@@ -135,7 +135,6 @@ public class GUI implements UI {
 			}
 		}
 	}
-
 	@Override
 	public final void onClick(InventoryClickEvent event) {
 		if (!Permissions.isPermitted(player, permission)) {
