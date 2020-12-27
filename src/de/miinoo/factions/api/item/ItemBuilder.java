@@ -5,6 +5,7 @@ package de.miinoo.factions.api.item;
  *
  */
 
+import de.miinoo.factions.api.xutils.XEnchantment;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -38,6 +39,10 @@ public interface ItemBuilder {
 	ItemBuilder setUnbreakable(boolean unbreakable);
 	
 	ItemBuilder addEnchantment(Enchantment enchantment, int level);
+
+	ItemBuilder addEnchantments(Map<Enchantment, Integer> enchantments);
+
+	ItemBuilder addXEnchantments(Map<XEnchantment, Integer> enchantments);
 
 	ItemBuilder removeEnchantment(Enchantment enchantment);
 	
