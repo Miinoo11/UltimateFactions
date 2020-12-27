@@ -6,6 +6,7 @@ package de.miinoo.factions.api.item;
  */
 
 import de.miinoo.factions.adapter.ServerVersion;
+import de.miinoo.factions.api.xutils.XEnchantment;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -89,9 +90,16 @@ class ItemCreator implements ItemBuilder {
 		return this;
 	}
 
+	public ItemBuilder addXEnchantments(Map<XEnchantment, Integer> enchantments) {
+		for(XEnchantment enchantment : enchantments.keySet()) {
+			meta.addEnchant(enchantment.parseEnchantment(), enchantments.get(enchantment), true);
+		}
+		return this;
+	}
+
 	public ItemBuilder addEnchantments(Map<Enchantment, Integer> enchantments) {
 		for(Enchantment enchantment : enchantments.keySet()) {
-			meta.addEnchant(enchantment, enchantments.get(enchantment), true);
+			meta.addEnchant(XEnchantment.matchXEnchantment(enchantment).parseEnchantment(), enchantments.get(enchantment), true);
 		}
 		return this;
 	}
