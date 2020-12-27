@@ -30,63 +30,27 @@ public class ChatListener implements Listener {
         Faction senderFaction = FactionsSystem.getFactions().getFaction(sender);
         Faction receiverFaction = null;
 
-        if(FactionsSystem.getSettings().useExtendedChatFormat()) {
+        if (FactionsSystem.getSettings().useExtendedChatFormat()) {
             event.setCancelled(true);
-            if(ChatCommand.chatMode.containsKey(sender)) {
-                if(ChatCommand.chatMode.get(sender).equalsIgnoreCase("public")) {
-                    for(Player all : Bukkit.getOnlinePlayers()) {
+            if (ChatCommand.chatMode.containsKey(sender)) {
+                if (ChatCommand.chatMode.get(sender).equalsIgnoreCase("public")) {
+                    for (Player all : Bukkit.getOnlinePlayers()) {
                         receiverFaction = FactionsSystem.getFactions().getFaction(all);
-                        if(senderFaction != null) {
-                            if(receiverFaction != null) {
-                                if(senderFaction.equals(receiverFaction)) {
-                                    all.sendMessage(settings.getExtendedFormat()
-                                            .replace("&", "§")
-                                    .replace("%color%", settings.getFactionColor().replace("&", "§"))
-                                    .replace("%faction%", senderFaction.getName())
-                                    .replace("%player%", sender.getDisplayName())
-                                    .replace("%rank%", senderFaction.getRankOfPlayer(sender.getUniqueId()).getName())
-                                    .replace("%message%", message.replace("%", "%%")));
-                                } else if(senderFaction.getTrucesRelation().contains(receiverFaction.getId())) {
-                                    all.sendMessage(settings.getExtendedFormat()
-                                            .replace("&", "§")
-                                            .replace("%color%", settings.getTruceColor().replace("&", "§"))
-                                            .replace("%faction%", senderFaction.getName())
-                                            .replace("%player%", sender.getDisplayName())
-                                            .replace("%rank%", senderFaction.getRankOfPlayer(sender.getUniqueId()).getName())
-                                            .replace("%message%", message.replace("%", "%%")));
-                                } else if(senderFaction.getAlliesRelation().contains(receiverFaction.getId())) {
-                                    all.sendMessage(settings.getExtendedFormat()
-                                            .replace("&", "§")
-                                            .replace("%color%", settings.getAllyColor().replace("&", "§"))
-                                            .replace("%faction%", senderFaction.getName())
-                                            .replace("%player%", sender.getDisplayName())
-                                            .replace("%rank%", senderFaction.getRankOfPlayer(sender.getUniqueId()).getName())
-                                            .replace("%message%", message.replace("%", "%%")));
-                                } else if(senderFaction.getEnemyRelation().contains(receiverFaction.getId())) {
-                                    all.sendMessage(settings.getExtendedFormat()
-                                            .replace("&", "§")
-                                            .replace("%color%", settings.getEnemyColor().replace("&", "§"))
-                                            .replace("%faction%", senderFaction.getName())
-                                            .replace("%player%", sender.getDisplayName())
-                                            .replace("%rank%", senderFaction.getRankOfPlayer(sender.getUniqueId()).getName())
-                                            .replace("%message%", message.replace("%", "%%")));
+                        if (senderFaction != null) {
+                            if (receiverFaction != null) {
+                                if (senderFaction.equals(receiverFaction)) {
+                                    all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getFactionColor(), message));
+                                } else if (senderFaction.getTrucesRelation().contains(receiverFaction.getId())) {
+                                    all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getTruceColor(), message));
+                                } else if (senderFaction.getAlliesRelation().contains(receiverFaction.getId())) {
+                                    all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getAllyColor(), message));
+                                } else if (senderFaction.getEnemyRelation().contains(receiverFaction.getId())) {
+                                    all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getEnemyColor(), message));
                                 } else {
-                                    all.sendMessage(settings.getExtendedFormat()
-                                            .replace("&", "§")
-                                            .replace("%color%", settings.getDefaultColor().replace("&", "§"))
-                                            .replace("%faction%", senderFaction.getName())
-                                            .replace("%player%", sender.getDisplayName())
-                                            .replace("%rank%", senderFaction.getRankOfPlayer(sender.getUniqueId()).getName())
-                                            .replace("%message%", message.replace("%", "%%")));
+                                    all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getDefaultColor(), message));
                                 }
                             } else {
-                                all.sendMessage(settings.getExtendedFormat()
-                                        .replace("&", "§")
-                                        .replace("%color%", settings.getDefaultColor().replace("&", "§"))
-                                        .replace("%faction%", senderFaction.getName())
-                                        .replace("%player%", sender.getDisplayName())
-                                        .replace("%rank%", senderFaction.getRankOfPlayer(sender.getUniqueId()).getName())
-                                        .replace("%message%", message.replace("%", "%%")));
+                                all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getDefaultColor(), message));
                             }
                         } else {
                             all.sendMessage(settings.getExtendedFormat2()
@@ -98,59 +62,23 @@ public class ChatListener implements Listener {
                     }
                 }
             } else {
-                for(Player all : Bukkit.getOnlinePlayers()) {
+                for (Player all : Bukkit.getOnlinePlayers()) {
                     receiverFaction = FactionsSystem.getFactions().getFaction(all);
-                    if(senderFaction != null) {
-                        if(receiverFaction != null) {
-                            if(senderFaction.equals(receiverFaction)) {
-                                all.sendMessage(settings.getExtendedFormat()
-                                        .replace("&", "§")
-                                        .replace("%color%", settings.getFactionColor().replace("&", "§"))
-                                        .replace("%faction%", senderFaction.getName())
-                                        .replace("%player%", sender.getDisplayName())
-                                        .replace("%rank%", senderFaction.getRankOfPlayer(sender.getUniqueId()).getName())
-                                        .replace("%message%", message.replace("%", "%%")));
-                            } else if(senderFaction.getTrucesRelation().contains(receiverFaction.getId())) {
-                                all.sendMessage(settings.getExtendedFormat()
-                                        .replace("&", "§")
-                                        .replace("%color%", settings.getTruceColor().replace("&", "§"))
-                                        .replace("%faction%", senderFaction.getName())
-                                        .replace("%player%", sender.getDisplayName())
-                                        .replace("%rank%", senderFaction.getRankOfPlayer(sender.getUniqueId()).getName())
-                                        .replace("%message%", message.replace("%", "%%")));
-                            } else if(senderFaction.getAlliesRelation().contains(receiverFaction.getId())) {
-                                all.sendMessage(settings.getExtendedFormat()
-                                        .replace("&", "§")
-                                        .replace("%color%", settings.getAllyColor().replace("&", "§"))
-                                        .replace("%faction%", senderFaction.getName())
-                                        .replace("%player%", sender.getDisplayName())
-                                        .replace("%rank%", senderFaction.getRankOfPlayer(sender.getUniqueId()).getName())
-                                        .replace("%message%", message.replace("%", "%%")));
-                            } else if(senderFaction.getEnemyRelation().contains(receiverFaction.getId())) {
-                                all.sendMessage(settings.getExtendedFormat()
-                                        .replace("&", "§")
-                                        .replace("%color%", settings.getEnemyColor().replace("&", "§"))
-                                        .replace("%faction%", senderFaction.getName())
-                                        .replace("%player%", sender.getDisplayName())
-                                        .replace("%rank%", senderFaction.getRankOfPlayer(sender.getUniqueId()).getName())
-                                        .replace("%message%", message.replace("%", "%%")));
+                    if (senderFaction != null) {
+                        if (receiverFaction != null) {
+                            if (senderFaction.equals(receiverFaction)) {
+                                all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getFactionColor(), message));
+                            } else if (senderFaction.getTrucesRelation().contains(receiverFaction.getId())) {
+                                all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getTruceColor(), message));
+                            } else if (senderFaction.getAlliesRelation().contains(receiverFaction.getId())) {
+                                all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getAllyColor(), message));
+                            } else if (senderFaction.getEnemyRelation().contains(receiverFaction.getId())) {
+                                all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getEnemyColor(), message));
                             } else {
-                                all.sendMessage(settings.getExtendedFormat()
-                                        .replace("&", "§")
-                                        .replace("%color%", settings.getDefaultColor().replace("&", "§"))
-                                        .replace("%faction%", senderFaction.getName())
-                                        .replace("%player%", sender.getDisplayName())
-                                        .replace("%rank%", senderFaction.getRankOfPlayer(sender.getUniqueId()).getName())
-                                        .replace("%message%", message.replace("%", "%%")));
+                                all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getDefaultColor(), message));
                             }
                         } else {
-                            all.sendMessage(settings.getExtendedFormat()
-                                    .replace("&", "§")
-                                    .replace("%color%", settings.getDefaultColor().replace("&", "§"))
-                                    .replace("%faction%", senderFaction.getName())
-                                    .replace("%player%", sender.getDisplayName())
-                                    .replace("%rank%", senderFaction.getRankOfPlayer(sender.getUniqueId()).getName())
-                                    .replace("%message%", message.replace("%", "%%")));
+                            all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getDefaultColor(), message));
                         }
                     } else {
                         all.sendMessage(settings.getExtendedFormat2()
@@ -209,14 +137,14 @@ public class ChatListener implements Listener {
                         }
                     }
                 } else if (ChatCommand.chatMode.get(sender).equalsIgnoreCase("public")) {
-                    if(senderFaction != null) {
+                    if (senderFaction != null) {
                         event.setFormat(publicChat(senderFaction, sender, message));
                     } else {
                         event.setFormat(publicChatNoFaction(sender, message));
                     }
                 }
             } else {
-                if(senderFaction != null) {
+                if (senderFaction != null) {
                     event.setFormat(publicChat(senderFaction, sender, message));
                 } else {
                     event.setFormat(publicChatNoFaction(sender, message));
@@ -224,6 +152,7 @@ public class ChatListener implements Listener {
             }
         }
     }
+
     private String factionChat(Faction faction, Player player, String message) {
         Rank rank = faction.getRankOfPlayer(player.getUniqueId());
         if (FactionsSystem.isPlaceHolderAPIFound) {
@@ -271,6 +200,7 @@ public class ChatListener implements Listener {
                 .replace("%faction%", faction.getName()).replace("%rank%", rank.getPrefix()).replace("%player%", player.getDisplayName())
                 + message.replace("%", "%%");
     }
+
     private String publicChatNoFaction(Player player, String message) {
         if (FactionsSystem.isPlaceHolderAPIFound) {
             return PlaceholderAPI.setPlaceholders(player, OtherMessages.Public_Chat_No_Faction.getMessage()
@@ -280,6 +210,15 @@ public class ChatListener implements Listener {
         return OtherMessages.Public_Chat.getMessage()
                 .replace("%faction%", "[]").replace("%player%", player.getDisplayName())
                 + message.replace("%", "%%");
+    }
+
+    private String extendedFormat(Player sender, Faction senderFaction, String format, String color, String message) {
+        return format.replace("&", "§")
+                .replace("%color%", color.replace("&", "§"))
+                .replace("%faction%", senderFaction.getName())
+                .replace("%player%", sender.getDisplayName())
+                .replace("%rank%", senderFaction.getRankOfPlayer(sender.getUniqueId()).getName())
+                .replace("%message%", message.replace("%", "%%"));
     }
 
 }
