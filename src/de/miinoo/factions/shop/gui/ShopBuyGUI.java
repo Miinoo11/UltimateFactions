@@ -12,6 +12,7 @@ import de.miinoo.factions.shop.ShopCategory;
 import de.miinoo.factions.shop.ShopItem;
 import de.miinoo.factions.util.ItemUtil;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +27,7 @@ public class ShopBuyGUI extends GUI {
                 item -> new GUIItem(Items.createItem(item.getItemStack())
                         .setDisplayName(item.getDisplayName())
                         .setLore(lore(item))
+                        .addEnchantments(item.getItemStack().getEnchantments())
                         .setAmount(item.getAmount())
                         .getItem()).setOnClickListener((player1, item1, event) -> {
 
@@ -51,6 +53,15 @@ public class ShopBuyGUI extends GUI {
                             break;
                         case RIGHT:
                             if (!player.getInventory().contains(item.getItemStack())) {
+
+                                System.out.println(item.getItemStack());
+                                System.out.println(item.getItemStack().getEnchantments());
+
+                                for(ItemStack i : player.getInventory().getContents()) {
+                                    if(i != null) {
+                                        System.out.println(i);
+                                    }
+                                }
                                 close();
                                 player.sendMessage(ErrorMessage.Shop_Sell_Item_Error.getMessage());
                             } else {

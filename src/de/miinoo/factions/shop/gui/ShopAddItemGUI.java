@@ -9,6 +9,7 @@ import de.miinoo.factions.api.ui.gui.GUIArea;
 import de.miinoo.factions.api.ui.gui.GUIItem;
 import de.miinoo.factions.api.ui.input.AnvilInput;
 import de.miinoo.factions.api.ui.input.GUIInput;
+import de.miinoo.factions.api.xutils.XEnchantment;
 import de.miinoo.factions.api.xutils.XMaterial;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.GUITags;
@@ -17,9 +18,12 @@ import de.miinoo.factions.shop.ShopCategory;
 import de.miinoo.factions.shop.ShopItem;
 import de.miinoo.factions.util.ItemUtil;
 import org.bukkit.ChatColor;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ShopAddItemGUI extends GUI {
 
@@ -86,11 +90,13 @@ public class ShopAddItemGUI extends GUI {
             new ListGUI<ItemStack>(player, GUITags.Shop_ChooseIcon.getMessage(), ItemUtil.getItemsAsList(player.getInventory()),
                     icon -> new GUIItem(Items.createItem(icon.getType())
                             .setAmount(icon.getAmount())
+                            .addEnchantments(icon.getEnchantments())
                             .getItem()), (player1, list, index, element, event) -> {
                 item = element;
                 open();
                 return true;
             }).open();
+
         }));
 
         addElement(20, new DependGUIItem(() -> Items.createItem(XMaterial.REDSTONE_TORCH.parseMaterial())

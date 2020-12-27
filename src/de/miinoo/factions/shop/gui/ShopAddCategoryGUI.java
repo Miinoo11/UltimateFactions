@@ -50,7 +50,10 @@ public class ShopAddCategoryGUI extends GUI {
         addElement(16, new DependGUIItem(() -> Items.createItem(item != null ? item : XMaterial.GRASS_BLOCK.parseItem())
                 .setDisplayName(GUITags.Shop_AddCategory_Icon.getMessage()).getItem(), () -> {
             new ListGUI<ItemStack>(player, GUITags.Shop_ChooseIcon.getMessage(), ItemUtil.getItemsAsList(player.getInventory()),
-                    icon -> new GUIItem(Items.createItem(icon.getType()).setAmount(icon.getAmount()).getItem()), (player1, list, index, element, event) -> {
+                    icon -> new GUIItem(Items.createItem(icon.getType())
+                            .setAmount(icon.getAmount())
+                            .addEnchantments(icon.getEnchantments())
+                            .getItem()), (player1, list, index, element, event) -> {
                 item = element;
                 open();
                 return true;
