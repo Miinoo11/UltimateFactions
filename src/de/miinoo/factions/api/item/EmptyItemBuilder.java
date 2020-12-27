@@ -5,6 +5,7 @@ package de.miinoo.factions.api.item;
  *
  */
 
+import de.miinoo.factions.api.xutils.XEnchantment;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -75,6 +76,16 @@ final class EmptyItemBuilder implements ItemBuilder {
 
 	@Override
 	public ItemBuilder addEnchantment(Enchantment enchantment, int level) {
+		return builder;
+	}
+
+	@Override
+	public ItemBuilder addEnchantments(Map<Enchantment, Integer> enchantments) {
+		return builder;
+	}
+
+	@Override
+	public ItemBuilder addXEnchantments(Map<XEnchantment, Integer> enchantments) {
 		return builder;
 	}
 
