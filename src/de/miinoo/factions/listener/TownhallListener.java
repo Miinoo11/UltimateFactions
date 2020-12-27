@@ -12,7 +12,6 @@ import de.miinoo.factions.model.guis.TownHallGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.boss.BossBar;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,7 +32,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class TownhallListener implements Listener {
 
     private Factions factions = FactionsSystem.getFactions();
-    private BossBar bossBar;
 
     @EventHandler
     public void onDamage1(EntityDamageByEntityEvent event) {
@@ -93,28 +91,6 @@ public class TownhallListener implements Listener {
                     faction.removeTownHall();
                     factions.saveFaction(faction);
                 }
-
-                //bossBar = BossUtil.createBossBar(FactionsSystem.getPlugin(), faction, (LivingEntity) event.getEntity(),
-                //        "Townhall: " + faction.getName(), BarColor.YELLOW, BarStyle.SEGMENTED_12);
-                //if (BossUtil.getBossBar(player) == null) {
-                //    BossUtil.addBar(player, bossBar);
-                //}
-                //faction.getTownHall().removeHealth(event.getDamage());
-//
-                //if (faction.getTownHall().getHealth() <= 0) {
-                //    if (!faction.getBankItems().isEmpty()) {
-                //        for (Material material : faction.getBankItems().keySet()) {
-                //            ItemStack is = new ItemStack(material, faction.getBankItemAmount(material));
-                //            entity.getWorld().dropItem(entity.getLocation(), is);
-                //        }
-                //    }
-                //    bossBar.removePlayer(player);
-                //    BossUtil.removeBar(player);
-                //    faction.getTownHall().stopMoveTask();
-                //    Bukkit.getEntity(faction.getTownHall().getEntityUUID()).remove();
-                //    faction.removeTownHall();
-                //    factions.saveFaction(faction);
-                //}
             }
         }
     }

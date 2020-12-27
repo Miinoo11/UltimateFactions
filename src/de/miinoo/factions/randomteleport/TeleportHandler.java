@@ -38,12 +38,12 @@ public class TeleportHandler
             return;
         }
         this.player.teleport(location);
-        this.player.sendMessage(ChatColor.DARK_AQUA + "Teleported to the location:");
-        this.player.sendMessage(ChatColor.DARK_AQUA + "X: " + ChatColor.AQUA + this.xF);
-        this.player.sendMessage(ChatColor.DARK_AQUA + "Y: " + ChatColor.AQUA + this.yF);
-        this.player.sendMessage(ChatColor.DARK_AQUA + "Z: " + ChatColor.AQUA + this.zF);
-        this.player.sendMessage(ChatColor.DARK_AQUA + "World: " + ChatColor.AQUA + this.world.getName());
-        this.player.sendMessage(" ");
+        //this.player.sendMessage(ChatColor.DARK_AQUA + "Teleported to the location:");
+        //this.player.sendMessage(ChatColor.DARK_AQUA + "X: " + ChatColor.AQUA + this.xF);
+        //this.player.sendMessage(ChatColor.DARK_AQUA + "Y: " + ChatColor.AQUA + this.yF);
+        //this.player.sendMessage(ChatColor.DARK_AQUA + "Z: " + ChatColor.AQUA + this.zF);
+        //this.player.sendMessage(ChatColor.DARK_AQUA + "World: " + ChatColor.AQUA + this.world.getName());
+        //this.player.sendMessage(" ");
     }
 
     public int getX() {

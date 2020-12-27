@@ -108,24 +108,6 @@ public class TownhallCommand extends PlayerCommand {
                                         e.printStackTrace();
                                     }
                                 }
-                                //net.minecraft.server.v1_10_R1.Entity nmsEntity = ((org.bukkit.craftbukkit.v1_10_R1.entity.CraftEntity) entity).getHandle();
-                                //net.minecraft.server.v1_10_R1.NBTTagCompound tag = new net.minecraft.server.v1_10_R1.NBTTagCompound();
-                                //nmsEntity.c(tag);
-                                //tag.setInt("NoAI", 1);
-                                //nmsEntity.b(true);
-                                //nmsEntity.f(tag);
-                                //} else if(ServerVersion.getServerVersion().equals(ServerVersion.VERSION_1_10_R2)) {
-                                //    net.minecraft.server.v1_10_R2.Entity nmsEntity = ((org.bukkit.craftbukkit.v1_10_R2.entity.CraftEntity) entity).getHandle();
-                                //    net.minecraft.server.v1_10_R2.NBTTagCompound tag = new net.minecraft.server.v1_10_R2.NBTTagCompound();
-                                //    nmsEntity.c(tag);
-                                //    tag.setInt("NoAI", 1);
-                                //    nmsEntity.f(tag);
-                                //} else if(ServerVersion.getServerVersion().equals(ServerVersion.VERSION_1_11_R1)) {
-                                //    net.minecraft.server.v1_11_R1.Entity nmsEntity = ((org.bukkit.craftbukkit.v1_11_R1.entity.CraftEntity) entity).getHandle();
-                                //    net.minecraft.server.v1_11_R1.NBTTagCompound tag = new net.minecraft.server.v1_11_R1.NBTTagCompound();
-                                //    nmsEntity.c(tag);
-                                //    tag.setInt("NoAI", 1);
-                                //    nmsEntity.f(tag);
                             } else {
                                 entity.setSilent(true);
                                 if (entity instanceof LivingEntity) {
@@ -143,9 +125,5 @@ public class TownhallCommand extends PlayerCommand {
 
         player.sendMessage(ErrorMessage.TownHall_Location_Error.getMessage());
         return true;
-    }
-
-    void noAI(Entity bukkitEntity) {
-
     }
 }
