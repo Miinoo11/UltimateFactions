@@ -182,7 +182,7 @@ public enum GUITags {
     Shop_AddItem_canSell("&eCan sell"),
 
     Shop_Item_Price_Lore("&7Buy: &a$%price% &8| &7&oLeftClick"),
-    Shop_Item_Sell_Price_Lore("&7Sell: &a$%price% &8&o| &7RightClick"),
+    Shop_Item_Sell_Price_Lore("&7Sell: &a$%price% &8| &7&oRightClick"),
     ;
 
     private String message;
