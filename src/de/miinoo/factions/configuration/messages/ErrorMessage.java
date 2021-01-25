@@ -142,6 +142,8 @@ public enum ErrorMessage {
     Fill_Block_Error("&cThis is not a valid block to fill!"),
     Fill_Block_Amount_Error("&cYou have no TNT in your inventory!"),
     Fill_Block_Full_Error("&cThis Block is full!"),
+    Shop_Category_Create_Item_Error("&aPlease choose a item!"),
+    Shop_Add_Item_Item_Error("&aPlease choose a item!"),
     Shop_Enabled_Error("&cThe shop function is disabled!"),
     Shop_Sell_Item_Error("&cYou don't have this item in your inventory!"),
     ;

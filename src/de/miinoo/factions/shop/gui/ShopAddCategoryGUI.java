@@ -10,6 +10,7 @@ import de.miinoo.factions.api.ui.gui.GUIItem;
 import de.miinoo.factions.api.ui.input.AnvilInput;
 import de.miinoo.factions.api.ui.input.GUIInput;
 import de.miinoo.factions.api.xutils.XMaterial;
+import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.GUITags;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
 import de.miinoo.factions.shop.ShopCategory;
@@ -63,6 +64,11 @@ public class ShopAddCategoryGUI extends GUI {
         addElement(size - 5, new GUIItem(Items.createSkull("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTMwZjQ1MzdkMjE0ZDM4NjY2ZTYzMDRlOWM4NTFjZDZmN2U0MWEwZWI3YzI1MDQ5YzlkMjJjOGM1ZjY1NDVkZiJ9fX0=")
                 .setDisplayName(GUITags.Save.getMessage())
                 .getItem(), () -> {
+
+            if(item == null) {
+                player.sendMessage(ErrorMessage.Shop_Category_Create_Item_Error.getMessage());close();
+                return;
+            }
 
             FactionsSystem.getShopConfiguration().saveCategory(new ShopCategory(name, item, description));
             close();

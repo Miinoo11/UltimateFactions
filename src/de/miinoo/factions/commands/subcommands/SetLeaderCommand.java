@@ -26,7 +26,7 @@ import java.util.List;
 public class SetLeaderCommand extends PlayerCommand {
 
     public SetLeaderCommand() {
-        super("setleader", new CommandDescription("Promote a new leader", "<player>"));
+        super("setleader", new CommandDescription(OtherMessages.Help_SetLeaderCommand.getMessage(), OtherMessages.Help_SetLeaderCommandSyntax.getMessage()));
     }
 
     private Factions factions = FactionsSystem.getFactions();

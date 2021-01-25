@@ -5,6 +5,7 @@ import de.miinoo.factions.api.command.ArgumentParser;
 import de.miinoo.factions.api.command.CommandDescription;
 import de.miinoo.factions.api.command.PlayerCommand;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
+import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.model.RankPermission;
 import de.miinoo.factions.shop.gui.ShopMainGUI;
 import org.bukkit.entity.Player;
@@ -12,7 +13,7 @@ import org.bukkit.entity.Player;
 public class ShopCommand extends PlayerCommand {
 
     public ShopCommand() {
-        super("shop", new CommandDescription("Opens a Shop GUI"));
+        super("shop", new CommandDescription(OtherMessages.Help_ShopCommand.getMessage()));
     }
 
     @Override

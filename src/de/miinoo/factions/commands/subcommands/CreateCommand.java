@@ -5,9 +5,12 @@ import de.miinoo.factions.api.command.CommandDescription;
 import de.miinoo.factions.api.command.PlayerCommand;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
+import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
+import de.miinoo.factions.events.FactionCreateEvent;
 import de.miinoo.factions.model.ColorHelper;
 import de.miinoo.factions.model.Faction;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
@@ -17,7 +20,7 @@ import org.bukkit.entity.Player;
 public class CreateCommand extends PlayerCommand {
 
     public CreateCommand() {
-        super("create", new CommandDescription("Create your own faction", "<name>"));
+        super("create", new CommandDescription(OtherMessages.Help_CreateCommand.getMessage(), OtherMessages.Help_CreateCommandSyntax.getMessage()));
     }
 
     @Override
@@ -51,6 +54,15 @@ public class CreateCommand extends PlayerCommand {
             return true;
         }
 
+        if(FactionsSystem.getSettings().enableCreateCost()) {
+            if(!((FactionsSystem.getEconomy().getBalance(player) - FactionsSystem.getSettings().getCreationCost()) >= 0)) {
+                player.sendMessage(ErrorMessage.Not_Enough_Money.getMessage());
+                return true;
+            }
+            FactionsSystem.getEconomy().withdrawPlayer(player, FactionsSystem.getSettings().getCreationCost());
+            player.sendMessage(SuccessMessage.Successfully_Created_Costs.getMessage().replace("%amount%", String.valueOf(FactionsSystem.getSettings().getCreationCost())));
+        }
+
         faction = new Faction(args.get(0), player.getUniqueId(), "Another Faction");
         faction.addPower(FactionsSystem.getSettings().getPlayer1Power());
         faction.setPowerCap(FactionsSystem.getSettings().getPlayer1Power());
@@ -64,7 +76,7 @@ public class CreateCommand extends PlayerCommand {
                     ColorHelper.colorize(FactionsSystem.getSettings().tabFooter(player)));
         }
         player.sendMessage(SuccessMessage.Successfully_Created.getMessage().replace("%faction%", faction.getName()));
-
+        Bukkit.getPluginManager().callEvent(new FactionCreateEvent(player, faction));
         return true;
     }
 }

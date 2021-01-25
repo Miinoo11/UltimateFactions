@@ -3,6 +3,7 @@ package de.miinoo.factions.commands.subcommands;
 import de.miinoo.factions.api.command.ArgumentParser;
 import de.miinoo.factions.api.command.CommandDescription;
 import de.miinoo.factions.api.command.PlayerCommand;
+import de.miinoo.factions.configuration.messages.OtherMessages;
 import org.bukkit.Chunk;
 import org.bukkit.Color;
 import org.bukkit.Particle;
@@ -17,7 +18,7 @@ public class ChunkSeeCommand extends PlayerCommand {
 
 
     public ChunkSeeCommand() {
-        super("chunksee", new CommandDescription("Shows the chunk borders"));
+        super("chunksee", new CommandDescription(OtherMessages.Help_ChunkSeeCommand.getMessage()));
     }
 
     @Override

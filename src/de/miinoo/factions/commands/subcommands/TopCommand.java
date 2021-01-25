@@ -4,6 +4,7 @@ import de.miinoo.factions.api.command.ArgumentParser;
 import de.miinoo.factions.api.command.CommandDescription;
 import de.miinoo.factions.api.command.PlayerCommand;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
+import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
 import de.miinoo.factions.model.guis.TopGUI;
 import de.miinoo.factions.util.TopUtil;
@@ -19,7 +20,7 @@ import java.util.List;
 public class TopCommand extends PlayerCommand {
 
     public TopCommand() {
-        super("top", new CommandDescription("Opens a GUI with top 10 factions", "[update]"));
+        super("top", new CommandDescription(OtherMessages.Help_TopCommand.getMessage(), OtherMessages.Help_TopCommandSyntax.getMessage()));
     }
 
     @Override

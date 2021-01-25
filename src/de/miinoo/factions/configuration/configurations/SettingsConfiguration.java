@@ -3,6 +3,7 @@ package de.miinoo.factions.configuration.configurations;
 import de.miinoo.factions.api.configuration.Configuration;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.model.Faction;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -95,8 +96,9 @@ public class SettingsConfiguration extends Configuration {
    //     save();
    // }
     public boolean enableTablist() { return configuration.getBoolean("Settings.Tab.enabled"); }
-    public int getFactionNameMaximalLength() { return configuration.getInt("Settings.Other.factionNameLenght");}
     public boolean enableScoreboard() { return configuration.getBoolean("Settings.Game.enableScoreboard");}
+
+    // Map Settings
     public String getChatColor(String name) {
         return configuration.getString("Settings.Map.Colors." + name);
     }
@@ -112,7 +114,10 @@ public class SettingsConfiguration extends Configuration {
     public int getWidth() {
         return configuration.getInt("Settings.Map.Width");
     }
+
     public int getTopUpdater() { return configuration.getInt("Settings.Game.TopFactions.updaterCount"); }
+
+    //  Wild settings
     public boolean wildIsEnabled() { return configuration.getBoolean("Settings.Game.Wild.enabled"); }
     public double wildCosts() {return configuration.getDouble("Settings.Game.Wild.costs"); }
     public int wildDelay() { return configuration.getInt("Settings.Game.Wild.delay"); }
@@ -121,14 +126,23 @@ public class SettingsConfiguration extends Configuration {
     public int wildMaxZ() { return configuration.getInt("Settings.Game.Wild.wildMaxZ"); }
     public List<String> wildDisabledWorlds() { return configuration.getStringList("Settings.Game.Wild.disabled-worlds"); }
     public List<String> wildDisabledBiomes() { return configuration.getStringList("Settings.Game.Wild.disabled-biomes"); }
+
+    // Townhall Settings
     public boolean townhallIsEnabled() { return configuration.getBoolean("Settings.Game.TownHall.enabled"); }
     public int getMoveCooldown() { return configuration.getInt("Settings.Game.TownHall.moveCooldown");}
     public double getDefaultHealth() { return configuration.getDouble("Settings.Game.TownHall.defaultHealth");}
+
+    // Claim Settings
+    public boolean connectedClaims() { return configuration.getBoolean("Settings.Game.Claims.connected"); }
     public int getEnergyTimer() { return configuration.getInt("Settings.Game.Claims.energyTimer");}
     public int getClaimDefaultPrice() { return configuration.getInt("Settings.Game.Claims.defaultPrice");}
     public int getClaimPriceStreak() { return configuration.getInt("Settings.Game.Claims.PriceStreak");}
     public double getClaimPriceMultiplier() { return configuration.getDouble("Settings.Game.Claims.PriceMultiplier");}
     public int getEnergyMultiplier() { return configuration.getInt("Settings.Game.Claims.energyMultiplier"); }
+    public boolean usePermissionInsteadOfUpgrade() {return configuration.getBoolean("Settings.Game.Claims.flyCommand.usePermissionInsteadOfUpgrade");}
+    public String flyCommandPermission() { return configuration.getString("Settings.Game.Claims.flyCommand.permission");}
+
+    // Power Settings
     public double getPowerJoinIncrease() {
         return configuration.getDouble("Settings.Game.Power.powerJoinIncrease");
     }
@@ -154,6 +168,8 @@ public class SettingsConfiguration extends Configuration {
     }
     public int getPowerRegenValue() { return configuration.getInt("Settings.Game.Power.powerRegenValue");}
     public int getPowerRegenCount() { return configuration.getInt("Settings.Game.Power.powerRegenCount");}
+
+    // Warpiece Settings
     public int getSiegePieceNeeded() { return configuration.getInt("Settings.Game.WarPieces.siegePieceNeeded");}
     public int getSiegeCount() { return configuration.getInt("Settings.Game.WarPieces.siegeCount");}
     public int getMinWarPiece() {
@@ -162,10 +178,13 @@ public class SettingsConfiguration extends Configuration {
     public int getMaxWarPiece() {
         return configuration.getInt("Settings.Game.WarPieces.maxWarPiece");
     }
+    public List<String> getWarPieceDisabledWorlds() { return configuration.getStringList("Settings.Game.WarPieces.disabledWorlds"); }
 
     public boolean canSetWarpOutSideFactionChunk() {
         return configuration.getBoolean("Settings.Warps.outsideFactionChunk");
     }
+
+    // Interact Settings
     public boolean canUseChest() {
         return configuration.getBoolean("Settings.Game.InteractAll.chest");
     }
@@ -224,7 +243,13 @@ public class SettingsConfiguration extends Configuration {
         return configuration.getBoolean("Settings.Game.InteractAll.emptyBucket");
     }
 
+    public boolean enableWarps() { return configuration.getBoolean("Settings.Game.enableWarps");}
+    public boolean enableHome() { return configuration.getBoolean("Settings.Game.enableHome");}
+
+    // Other Settings
     public boolean onlyCharacter() { return configuration.getBoolean("Settings.Other.onlyCharacter"); }
+    public int getFactionNameMaximalLength() { return configuration.getInt("Settings.Other.factionNameLenght"); }
+    public boolean enableChatSystem() { return configuration.getBoolean("Settings.Other.chat-system.enabled"); }
     public boolean useExtendedChatFormat() { return configuration.getBoolean("Settings.Other.extendedChatFormat.enabled"); }
     public boolean enableShop() {return configuration.getBoolean("Settings.Other.enableShop"); }
 
@@ -236,42 +261,87 @@ public class SettingsConfiguration extends Configuration {
     public String getExtendedFormat() { return configuration.getString("Settings.Other.extendedChatFormat.format"); }
     public String getExtendedFormat2() { return configuration.getString("Settings.Other.extendedChatFormat.format2"); }
 
+    public boolean enableCreateCost() { return configuration.getBoolean("Settings.Other.creationCost.enabled");}
+    public float getCreationCost() { return configuration.getInt("Settings.Other.creationCost.costs");}
+
+    // Hook Settings
+    public boolean dynMapHookIsEnabled() { return configuration.getBoolean("Settings.Hooks.DynMap.enabled"); }
+    public boolean createAreaOnClaim() { return configuration.getBoolean("Settings.Hooks.DynMap.createArea"); }
+
+    // Language Settings
+    public String getLanguageIdentifier() { return configuration.getString("Settings.Language.identifier");}
 
     public String tabHeader(Player player) {
         Faction faction = FactionsSystem.getFactions().getFaction(player);
-        if (faction != null) {
-            return configuration.getString("Settings.Tab.header")
-                    .replace("%faction%", faction.getName())
-                    .replace("%count%", "" + Bukkit.getOnlinePlayers().size())
-                    .replace("%power%", "" + faction.getPower())
-                    .replace("%claims%", "" + faction.getClaimed().size())
-                    .replace("\\n", "\n");
+        if(FactionsSystem.isPlaceHolderAPIFound) {
+            if (faction != null) {
+               return PlaceholderAPI.setPlaceholders(player, configuration.getString("Settings.Tab.header")
+                        .replace("%faction%", faction.getName())
+                        .replace("%count%", "" + Bukkit.getOnlinePlayers().size())
+                        .replace("%power%", "" + faction.getPower())
+                        .replace("%claims%", "" + faction.getClaimed().size())
+                        .replace("\\n", "\n"));
+            } else {
+                return PlaceholderAPI.setPlaceholders(player, configuration.getString("Settings.Tab.header")
+                        .replace("%faction%", "N/A")
+                        .replace("%count%", "" + Bukkit.getOnlinePlayers().size())
+                        .replace("%power%", "N/A")
+                        .replace("%claims%", "N/A")
+                        .replace("\\n", "\n"));
+            }
         } else {
-            return configuration.getString("Settings.Tab.header")
-                    .replace("%faction%", "N/A")
-                    .replace("%count%", "" + Bukkit.getOnlinePlayers().size())
-                    .replace("%power%", "N/A")
-                    .replace("%claims%", "N/A")
-                    .replace("\\n", "\n");
+            if (faction != null) {
+                return configuration.getString("Settings.Tab.header")
+                        .replace("%faction%", faction.getName())
+                        .replace("%count%", "" + Bukkit.getOnlinePlayers().size())
+                        .replace("%power%", "" + faction.getPower())
+                        .replace("%claims%", "" + faction.getClaimed().size())
+                        .replace("\\n", "\n");
+            } else {
+                return configuration.getString("Settings.Tab.header")
+                        .replace("%faction%", "N/A")
+                        .replace("%count%", "" + Bukkit.getOnlinePlayers().size())
+                        .replace("%power%", "N/A")
+                        .replace("%claims%", "N/A")
+                        .replace("\\n", "\n");
+            }
         }
     }
-    //
+
     public String tabFooter(Player player) {
         Faction faction = FactionsSystem.getFactions().getFaction(player);
-        if (faction != null) {
-            return configuration.getString("Settings.Tab.footer")
-                    .replace("%faction%", faction.getName())
-                    .replace("%count%", "" + Bukkit.getOnlinePlayers().size())
-                    .replace("%power%", "" + faction.getPower())
-                    .replace("%claims%", "" + faction.getClaimed().size())
-                    .replace("\\n", "\n");
+        if(FactionsSystem.isPlaceHolderAPIFound) {
+            if (faction != null) {
+                return PlaceholderAPI.setPlaceholders(player, configuration.getString("Settings.Tab.footer")
+                        .replace("%faction%", faction.getName())
+                        .replace("%count%", "" + Bukkit.getOnlinePlayers().size())
+                        .replace("%power%", "" + faction.getPower())
+                        .replace("%claims%", "" + faction.getClaimed().size())
+                        .replace("\\n", "\n"));
+            } else {
+                return PlaceholderAPI.setPlaceholders(player, configuration.getString("Settings.Tab.footer")
+                        .replace("%faction%", "N/A")
+                        .replace("%count%", "" + Bukkit.getOnlinePlayers().size())
+                        .replace("%power%", "N/A")
+                        .replace("%claims%", "N/A")
+                        .replace("\\n", "\n"));
+            }
         } else {
-            return configuration.getString("Settings.Tab.footer")
-                    .replace("%faction%", "N/A")
-                    .replace("%count%", "" + Bukkit.getOnlinePlayers().size())
-                    .replace("%power%", "N/A")
-                    .replace("%claims%", "N/A")
-                    .replace("\\n", "\n");
+            if (faction != null) {
+                return configuration.getString("Settings.Tab.footer")
+                        .replace("%faction%", faction.getName())
+                        .replace("%count%", "" + Bukkit.getOnlinePlayers().size())
+                        .replace("%power%", "" + faction.getPower())
+                        .replace("%claims%", "" + faction.getClaimed().size())
+                        .replace("\\n", "\n");
+            } else {
+                return configuration.getString("Settings.Tab.footer")
+                        .replace("%faction%", "N/A")
+                        .replace("%count%", "" + Bukkit.getOnlinePlayers().size())
+                        .replace("%power%", "N/A")
+                        .replace("%claims%", "N/A")
+                        .replace("\\n", "\n");
+            }
         }
     }
 

@@ -6,6 +6,7 @@ import de.miinoo.factions.api.command.PlayerCommand;
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
+import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.guis.FactionInfoGUI;
 import org.bukkit.entity.Player;
@@ -17,7 +18,7 @@ import org.bukkit.entity.Player;
 public class InfoCommand extends PlayerCommand {
 
     public InfoCommand() {
-        super("info", new CommandDescription("Shows you an info about a faction", "[name]"));
+        super("info", new CommandDescription(OtherMessages.Help_InfoCommand.getMessage(), OtherMessages.Help_InfoCommandSyntax.getMessage()));
     }
 
     private Factions factions = FactionsSystem.getFactions();

@@ -110,6 +110,12 @@ public class ShopAddItemGUI extends GUI {
                 .setDisplayName(GUITags.Save.getMessage())
                 .getItem(), () -> {
 
+            if(item == null) {
+                player.sendMessage(ErrorMessage.Shop_Add_Item_Item_Error.getMessage());
+                close();
+                return;
+            }
+
             category.addItem(new ShopItem(item, name, item.getAmount(), description, Double.parseDouble(price), Double.parseDouble(sellPrice), canSell));
             FactionsSystem.getShopConfiguration().saveCategory(category);
             close();

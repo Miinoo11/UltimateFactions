@@ -25,15 +25,45 @@ public class ChatListener implements Listener {
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
+
         Player sender = event.getPlayer();
         String message = event.getMessage();
         Faction senderFaction = FactionsSystem.getFactions().getFaction(sender);
         Faction receiverFaction = null;
 
-        if (FactionsSystem.getSettings().useExtendedChatFormat()) {
-            event.setCancelled(true);
-            if (ChatCommand.chatMode.containsKey(sender)) {
-                if (ChatCommand.chatMode.get(sender).equalsIgnoreCase("public")) {
+        if(FactionsSystem.getSettings().enableChatSystem()) {
+            if (FactionsSystem.getSettings().useExtendedChatFormat()) {
+                event.setCancelled(true);
+                if (ChatCommand.chatMode.containsKey(sender)) {
+                    if (ChatCommand.chatMode.get(sender).equalsIgnoreCase("public")) {
+                        for (Player all : Bukkit.getOnlinePlayers()) {
+                            receiverFaction = FactionsSystem.getFactions().getFaction(all);
+                            if (senderFaction != null) {
+                                if (receiverFaction != null) {
+                                    if (senderFaction.equals(receiverFaction)) {
+                                        all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getFactionColor(), message));
+                                    } else if (senderFaction.getTrucesRelation().contains(receiverFaction.getId())) {
+                                        all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getTruceColor(), message));
+                                    } else if (senderFaction.getAlliesRelation().contains(receiverFaction.getId())) {
+                                        all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getAllyColor(), message));
+                                    } else if (senderFaction.getEnemyRelation().contains(receiverFaction.getId())) {
+                                        all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getEnemyColor(), message));
+                                    } else {
+                                        all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getDefaultColor(), message));
+                                    }
+                                } else {
+                                    all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getDefaultColor(), message));
+                                }
+                            } else {
+                                all.sendMessage(settings.getExtendedFormat2()
+                                        .replace("&", "§")
+                                        .replace("%color%", settings.getEnemyColor().replace("&", "§"))
+                                        .replace("%player%", sender.getDisplayName())
+                                        .replace("%message%", message.replace("%", "%%")));
+                            }
+                        }
+                    }
+                } else {
                     for (Player all : Bukkit.getOnlinePlayers()) {
                         receiverFaction = FactionsSystem.getFactions().getFaction(all);
                         if (senderFaction != null) {
@@ -55,99 +85,72 @@ public class ChatListener implements Listener {
                         } else {
                             all.sendMessage(settings.getExtendedFormat2()
                                     .replace("&", "§")
-                                    .replace("%color%", settings.getEnemyColor().replace("&", "§"))
+                                    .replace("%color%", settings.getDefaultColor().replace("&", "§"))
                                     .replace("%player%", sender.getDisplayName())
                                     .replace("%message%", message.replace("%", "%%")));
                         }
                     }
                 }
             } else {
-                for (Player all : Bukkit.getOnlinePlayers()) {
-                    receiverFaction = FactionsSystem.getFactions().getFaction(all);
-                    if (senderFaction != null) {
-                        if (receiverFaction != null) {
-                            if (senderFaction.equals(receiverFaction)) {
-                                all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getFactionColor(), message));
-                            } else if (senderFaction.getTrucesRelation().contains(receiverFaction.getId())) {
-                                all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getTruceColor(), message));
-                            } else if (senderFaction.getAlliesRelation().contains(receiverFaction.getId())) {
-                                all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getAllyColor(), message));
-                            } else if (senderFaction.getEnemyRelation().contains(receiverFaction.getId())) {
-                                all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getEnemyColor(), message));
-                            } else {
-                                all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getDefaultColor(), message));
+                if (ChatCommand.chatMode.containsKey(sender)) {
+                    if (ChatCommand.chatMode.get(sender).equalsIgnoreCase("faction")) {
+                        event.setCancelled(true);
+                        for (UUID uuid : senderFaction.getPlayers()) {
+                            Player all = Bukkit.getPlayer(uuid);
+                            if (all != null && all.isOnline()) {
+                                all.sendMessage(factionChat(senderFaction, sender, message));
                             }
+                        }
+                    } else if (ChatCommand.chatMode.get(sender).equalsIgnoreCase("ally")) {
+                        event.setCancelled(true);
+                        for (UUID uuid : senderFaction.getAlliesRelation()) {
+                            Faction ally = FactionsSystem.getFactions().getFactionByUUID(uuid);
+                            if (ally != null) {
+                                for (UUID pUUID : ally.getPlayers()) {
+                                    Player player1 = Bukkit.getPlayer(pUUID);
+                                    if (player1 != null && player1.isOnline()) {
+                                        player1.sendMessage(allyChat(senderFaction, sender, message));
+                                    }
+                                }
+                            }
+                        }
+                        for (UUID uuid : senderFaction.getPlayers()) {
+                            Player all = Bukkit.getPlayer(uuid);
+                            if (all != null && all.isOnline())
+                                all.sendMessage(allyChat(senderFaction, sender, message));
+                        }
+                    } else if (ChatCommand.chatMode.get(sender).equalsIgnoreCase("truce")) {
+                        event.setCancelled(true);
+                        for (UUID uuid : senderFaction.getTrucesRelation()) {
+                            Faction truce = FactionsSystem.getFactions().getFactionByUUID(uuid);
+                            if (truce != null) {
+                                for (UUID pUUID : truce.getPlayers()) {
+                                    Player player1 = Bukkit.getPlayer(pUUID);
+                                    if (player1 != null && player1.isOnline()) {
+                                        player1.sendMessage(truceChat(senderFaction, sender, message));
+                                    }
+                                }
+                            }
+                        }
+                        for (UUID uuid : senderFaction.getPlayers()) {
+                            Player all = Bukkit.getPlayer(uuid);
+                            if (all != null && all.isOnline()) {
+                                all.sendMessage(truceChat(senderFaction, sender, message));
+                            }
+                        }
+                    } else if (ChatCommand.chatMode.get(sender).equalsIgnoreCase("public")) {
+                        if (senderFaction != null) {
+                            event.setFormat(publicChat(senderFaction, sender, message));
                         } else {
-                            all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getDefaultColor(), message));
-                        }
-                    } else {
-                        all.sendMessage(settings.getExtendedFormat2()
-                                .replace("&", "§")
-                                .replace("%color%", settings.getDefaultColor().replace("&", "§"))
-                                .replace("%player%", sender.getDisplayName())
-                                .replace("%message%", message.replace("%", "%%")));
-                    }
-                }
-            }
-        } else {
-            if (ChatCommand.chatMode.containsKey(sender)) {
-                if (ChatCommand.chatMode.get(sender).equalsIgnoreCase("faction")) {
-                    event.setCancelled(true);
-                    for (UUID uuid : senderFaction.getPlayers()) {
-                        Player all = Bukkit.getPlayer(uuid);
-                        if (all != null && all.isOnline()) {
-                            all.sendMessage(factionChat(senderFaction, sender, message));
+                            event.setFormat(publicChatNoFaction(sender, message));
                         }
                     }
-                } else if (ChatCommand.chatMode.get(sender).equalsIgnoreCase("ally")) {
-                    event.setCancelled(true);
-                    for (UUID uuid : senderFaction.getAlliesRelation()) {
-                        Faction ally = FactionsSystem.getFactions().getFactionByUUID(uuid);
-                        if (ally != null) {
-                            for (UUID pUUID : ally.getPlayers()) {
-                                Player player1 = Bukkit.getPlayer(pUUID);
-                                if (player1 != null && player1.isOnline()) {
-                                    player1.sendMessage(allyChat(senderFaction, sender, message));
-                                }
-                            }
-                        }
-                    }
-                    for (UUID uuid : senderFaction.getPlayers()) {
-                        Player all = Bukkit.getPlayer(uuid);
-                        if (all != null && all.isOnline())
-                            all.sendMessage(allyChat(senderFaction, sender, message));
-                    }
-                } else if (ChatCommand.chatMode.get(sender).equalsIgnoreCase("truce")) {
-                    event.setCancelled(true);
-                    for (UUID uuid : senderFaction.getTrucesRelation()) {
-                        Faction truce = FactionsSystem.getFactions().getFactionByUUID(uuid);
-                        if (truce != null) {
-                            for (UUID pUUID : truce.getPlayers()) {
-                                Player player1 = Bukkit.getPlayer(pUUID);
-                                if (player1 != null && player1.isOnline()) {
-                                    player1.sendMessage(truceChat(senderFaction, sender, message));
-                                }
-                            }
-                        }
-                    }
-                    for (UUID uuid : senderFaction.getPlayers()) {
-                        Player all = Bukkit.getPlayer(uuid);
-                        if (all != null && all.isOnline()) {
-                            all.sendMessage(truceChat(senderFaction, sender, message));
-                        }
-                    }
-                } else if (ChatCommand.chatMode.get(sender).equalsIgnoreCase("public")) {
+                } else {
                     if (senderFaction != null) {
                         event.setFormat(publicChat(senderFaction, sender, message));
                     } else {
                         event.setFormat(publicChatNoFaction(sender, message));
                     }
-                }
-            } else {
-                if (senderFaction != null) {
-                    event.setFormat(publicChat(senderFaction, sender, message));
-                } else {
-                    event.setFormat(publicChatNoFaction(sender, message));
                 }
             }
         }

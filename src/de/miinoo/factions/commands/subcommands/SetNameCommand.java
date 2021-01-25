@@ -23,7 +23,7 @@ import org.bukkit.entity.Player;
 public class SetNameCommand extends PlayerCommand {
 
     public SetNameCommand() {
-        super("setname", new CommandDescription("Changes the name of your faction", "<name>"), RankPermission.CHANGE_INFO);
+        super("setname", new CommandDescription(OtherMessages.Help_SetNameCommand.getMessage(), OtherMessages.Help_SetNameCommandSyntax.getMessage()), RankPermission.CHANGE_INFO);
     }
 
     private Factions factions = FactionsSystem.getFactions();

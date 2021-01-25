@@ -19,5 +19,7 @@ public abstract class FactionsAdapter {
 
     public abstract void sendScoreboard(Player player);
 
+    public abstract void sendActionBarTitle(Player player, String msg);
+
     public abstract void shootParticle(final String particle, final Location loc, final float xOffset, final float yOffset, final float zOffset, final float speed, final int count);
 }

@@ -1,6 +1,8 @@
 package de.miinoo.factions;
 
+import de.miinoo.factions.configuration.configurations.FactionChestsConfiguration;
 import de.miinoo.factions.configuration.configurations.FactionConfiguration;
+import de.miinoo.factions.factionchest.FactionChest;
 import de.miinoo.factions.model.*;
 import org.bukkit.*;
 

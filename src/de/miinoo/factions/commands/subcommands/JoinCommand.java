@@ -7,6 +7,7 @@ import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
+import de.miinoo.factions.events.FactionPlayerJoinEvent;
 import de.miinoo.factions.model.ColorHelper;
 import de.miinoo.factions.model.Faction;
 import org.bukkit.Bukkit;
@@ -22,7 +23,7 @@ import java.util.UUID;
 public class JoinCommand extends PlayerCommand {
 
     public JoinCommand() {
-        super("join", new CommandDescription("Joins a faction", "<name>"));
+        super("join", new CommandDescription(OtherMessages.Help_JoinCommand.getMessage(), OtherMessages.Help_JoinCommandSyntax.getMessage()));
     }
 
     @Override
@@ -49,6 +50,8 @@ public class JoinCommand extends PlayerCommand {
             player.sendMessage(ErrorMessage.Join_Error.getMessage());
             return true;
         }
+
+        Bukkit.getPluginManager().callEvent(new FactionPlayerJoinEvent(player, faction));
 
         for (UUID uuid : faction.getPlayers()) {
             OfflinePlayer all = Bukkit.getOfflinePlayer(uuid);

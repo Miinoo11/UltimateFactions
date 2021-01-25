@@ -24,7 +24,7 @@ import java.util.UUID;
 public class SiegeCMD extends PlayerCommand {
 
     public SiegeCMD() {
-        super("siege", new CommandDescription("Siege a faction", "<faction>"), RankPermission.SIEGE);
+        super("siege", new CommandDescription(OtherMessages.Help_SiegeCommand.getMessage(), OtherMessages.Help_SiegeCommandSyntax.getMessage()), RankPermission.SIEGE);
     }
 
     private Factions factions = FactionsSystem.getFactions();

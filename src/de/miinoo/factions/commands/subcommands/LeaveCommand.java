@@ -10,6 +10,7 @@ import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.GUITags;
 import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
+import de.miinoo.factions.events.FactionPlayerLeaveEvent;
 import de.miinoo.factions.model.ColorHelper;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.guis.ConfirmationGUI;
@@ -25,7 +26,7 @@ import java.util.UUID;
 public class LeaveCommand extends PlayerCommand {
 
     public LeaveCommand() {
-        super("leave", new CommandDescription("Leaves a faction"));
+        super("leave", new CommandDescription(OtherMessages.Help_LeaveCommand.getMessage()));
     }
     private static double minPower = FactionsSystem.getSettings().getMinPower();
     @Override
@@ -43,6 +44,8 @@ public class LeaveCommand extends PlayerCommand {
 
         new ConfirmationGUI(player, Items.createItem(XMaterial.PAPER.parseMaterial())
                 .setDisplayName(GUITags.Confirm_Description.getMessage()).setLore(GUITags.Leave_Confirm_Lore.getMessage()).getItem(), () -> {
+
+            Bukkit.getPluginManager().callEvent(new FactionPlayerLeaveEvent(player, faction));
 
             if (faction.getPlayers().size() == 3) {
                 if ((faction.getPowerCap() - FactionsSystem.getSettings().getPlayer3Power()) >= FactionsSystem.getSettings().getMinPower()) {

@@ -11,6 +11,8 @@ import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.GUITags;
 import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
+import de.miinoo.factions.events.FactionCreateEvent;
+import de.miinoo.factions.events.FactionDisbandEvent;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.FactionChunk;
 import de.miinoo.factions.model.RankPermission;
@@ -29,7 +31,7 @@ import java.util.UUID;
 public class DisbandCommand extends PlayerCommand {
 
     public DisbandCommand() {
-        super("disband", new CommandDescription("Disbands your faction"), RankPermission.DISBAND);
+        super("disband", new CommandDescription(OtherMessages.Help_DisbandCommand.getMessage()), RankPermission.DISBAND);
     }
 
     private Factions factions = FactionsSystem.getFactions();
@@ -45,6 +47,8 @@ public class DisbandCommand extends PlayerCommand {
         factions.removeAllChunks(faction);
         new ConfirmationGUI(player, Items.createItem(XMaterial.PAPER.parseMaterial())
                 .setDisplayName(GUITags.Confirm_Description.getMessage()).setLore(GUITags.Disband_Confirm_Lore.getMessage()).getItem(), () -> {
+
+            Bukkit.getPluginManager().callEvent(new FactionDisbandEvent(player, faction));
             player.sendMessage(SuccessMessage.Successfully_Disbanded.getMessage().replace("%faction%", faction.getName()));
             for (UUID uuid : faction.getPlayers()) {
                 Player player1 = Bukkit.getPlayer(uuid);
@@ -63,6 +67,7 @@ public class DisbandCommand extends PlayerCommand {
                     }
                 }
             }
+
             if (faction.townHallExists() && townhall != null) {
                 townhall.remove();
             }

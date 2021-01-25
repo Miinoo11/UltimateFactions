@@ -26,7 +26,7 @@ public class FillCommand extends PlayerCommand {
     private Factions factions = FactionsSystem.getFactions();
 
     public FillCommand() {
-        super("fill", new CommandDescription("Fills storage container with tnt"), RankPermission.FILL);
+        super("fill", new CommandDescription(OtherMessages.Help_FillCommand.getMessage()), RankPermission.FILL);
     }
 
     @Override

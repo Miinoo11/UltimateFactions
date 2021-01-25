@@ -6,8 +6,11 @@ import de.miinoo.factions.commands.subcommands.*;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
+import de.miinoo.factions.events.FactionTerritoryEnterEvent;
+import de.miinoo.factions.events.FactionTerritoryLeaveEvent;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.FactionChunk;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,7 +29,6 @@ import java.util.UUID;
  */
 public class MoveListener implements Listener {
 
-    private HashMap<Player, String> move = new HashMap<>();
     private HashMap<Player, Boolean> autoclaim = AutoClaimCommand.autoClaimEnabled;
     private HashMap<Player, Chunk> autoclaimStorage = new HashMap<>();
     private Factions factions = FactionsSystem.getFactions();
@@ -36,24 +38,27 @@ public class MoveListener implements Listener {
 
     private List<UUID> flyMessageStorage = new ArrayList<>();
 
+    private HashMap<Player, String> move = new HashMap<>();
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         Chunk chunk = player.getLocation().getChunk();
+        Faction faction = FactionsSystem.getFactions().getFaction(chunk);
 
         // Territory Messages
         if (factions.isClaimedChunk(chunk)) {
-            Faction faction = factions.getFaction(chunk);
             if (move.containsKey(player)) {
                 String string = move.get(player);
                 if (!string.equals(faction.getName())) {
                     move.remove(player);
                     move.put(player, faction.getName());
                     player.sendMessage(OtherMessages.Entering_Territory.getMessage().replace("%faction%", faction.getName()));
+                    Bukkit.getPluginManager().callEvent(new FactionTerritoryEnterEvent(player, chunk));
                 }
             } else {
                 move.put(player, faction.getName());
                 player.sendMessage(OtherMessages.Entering_Territory.getMessage().replace("%faction%", faction.getName()));
+                Bukkit.getPluginManager().callEvent(new FactionTerritoryEnterEvent(player, chunk));
             }
         } else {
             if (move.containsKey(player)) {
@@ -62,11 +67,14 @@ public class MoveListener implements Listener {
                     move.remove(player);
                     move.put(player, "wilderness");
                     player.sendMessage(OtherMessages.Entering_Wilderness.getMessage());
+                    Bukkit.getPluginManager().callEvent(new FactionTerritoryLeaveEvent(player, chunk));
                 }
             } else {
                 move.put(player, "wilderness");
                 player.sendMessage(OtherMessages.Entering_Wilderness.getMessage());
+                Bukkit.getPluginManager().callEvent(new FactionTerritoryLeaveEvent(player, chunk));
             }
+
             if(FlyCommand.flyList.contains(player.getUniqueId())) {
                 if(!flyMessageStorage.contains(player.getUniqueId())) {
                     flyMessageStorage.add(player.getUniqueId());
@@ -83,8 +91,9 @@ public class MoveListener implements Listener {
                 }
             }
         }
+
+        // Teleport delays
         runAsync(() -> {
-            // Teleport delays
             if (WarpCommand.teleportDelay.contains(player.getUniqueId())) {
                 if (event.getFrom().getBlockX() == event.getTo().getBlockX() && event.getFrom().getBlockZ() == event.getTo().getBlockZ()) {
                     return;
@@ -115,7 +124,6 @@ public class MoveListener implements Listener {
                     autoclaimStorage.put(player, chunk);
                     Faction chunkFaction = factions.getFaction(chunk);
                     if (chunkFaction == null) {
-                        Faction faction = factions.getFaction(player);
                         if (faction != null) {
                             if (!((FactionsSystem.getEconomy().getBalance(player) - price) >= 0)) {
                                 player.sendMessage(ErrorMessage.Not_Enough_Money.getMessage());

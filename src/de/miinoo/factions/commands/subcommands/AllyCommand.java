@@ -28,7 +28,7 @@ import java.util.*;
 public class AllyCommand extends PlayerCommand {
 
     public AllyCommand() {
-        super("ally", new CommandDescription("Adds a faction to your allies", "<faction>"), RankPermission.ALLY);
+        super("ally", new CommandDescription(OtherMessages.Help_AllyCommand.getMessage(), OtherMessages.Help_AllyCommandSyntax.getMessage()), RankPermission.ALLY);
     }
 
     public static HashMap<Faction, Faction> allyRequest = new HashMap<>();

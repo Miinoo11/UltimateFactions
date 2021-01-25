@@ -5,6 +5,7 @@ import de.miinoo.factions.api.command.CommandDescription;
 import de.miinoo.factions.api.command.PlayerCommand;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
+import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
 import de.miinoo.factions.model.Faction;
 import org.bukkit.Bukkit;
@@ -17,7 +18,7 @@ import org.bukkit.entity.Player;
 public class ReloadCommand extends PlayerCommand {
 
     public ReloadCommand() {
-        super("reload", new CommandDescription("Reloads the plugin"));
+        super("reload", new CommandDescription(OtherMessages.Help_ReloadCommand.getMessage()));
     }
 
     @Override

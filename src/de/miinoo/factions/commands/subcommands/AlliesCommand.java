@@ -6,6 +6,7 @@ import de.miinoo.factions.api.command.PlayerCommand;
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
+import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.RankPermission;
 import de.miinoo.factions.model.guis.AlliesGUI;
@@ -18,7 +19,7 @@ import org.bukkit.entity.Player;
 public class AlliesCommand extends PlayerCommand {
 
     public AlliesCommand() {
-        super("allies", new CommandDescription("Opens a GUI"), RankPermission.ALLY);
+        super("allies", new CommandDescription(OtherMessages.Help_AlliesCommand.getMessage()), RankPermission.ALLY);
     }
 
     private Factions factions = FactionsSystem.getFactions();

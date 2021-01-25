@@ -6,6 +6,7 @@ import de.miinoo.factions.api.command.PlayerCommand;
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
+import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.RankPermission;
@@ -21,7 +22,7 @@ import java.util.List;
 public class EnemyCommand extends PlayerCommand {
 
     public EnemyCommand() {
-        super("enemy", new CommandDescription("Adds an Faction to your enemy list", "<name>"), RankPermission.ENEMY);
+        super("enemy", new CommandDescription(OtherMessages.Help_EnemyCommand.getMessage(), OtherMessages.Help_EnemyCommandSyntax.getMessage()), RankPermission.ENEMY);
     }
 
     private Factions factions = FactionsSystem.getFactions();

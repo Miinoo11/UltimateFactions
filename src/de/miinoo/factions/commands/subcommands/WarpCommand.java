@@ -27,7 +27,7 @@ public class WarpCommand extends PlayerCommand {
     public static Set<UUID> teleportDelay = new HashSet<>();
 
     public WarpCommand() {
-        super("warp", new CommandDescription("Teleports you to a warp", "<name> [password] | list"), RankPermission.WARP);
+        super("warp", new CommandDescription(OtherMessages.Help_WarpCommand.getMessage(), OtherMessages.Help_WarpCommandSyntax.getMessage()), RankPermission.WARP);
     }
 
     private Factions factions = FactionsSystem.getFactions();

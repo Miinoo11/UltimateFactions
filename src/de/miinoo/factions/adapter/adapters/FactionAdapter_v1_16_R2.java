@@ -4,6 +4,8 @@ import de.miinoo.factions.adapter.FactionsAdapter;
 import de.miinoo.factions.api.ui.gui.anvil.AnvilGUI_v1_16_R2;
 import de.miinoo.factions.api.ui.ui.AnvilUI;
 import de.miinoo.factions.util.ScoreboardUtil;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -23,6 +25,11 @@ public class FactionAdapter_v1_16_R2 extends FactionsAdapter {
     @java.lang.Override
     public void sendScoreboard(Player player) {
         ScoreboardUtil.sendScoreboard(player);
+    }
+
+    @Override
+    public void sendActionBarTitle(Player player, String msg) {
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(msg).create());
     }
 
     @java.lang.Override

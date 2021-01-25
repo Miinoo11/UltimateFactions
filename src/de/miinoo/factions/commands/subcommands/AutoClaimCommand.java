@@ -21,7 +21,7 @@ public class AutoClaimCommand extends PlayerCommand {
 
 
     public AutoClaimCommand() {
-        super("autoclaim", new CommandDescription("Walk across a chunk and claim it"), RankPermission.CLAIM);
+        super("autoclaim", new CommandDescription(OtherMessages.Help_AutoClaimCommand.getMessage()), RankPermission.CLAIM);
     }
 
     public static HashMap<Player, Boolean> autoClaimEnabled  = new HashMap<>();

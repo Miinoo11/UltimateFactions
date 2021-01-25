@@ -5,7 +5,9 @@ import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.api.xutils.XMaterial;
 import de.miinoo.factions.configuration.messages.GUITags;
 import de.miinoo.factions.model.Region;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -24,6 +26,16 @@ public class RegionUtil {
     public boolean isInRegion(Player player) {
         for(Region region : FactionsSystem.getRegions().getRegions()) {
             return region.getCuboid().contains(player.getLocation());
+        }
+        return false;
+    }
+
+    public boolean isInDisabledWorld(Player player) {
+        for(String s : FactionsSystem.getSettings().getWarPieceDisabledWorlds()) {
+            World world = Bukkit.getWorld(s);
+            if(s != null) {
+                return player.getWorld().equals(world);
+            }
         }
         return false;
     }

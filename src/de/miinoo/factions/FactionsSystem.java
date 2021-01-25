@@ -1,7 +1,11 @@
 package de.miinoo.factions;
 
+import de.miinoo.factions.adapter.AdapterDependencyMissingException;
 import de.miinoo.factions.adapter.FactionsAdapter;
 import de.miinoo.factions.adapter.ServerVersion;
+import de.miinoo.factions.addon.AddonLoader;
+import de.miinoo.factions.addon.AddonRegistry;
+import de.miinoo.factions.addon.FactionsAddon;
 import de.miinoo.factions.api.command.Command;
 import de.miinoo.factions.api.command.CommandRegistry;
 import de.miinoo.factions.api.ui.UIs;
@@ -10,6 +14,8 @@ import de.miinoo.factions.api.ui.manager.GUIManager;
 import de.miinoo.factions.commands.FactionCommand;
 import de.miinoo.factions.configuration.Messages;
 import de.miinoo.factions.configuration.configurations.*;
+import de.miinoo.factions.factionchest.FactionChest;
+import de.miinoo.factions.hooks.bstats.Metrics;
 import de.miinoo.factions.hooks.placeholderapi.FactionPlaceholders;
 import de.miinoo.factions.listener.*;
 import de.miinoo.factions.model.*;
@@ -20,27 +26,26 @@ import de.miinoo.factions.util.RegionUtil;
 import de.miinoo.factions.util.ResourceUtil;
 import de.miinoo.factions.util.TopUtil;
 import net.milkbowl.vault.economy.Economy;
+import org.apache.logging.log4j.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author Mino
  * 09.04.2020
  */
-public class FactionsSystem extends JavaPlugin implements CommandRegistry {
+public class FactionsSystem extends JavaPlugin implements AddonRegistry, CommandRegistry {
 
     private static FactionsSystem plugin;
     private static Factions factions;
@@ -53,53 +58,54 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
     private static Economy economy;
     private static Random random;
     private static RegionUtil regionUtil;
-
     private static ServerVersion version;
-    public static FactionsAdapter adapter;
+    private static FactionChestsConfiguration chestsConfiguration;
 
+    private final Map<String, Command> commands = new HashMap<>();
+
+    public static FactionsAdapter adapter;
     public static boolean isPlaceHolderAPIFound = false;
+    public static boolean isDynMapFound = false;
 
     public static FactionsSystem getPlugin() {
         return plugin;
     }
-
     public static Factions getFactions() {
         return factions;
     }
-
     public static Regions getRegions() {
         return regions;
     }
-
     public static Messages getMessages() {
         return messages;
     }
-
     public static SettingsConfiguration getSettings() {
         return settings;
     }
-
     public static BankConfiguration getBank() {
         return bank;
     }
-
     public static ShopConfiguration getShopConfiguration() {
         return shop;
     }
-
     public static Economy getEconomy() {
         return economy;
     }
-
     public static RegionUtil getRegionUtil() {
         return regionUtil;
     }
-
     public static FactionsAdapter getAdapter() {
         return adapter;
     }
+    public static Random getRandom() {
+        return random;
+    }
+    public static FactionLevelConfiguration getFactionLevels() {
+        return factionLevels;
+    }
+    public static FactionChestsConfiguration getChestsConfiguration() { return chestsConfiguration; }
 
-    private final Map<String, Command> commands = new HashMap<>();
+    private Command command;
 
     @Override
     public void onEnable() {
@@ -116,6 +122,7 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
         ConfigurationSerialization.registerClass(FactionLevel.class);
         ConfigurationSerialization.registerClass(ShopItem.class);
         ConfigurationSerialization.registerClass(ShopCategory.class);
+        ConfigurationSerialization.registerClass(FactionChest.class);
         plugin = this;
 
         version = ServerVersion.getServerVersion();
@@ -133,16 +140,9 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
                 "                         &athank you for using ultimatefactions!                  \n" +
                 "             &cif you find any bug please report them on my discord! discord.gg/4dgT7Pz      "));
 
-        new UpdateChecker(this, 81103).getVersion(version -> {
-            if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
-                Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        "&a[UltimateFactions] You are running the newest version!"));
-            } else {
-                Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        "&4[UltimateFactions] There is a new update available! Please download the newer version!"));
-            }
-        });
+        checkUpdate();
 
+        // Load Vault economy System
         try {
             setupEconomy();
         } catch (NoClassDefFoundError e) {
@@ -150,8 +150,11 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
                     "&4[UltimateFactions] Vault not found! Please install Vault to use this plugin!"));
             Bukkit.getPluginManager().disablePlugin(this);
         }
+
+        // Load GUI System
         UIs.load(this, new GUIManager(), new EmptyLockManager());
 
+        // Config creation
         messages = new Messages(this, "messages.yml", "/language");
 
         File file = new File(getDataFolder(), "settings.yml");
@@ -170,8 +173,14 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
         factions = new Factions(this);
         regions = new Regions(this);
 
+        regionUtil = new RegionUtil();
+
+        chestsConfiguration = new FactionChestsConfiguration();
+
+        // PlaceHolderAPI register method
         registerPlaceholders();
 
+        // register listener and commands
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
         Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
         Bukkit.getPluginManager().registerEvents(new BuildListener(), this);
@@ -186,8 +195,9 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
         Bukkit.getPluginManager().registerEvents(new FillListener(), this);
         Bukkit.getPluginManager().registerEvents(new FactionUpgradeListener(), this);
 
-        registerCommand(new FactionCommand());
+        registerCommand(command = new FactionCommand());
 
+        // Faction stuff
         startRegenCount();
         updateFactionTop();
 
@@ -199,9 +209,39 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
             faction.getTownHall().startMoveTask();
         }
 
+        // Random for randomteleport
         random = new Random();
-        regionUtil = new RegionUtil();
 
+        // Other Hooks
+        loadBStats();
+        checkDynMap();
+
+        // Loading Addons
+
+        Collection<FactionsAddon> addons = AddonLoader.loadAddons(new File(getDataFolder(), "/addons"));
+
+        addons.forEach(addon -> {
+            addon.onEnable(FactionsSystem.this);
+            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a[FactionsAddon] loaded " + addon.getName()));
+        });
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                try {
+                    addons.forEach(addon -> {
+                        addon.onPostEnable(FactionsSystem.this);
+                    });
+                } catch (NoClassDefFoundError ex) {
+                    try {
+                        throw new AdapterDependencyMissingException();
+                    } catch (AdapterDependencyMissingException e) {
+                        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&4Error loading an addon"));
+                        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&4You are missing a plugin that the addon needs to work!"));
+                    }
+                }
+            }
+        }.runTask(this);
     }
 
     @Override
@@ -252,15 +292,26 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
     }
 
     private void registerPlaceholders() {
-        Plugin placeholdersapi = Bukkit.getPluginManager().getPlugin("PlaceholderAPI");
-        if (placeholdersapi == null) {
+        Plugin placeholderapi = Bukkit.getPluginManager().getPlugin("PlaceholderAPI");
+        if (placeholderapi == null) {
             Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',
                     "&4[UltimateFactions] PlaceHolderAPI not found! Please install the plugin"));
             return;
-            //Bukkit.getPluginManager().disablePlugin(this);
         }
         new FactionPlaceholders().register();
         isPlaceHolderAPIFound = true;
+    }
+
+    private void checkUpdate() {
+        new UpdateChecker(getPlugin(), 81103).getVersion(version -> {
+            if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
+                Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',
+                        "&a[UltimateFactions] You are running the newest version!"));
+            } else {
+                Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',
+                        "&4[UltimateFactions] There is a new update available! Please download the newer version!"));
+            }
+        });
     }
 
     private void updateFactionTop() {
@@ -268,12 +319,19 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
         TopUtil.startUpdateTask();
     }
 
-    public static Random getRandom() {
-        return random;
+    private void loadBStats() {
+        Metrics metrics = new Metrics(getPlugin(), 9794);
     }
 
-    public static FactionLevelConfiguration getFactionLevels() {
-        return factionLevels;
+    private void checkDynMap() {
+        if (Bukkit.getPluginManager().getPlugin("dynmap") != null) {
+            isDynMapFound = true;
+        }
+    }
+
+    @Override
+    public void registerFactionsCommand(Command command) {
+        this.command.addCommand(command);
     }
 
     @Override
@@ -281,6 +339,10 @@ public class FactionsSystem extends JavaPlugin implements CommandRegistry {
         if (command != null) {
             commands.put(command.getName().toLowerCase(), command);
         }
+    }
+
+    public void registerEvents(Listener listener) {
+        getServer().getPluginManager().registerEvents(listener, this);
     }
 
     @Override

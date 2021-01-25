@@ -26,7 +26,7 @@ public class InviteCommand extends PlayerCommand {
     public static HashMap<OfflinePlayer, Faction> invited = new HashMap<>();
 
     public InviteCommand() {
-        super("invite", new CommandDescription("Invites a player to the faction", "<player>"), RankPermission.INVITE);
+        super("invite", new CommandDescription(OtherMessages.Help_InviteCommand.getMessage(), OtherMessages.Help_InviteCommandSyntax.getMessage()), RankPermission.INVITE);
     }
 
     @Override

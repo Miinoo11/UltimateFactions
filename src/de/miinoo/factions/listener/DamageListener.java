@@ -111,9 +111,11 @@ public class DamageListener implements Listener {
             return;
         }
 
-
-
         if(FactionsSystem.getRegionUtil().isInRegion(player)) {
+            return;
+        }
+
+        if(FactionsSystem.getRegionUtil().isInDisabledWorld(player)) {
             return;
         }
 

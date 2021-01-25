@@ -4,6 +4,8 @@ import de.miinoo.factions.adapter.FactionsAdapter;
 import de.miinoo.factions.api.ui.gui.anvil.AnvilGUI_v1_12_R1;
 import de.miinoo.factions.api.ui.ui.AnvilUI;
 import de.miinoo.factions.util.ScoreboardUtil;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.minecraft.server.v1_12_R1.EnumParticle;
 import net.minecraft.server.v1_12_R1.IChatBaseComponent;
 import net.minecraft.server.v1_12_R1.PacketPlayOutPlayerListHeaderFooter;
@@ -53,6 +55,11 @@ public class FactionAdapter_v1_12_R1 extends FactionsAdapter {
     @Override
     public void sendScoreboard(Player player) {
         ScoreboardUtil.sendLegacyScoreboard(player);
+    }
+
+    @Override
+    public void sendActionBarTitle(Player player, String msg) {
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(msg).create());
     }
 
     @Override

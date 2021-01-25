@@ -2,14 +2,21 @@
 # https://www.spigotmc.org/members/kayloot.188238/
 # Do not sell, decompile or leak this plugin
 Settings:
+  Language:
+    identifier: "ENG"
   Other:
     # Maximal length of faction name
     factionNameLenght: 16
     # Only use Numbers and Letters in faction name
     onlyCharacter: true
+    # enable the chat-system
+    # the default format can be changed in messages.yml
+    chat-system:
+      enabled: true
     # You can see in chat if a faction is a enemy, ally or truce
     # You can use the following variables in the extended Format:
     extendedChatFormat:
+      # make sure chat-system is enabled
       enabled: false
       defaultColor: "&9"
       allyColor: "&a"
@@ -21,6 +28,10 @@ Settings:
       format2: "&7[] &e%player%&8: &f%message%"
     # Set to false if you want to disable the /f shop function
     enableShop: true
+    creationCost:
+    # Set to true if you want people to pay ingame money to create a faction
+      enabled: true
+      costs: 100.0
   # Set boolean to true if you want to enable faction warps outside a claimed chunk
   Warps:
     outsideFactionChunk: false
@@ -42,6 +53,10 @@ Settings:
       hostile: RED
   # Game Settings
   Game:
+    # this boolean enable or disables the warp commands (/f warp, /f setwarp, /f delwarp)
+    enableWarps: true
+    # this boolean enable or disables the home commands (/f home, /f sethome)
+    enableHome: true
     # enable info scoreboard (right display site)
     enableScoreboard: true
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -96,6 +111,9 @@ Settings:
     #                                    Claim Settings                               #
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     Claims:
+      # set to false if players can choose random chunks over the world to claim
+      # set to true if you want players only to claim connected chunks
+      connected: true
       # default price of the first # chunks
       defaultPrice: 100
       # every # claims the price gets multiplied with the price multiplier
@@ -106,6 +124,9 @@ Settings:
       energyTimer: 15
       # energy upgrade multiplier = # * amount of claims
       energyMultiplier: 50
+      flyCommand:
+        usePermissionInsteadOfUpgrade: false
+        permission: ultimatefactions.claims.fly
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     #                                    Power Settings                               #
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -145,6 +166,9 @@ Settings:
       siegeCount: 30
       # warpieces you need to siege a faction
       siegePieceNeeded: 25
+      # disabled worlds
+      disabledWorlds:
+        - exampleWorld
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     #                                   Interact Settings                               #
     #        configure which blocks can be used by other players in a claimed chunk     #
@@ -169,6 +193,15 @@ Settings:
       barrel: false
       fillBucket: false
       emptyBucket: false
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    #                                  Hook Settings                                    #
+    #        here you can enable or disable specific features from hooked plugins       #
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  Hooks:
+    DynMap:
+      enabled: true
+      # set to disabled if you don#t want to automatically create an area when a faction chunk is claimed
+      createArea: true
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
   #                                   Tablist Settings                                #
   #                        you can use same variables in scoreboard                   #

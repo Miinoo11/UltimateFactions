@@ -27,7 +27,7 @@ import java.util.UUID;
 public class NeutralCommand extends PlayerCommand {
 
     public NeutralCommand() {
-        super("neutral", new CommandDescription("Removes a faction from you relations", "<faction>"), RankPermission.NEUTRAL);
+        super("neutral", new CommandDescription(OtherMessages.Help_NeutralCommand.getMessage(), OtherMessages.Help_NeutralCommandSyntax.getMessage()), RankPermission.NEUTRAL);
     }
 
     private Factions factions = FactionsSystem.getFactions();

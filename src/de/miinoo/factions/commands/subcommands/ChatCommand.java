@@ -22,7 +22,7 @@ import java.util.List;
 public class ChatCommand extends PlayerCommand {
 
     public ChatCommand() {
-        super("chat", new CommandDescription("Switch chat mode", "[faction, ally, truce, public]"), RankPermission.CHAT);
+        super("chat", new CommandDescription(OtherMessages.Help_ChatCommand.getMessage(), OtherMessages.Help_ChatCommandSyntax.getMessage()), RankPermission.CHAT);
     }
 
     public static HashMap<Player, String> chatMode = new HashMap<>();

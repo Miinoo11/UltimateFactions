@@ -31,7 +31,7 @@ import java.lang.reflect.InvocationTargetException;
 public class TownhallCommand extends PlayerCommand {
 
     public TownhallCommand() {
-        super("townhall", new CommandDescription("Sets the faction townhall"), RankPermission.MANAGE_TOWNHALL);
+        super("townhall", new CommandDescription(OtherMessages.Help_TownhallCommand.getMessage()), RankPermission.MANAGE_TOWNHALL);
     }
 
     private Factions factions = FactionsSystem.getFactions();

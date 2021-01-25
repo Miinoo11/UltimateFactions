@@ -8,9 +8,12 @@ import de.miinoo.factions.api.ui.gui.GUIList;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.GUITags;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
+import de.miinoo.factions.events.ShopBuyItemEvent;
+import de.miinoo.factions.events.ShopSellItemEvent;
 import de.miinoo.factions.shop.ShopCategory;
 import de.miinoo.factions.shop.ShopItem;
 import de.miinoo.factions.util.ItemUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -37,7 +40,10 @@ public class ShopBuyGUI extends GUI {
                                 if (!ItemUtil.hasAvailableSlot(player.getInventory(), item.getAmount())) {
                                     close();
                                     player.sendMessage(ErrorMessage.Inventory_Full_Error.getMessage());
+                                    break;
                                 } else {
+                                    Bukkit.getPluginManager().callEvent(new ShopBuyItemEvent(player, item));
+
                                     FactionsSystem.getEconomy().withdrawPlayer(player, item.getPrice());
                                     close();
 
@@ -52,20 +58,12 @@ public class ShopBuyGUI extends GUI {
                             }
                             break;
                         case RIGHT:
-                            if (!player.getInventory().contains(item.getItemStack())) {
-
-                                System.out.println(item.getItemStack());
-                                System.out.println(item.getItemStack().getEnchantments());
-
-                                for(ItemStack i : player.getInventory().getContents()) {
-                                    if(i != null) {
-                                        System.out.println(i);
-                                    }
-                                }
+                            if (!ItemUtil.takeItem(player.getInventory(),item.getItemStack(), item.getAmount())) {
                                 close();
                                 player.sendMessage(ErrorMessage.Shop_Sell_Item_Error.getMessage());
+                                break;
                             } else {
-                                ItemUtil.takeItem(player.getInventory(), item.getItemStack(), item.getAmount());
+                                Bukkit.getPluginManager().callEvent(new ShopSellItemEvent(player, item));
                                 FactionsSystem.getEconomy().depositPlayer(player, item.getSell());
                                 close();
                                 player.sendMessage(SuccessMessage.Successfully_Sold_ShopItem.getMessage()

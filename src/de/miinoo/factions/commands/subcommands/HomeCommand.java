@@ -21,7 +21,7 @@ import java.util.HashMap;
 public class HomeCommand extends PlayerCommand {
 
     public HomeCommand() {
-        super("home", new CommandDescription("Teleports you to faction home"), RankPermission.HOME);
+        super("home", new CommandDescription(OtherMessages.Help_HomeCommand.getMessage()), RankPermission.HOME);
     }
 
     public static HashMap<Player, Integer> delay = new HashMap<>();

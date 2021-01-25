@@ -6,10 +6,15 @@ import de.miinoo.factions.api.command.PlayerCommand;
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
+import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
+import de.miinoo.factions.events.FactionDeleteWarpEvent;
+import de.miinoo.factions.events.FactionSetWarpEvent;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.FactionChunk;
+import de.miinoo.factions.model.FactionWarp;
 import de.miinoo.factions.model.RankPermission;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
@@ -19,7 +24,7 @@ import org.bukkit.entity.Player;
 public class SetHomeCommand extends PlayerCommand {
 
     public SetHomeCommand() {
-        super("sethome", new CommandDescription("Sets the faction home point"), RankPermission.SET_HOME);
+        super("sethome", new CommandDescription(OtherMessages.Help_SetHomeCommand.getMessage()), RankPermission.SET_HOME);
     }
 
     private Factions factions = FactionsSystem.getFactions();
@@ -41,6 +46,7 @@ public class SetHomeCommand extends PlayerCommand {
             if(factions.isInChunk(player.getLocation(), chunk.getBukkitChunk())) {
                 faction.setHome(player.getLocation());
                 factions.saveFaction(faction);
+                Bukkit.getPluginManager().callEvent(new FactionSetWarpEvent(player, faction, faction.getFactionWarp("home")));
                 player.sendMessage(SuccessMessage.Successfully_Set_Home.getMessage().replace("%faction%", faction.getName()));
                 return true;
             }

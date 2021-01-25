@@ -104,6 +104,7 @@ public enum GUITags {
     Bank_Withdraw_32("&b&lWithdraw 32: &7&o(Shift-Left-Click)"),
     Bank_Withdraw_64("&b&lWithdraw 64: &7&o(Right-Click)"),
 
+    Townhall_Title("&8Townhall"),
     Townhall_Lore("&eSets the villager to ur current location"),
     Townhall_Energy("&eEnergy"),
     Townhall_Energy_Lore("&7%count%"),

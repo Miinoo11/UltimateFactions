@@ -5,6 +5,7 @@ import de.miinoo.factions.api.command.CommandDescription;
 import de.miinoo.factions.api.command.PlayerCommand;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
+import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.guis.RanksGUI;
 import org.bukkit.entity.Player;
@@ -16,7 +17,7 @@ import org.bukkit.entity.Player;
 public class RanksCommand extends PlayerCommand {
 
     public RanksCommand() {
-        super("ranks", new CommandDescription("Opens a GUI"));
+        super("ranks", new CommandDescription(OtherMessages.Help_RanksCommand.getMessage()));
     }
 
     @Override

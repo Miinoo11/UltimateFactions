@@ -24,7 +24,7 @@ import java.util.Map;
 public class MapCommand extends PlayerCommand {
 
     public MapCommand() {
-        super("map", new CommandDescription("Shows territory map"));
+        super("map", new CommandDescription(OtherMessages.Help_MapCommand.getMessage()));
     }
 
     private static final String[] TOKENS;

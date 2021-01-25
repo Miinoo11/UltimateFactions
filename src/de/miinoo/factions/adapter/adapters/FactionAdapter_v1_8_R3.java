@@ -4,7 +4,10 @@ import de.miinoo.factions.adapter.FactionsAdapter;
 import de.miinoo.factions.api.ui.gui.anvil.AnvilGUI_v1_8_R3;
 import de.miinoo.factions.api.ui.ui.AnvilUI;
 import de.miinoo.factions.util.ScoreboardUtil;
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_8_R3.EnumParticle;
+import net.minecraft.server.v1_8_R3.IChatBaseComponent;
+import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerListHeaderFooter;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -48,6 +51,12 @@ public class FactionAdapter_v1_8_R3 extends FactionsAdapter {
     }
 
     @Override
+    public void sendActionBarTitle(Player player, String msg) {
+        net.minecraft.server.v1_8_R3.PacketPlayOutChat packet = new net.minecraft.server.v1_8_R3.PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + msg + "\"}"), (byte) 2);
+        ((org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer)player).getHandle().playerConnection.sendPacket(packet);
+    }
+
+    @Override
     public void shootParticle(String particle, Location loc, float xOffset, float yOffset, float zOffset, float speed, int count) {
         final EnumParticle enumParticle = EnumParticle.valueOf(particle);
         final float x = (float)loc.getX();
@@ -58,4 +67,6 @@ public class FactionAdapter_v1_8_R3 extends FactionsAdapter {
             ((CraftPlayer)p).getHandle().playerConnection.sendPacket(packet);
         }
     }
+
+
 }

@@ -27,7 +27,7 @@ public class KickCommand extends PlayerCommand {
     private Factions factions = FactionsSystem.getFactions();
 
     public KickCommand() {
-        super("kick", new CommandDescription("Kicks a player out of your faction", "<player>"), RankPermission.KICK);
+        super("kick", new CommandDescription(OtherMessages.Help_KickCommand.getMessage(), OtherMessages.Help_KickCommandSyntax.getMessage()), RankPermission.KICK);
     }
 
     private static double minPower = FactionsSystem.getSettings().getMinPower();

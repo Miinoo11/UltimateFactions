@@ -447,6 +447,10 @@ public class Faction implements ConfigurationSerializable {
         return bank;
     }
 
+    public void setBank(double bank) {
+        this.bank = bank;
+    }
+
     public void addBank(double amount) {
         bank += amount;
     }
@@ -475,10 +479,12 @@ public class Faction implements ConfigurationSerializable {
     public boolean removeBankItem(Material material, int amount) {
         if (bankItems.containsKey(material)) {
             int currentAmount = getBankItemAmount(material);
-            if (currentAmount - amount >= 0) {
+            if (currentAmount - amount > 0) {
                 bankItems.replace(material, (currentAmount - amount));
-                return true;
+            } else {
+                bankItems.remove(material);
             }
+            return true;
         }
         return false;
     }
@@ -505,6 +511,10 @@ public class Faction implements ConfigurationSerializable {
             return;
         }
         addWarp("home", null, location);
+    }
+
+    public Location getHome() {
+        return getFactionWarp("home").getLocation();
     }
 
     public void removeWarp(String name) {

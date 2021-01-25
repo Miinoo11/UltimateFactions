@@ -6,10 +6,14 @@ import de.miinoo.factions.api.command.PlayerCommand;
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
+import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
+import de.miinoo.factions.events.FactionClaimChunkEvent;
+import de.miinoo.factions.events.FactionUnclaimChunkEvent;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.FactionChunk;
 import de.miinoo.factions.model.RankPermission;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -23,7 +27,7 @@ public class UnClaimCommand extends PlayerCommand {
 
 
     public UnClaimCommand() {
-        super("unclaim", new CommandDescription("Unclaims a chunk", "[all]"), RankPermission.UNCLAIM);
+        super("unclaim", new CommandDescription(OtherMessages.Help_UnClaimCommand.getMessage(), OtherMessages.Help_UnClaimCommandSyntax.getMessage()), RankPermission.UNCLAIM);
     }
 
     private Factions factions = FactionsSystem.getFactions();
@@ -47,6 +51,7 @@ public class UnClaimCommand extends PlayerCommand {
 
         if (args.hasExactly(1)) {
             if (args.get(0).equalsIgnoreCase("all")) {
+                Bukkit.getPluginManager().callEvent(new FactionUnclaimChunkEvent(player, faction));
                 factions.unClaimAll(faction);
                 factions.saveFaction(faction);
                 player.sendMessage(SuccessMessage.Successfully_UnClaimedAll.getMessage());
@@ -57,6 +62,7 @@ public class UnClaimCommand extends PlayerCommand {
                 player.sendMessage(ErrorMessage.Chunk_Not_Claimed.getMessage());
                 return true;
             }
+            Bukkit.getPluginManager().callEvent(new FactionUnclaimChunkEvent(player, faction));
             factions.unClaim(faction, chunk);
             factions.saveFaction(faction);
             player.sendMessage(SuccessMessage.Successfully_UnClaimed.getMessage());

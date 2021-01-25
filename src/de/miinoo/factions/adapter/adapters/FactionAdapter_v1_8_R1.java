@@ -48,6 +48,12 @@ public class FactionAdapter_v1_8_R1 extends FactionsAdapter {
     }
 
     @Override
+    public void sendActionBarTitle(Player player, String msg) {
+        PacketPlayOutChat packet = new PacketPlayOutChat(ChatSerializer.a("{\"text\":\"" + msg + "\"}"), (byte) 2);
+        ((CraftPlayer)player).getHandle().playerConnection.sendPacket(packet);
+    }
+
+    @Override
     public void shootParticle(String particle, Location loc, float xOffset, float yOffset, float zOffset, float speed, int count) {
         final EnumParticle enumParticle = EnumParticle.valueOf(particle);
         final float x = (float)loc.getX();

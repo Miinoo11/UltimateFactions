@@ -4,6 +4,7 @@ import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.model.Faction;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -64,19 +65,36 @@ public class ScoreboardUtil {
 
     private static String scoreboardLine(Player player, String message) {
         Faction faction = factions.getFaction(player);
-        if (faction != null) {
-            message = message.replace("%faction%", faction.getName())
-                    .replace("%power%", "" + faction.getPower())
-                    .replace("%claims%", "" + faction.getClaimed().size())
-                    .replace("%maxclaims%", "" + FactionsSystem.getFactionLevels().getMaxClaims(faction.getLevel()))
-                    .replace("%online%", "" + Bukkit.getOnlinePlayers().size());
+        if(FactionsSystem.isPlaceHolderAPIFound) {
+            if (faction != null) {
+                message = PlaceholderAPI.setPlaceholders(player, message.replace("%faction%", faction.getName())
+                        .replace("%power%", "" + faction.getPower())
+                        .replace("%claims%", "" + faction.getClaimed().size())
+                        .replace("%maxclaims%", "" + FactionsSystem.getFactionLevels().getMaxClaims(faction.getLevel()))
+                        .replace("%online%", "" + Bukkit.getOnlinePlayers().size()));
+            } else {
+                message = PlaceholderAPI.setPlaceholders(player, message.replace("%faction%", "N/A")
+                        .replace("%power%", "N/A")
+                        .replace("%claims%", "N/A")
+                        .replace("%maxclaims%", "N/A")
+                        .replace("%online%", "" + Bukkit.getOnlinePlayers().size()));
+            }
         } else {
-            message = message.replace("%faction%", "N/A")
-                    .replace("%power%", "N/A")
-                    .replace("%claims%", "N/A")
-                    .replace("%maxclaims%", "N/A")
-                    .replace("%online%", "" + Bukkit.getOnlinePlayers().size());
+            if (faction != null) {
+                message = message.replace("%faction%", faction.getName())
+                        .replace("%power%", "" + faction.getPower())
+                        .replace("%claims%", "" + faction.getClaimed().size())
+                        .replace("%maxclaims%", "" + FactionsSystem.getFactionLevels().getMaxClaims(faction.getLevel()))
+                        .replace("%online%", "" + Bukkit.getOnlinePlayers().size());
+            } else {
+                message = message.replace("%faction%", "N/A")
+                        .replace("%power%", "N/A")
+                        .replace("%claims%", "N/A")
+                        .replace("%maxclaims%", "N/A")
+                        .replace("%online%", "" + Bukkit.getOnlinePlayers().size());
+            }
         }
+
         return message;
     }
 

@@ -34,7 +34,7 @@ public class TownHallGUI extends GUI {
     private final NumberFormat formatter = new DecimalFormat("#,###.00");
 
     public TownHallGUI(Player player, Faction faction) {
-        super(player, "Townhall", 27);
+        super(player, GUITags.Townhall_Title.getMessage(), 27);
 
         UIElement element, element1;
         int slot, slot1;

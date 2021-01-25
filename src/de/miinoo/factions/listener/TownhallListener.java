@@ -58,11 +58,13 @@ public class TownhallListener implements Listener {
                     }
                 }
                 Faction target = factions.getFaction(player);
-                if ((target != null && target.getAlliesRelation().contains(factions.getFactionByTownHallID(entity.getUniqueId()).getId()))) {
-                    return;
-                }
-                if ((target != null && target.getTrucesRelation().contains(factions.getFactionByTownHallID(entity.getUniqueId()).getId()))) {
-                    return;
+                if(target != null) {
+                    if(target.getAlliesRelation().contains(factions.getFactionByTownHallID(entity.getUniqueId()).getId())) {
+                        return;
+                    }
+                    if(target.getTrucesRelation().contains(factions.getFactionByTownHallID(entity.getUniqueId()).getId())) {
+                        return;
+                    }
                 }
 
                 event.setCancelled(true);
@@ -74,7 +76,9 @@ public class TownhallListener implements Listener {
                     if (!faction.getBankItems().isEmpty()) {
                         for (Material material : faction.getBankItems().keySet()) {
                             ItemStack is = new ItemStack(material, faction.getBankItemAmount(material));
+                            faction.removeBankItem(material, faction.getBankItemAmount(material));
                             entity.getWorld().dropItem(entity.getLocation(), is);
+                            faction.setBank(0.0);
                         }
                     }
                     faction.getTownHall().stopMoveTask();

@@ -23,7 +23,7 @@ public class WildCommand extends PlayerCommand {
     public static HashMap<Player, Integer> teleportDelay = new HashMap<>();
 
     public WildCommand() {
-        super("wild", new CommandDescription("Teleports you to a random location"));
+        super("wild", new CommandDescription(OtherMessages.Help_WildCommand.getMessage()));
     }
 
     @Override

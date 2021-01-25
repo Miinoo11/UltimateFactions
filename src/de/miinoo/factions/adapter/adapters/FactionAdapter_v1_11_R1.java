@@ -49,7 +49,11 @@ public class FactionAdapter_v1_11_R1 extends FactionsAdapter {
     public void sendScoreboard(Player player) {
         ScoreboardUtil.sendLegacyScoreboard(player);
     }
-
+    @Override
+    public void sendActionBarTitle(Player player, String msg) {
+        net.minecraft.server.v1_11_R1.PacketPlayOutChat packet = new net.minecraft.server.v1_11_R1.PacketPlayOutChat(net.minecraft.server.v1_11_R1.IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + msg + "\"}"), (byte) 2);
+        ((org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer)player).getHandle().playerConnection.sendPacket(packet);
+    }
     @Override
     public void shootParticle(String particle, Location loc, float xOffset, float yOffset, float zOffset, float speed, int count) {
         final EnumParticle enumParticle = EnumParticle.valueOf(particle);

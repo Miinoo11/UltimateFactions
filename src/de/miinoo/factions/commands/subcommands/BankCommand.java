@@ -6,6 +6,7 @@ import de.miinoo.factions.api.command.PlayerCommand;
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
+import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.guis.BankGUI;
 import org.bukkit.entity.Player;
@@ -17,7 +18,7 @@ import org.bukkit.entity.Player;
 public class BankCommand extends PlayerCommand {
 
     public BankCommand() {
-        super("bank", new CommandDescription("bank", "[deposit]"));
+        super("bank", new CommandDescription(OtherMessages.Help_BankCommand.getMessage(), OtherMessages.Help_BankCommandSyntax.getMessage()));
     }
 
     private Factions factions = FactionsSystem.getFactions();

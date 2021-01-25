@@ -5,6 +5,7 @@ import de.miinoo.factions.api.command.ArgumentParser;
 import de.miinoo.factions.api.command.CommandDescription;
 import de.miinoo.factions.api.command.PlayerCommand;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
+import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.guis.EnergyGUI;
 import org.bukkit.entity.Player;
@@ -17,7 +18,7 @@ import org.bukkit.entity.Player;
 public class EnergyCommand extends PlayerCommand {
 
     public EnergyCommand() {
-        super("energy", new CommandDescription("Opens the Energy GUI"));
+        super("energy", new CommandDescription(OtherMessages.Help_EnergyCommand.getMessage()));
     }
 
     @Override

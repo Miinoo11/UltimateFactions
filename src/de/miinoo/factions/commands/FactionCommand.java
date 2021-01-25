@@ -1,5 +1,6 @@
 package de.miinoo.factions.commands;
 
+import de.miinoo.factions.addon.FactionsAddon;
 import de.miinoo.factions.api.command.ArgumentParser;
 import de.miinoo.factions.api.command.Command;
 import de.miinoo.factions.api.command.HelpCommand;
@@ -28,8 +29,10 @@ public class FactionCommand extends PlayerCommand {
         addCommand(new TopCommand());
         addCommand(new ChatCommand());
         addCommand(new KickCommand());
-        addCommand(new HomeCommand());
-        addCommand(new SetHomeCommand());
+        if(FactionsSystem.getSettings().enableHome()) {
+            addCommand(new HomeCommand());
+            addCommand(new SetHomeCommand());
+        }
         addCommand(new RanksCommand());
         addCommand(new SetRankCommand());
         addCommand(new DisbandCommand());
@@ -37,9 +40,11 @@ public class FactionCommand extends PlayerCommand {
         addCommand(new AutoClaimCommand());
         //addCommand(new ChunkSeeCommand());
         addCommand(new UnClaimCommand());
-        addCommand(new WarpCommand());
-        addCommand(new SetWarpCommand());
-        addCommand(new DelWarpCommand());
+        if(FactionsSystem.getSettings().enableWarps()) {
+            addCommand(new WarpCommand());
+            addCommand(new SetWarpCommand());
+            addCommand(new DelWarpCommand());
+        }
         addCommand(new EnemyCommand());
         addCommand(new SetLeaderCommand());
         addCommand(new MapCommand());
@@ -66,6 +71,8 @@ public class FactionCommand extends PlayerCommand {
         addCommand(new ShopCommand());
 
         //addCommand(new TestCommand());
+
+
 
     }
 

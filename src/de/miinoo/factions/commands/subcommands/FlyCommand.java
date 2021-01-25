@@ -28,7 +28,7 @@ public class FlyCommand extends PlayerCommand {
     public static List<UUID> flyList = new ArrayList<>();
 
     public FlyCommand() {
-        super("fly", new CommandDescription("Enables fly in your territory"), RankPermission.FLY);
+        super("fly", new CommandDescription(OtherMessages.Help_FlyCommand.getMessage()), RankPermission.FLY);
     }
 
     @Override
@@ -39,9 +39,16 @@ public class FlyCommand extends PlayerCommand {
             return true;
         }
 
-        if(!faction.hasFly()) {
-            player.sendMessage(ErrorMessage.Upgrade_Needed_Error.getMessage());
-            return true;
+        if(FactionsSystem.getSettings().usePermissionInsteadOfUpgrade()) {
+            if (!player.hasPermission("ultimatefactions.claims.fly")) {
+                player.sendMessage(ErrorMessage.Player_Not_Permitted.getMessage());
+                return true;
+            }
+        } else {
+            if (!faction.hasFly()) {
+                player.sendMessage(ErrorMessage.Upgrade_Needed_Error.getMessage());
+                return true;
+            }
         }
 
         if(flyList.contains(player.getUniqueId())) {

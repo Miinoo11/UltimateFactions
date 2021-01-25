@@ -6,6 +6,7 @@ import de.miinoo.factions.api.command.ArgumentParser;
 import de.miinoo.factions.api.command.CommandDescription;
 import de.miinoo.factions.api.command.PlayerCommand;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
+import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.guis.UpgradeGUI;
 import org.bukkit.entity.Player;
@@ -20,7 +21,7 @@ public class UpgradeCommand extends PlayerCommand {
     private static Factions factions = FactionsSystem.getFactions();
 
     public UpgradeCommand() {
-        super("upgrade", new CommandDescription("Opens a GUI where you can upgrade your faction"));
+        super("upgrade", new CommandDescription(OtherMessages.Help_UpgradeCommand.getMessage()));
     }
 
     @Override

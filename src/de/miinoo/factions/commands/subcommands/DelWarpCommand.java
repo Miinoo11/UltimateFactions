@@ -6,9 +6,12 @@ import de.miinoo.factions.api.command.PlayerCommand;
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
+import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
+import de.miinoo.factions.events.FactionDeleteWarpEvent;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.RankPermission;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
@@ -18,7 +21,7 @@ import org.bukkit.entity.Player;
 public class DelWarpCommand extends PlayerCommand {
 
     public DelWarpCommand() {
-        super("delwarp", new CommandDescription("Deletes a warp", "<name>"), RankPermission.MANAGE_WARPS);
+        super("delwarp", new CommandDescription(OtherMessages.Help_DelWarpCommand.getMessage(), OtherMessages.Help_DelWarpCommandSyntax.getMessage()), RankPermission.MANAGE_WARPS);
     }
 
     @Override
@@ -40,6 +43,7 @@ public class DelWarpCommand extends PlayerCommand {
             return true;
         }
 
+        Bukkit.getPluginManager().callEvent(new FactionDeleteWarpEvent(player, faction, faction.getFactionWarp(args.get(0))));
         faction.removeWarp(args.get(0));
         factions.saveFaction(faction);
         player.sendMessage(SuccessMessage.Successfully_Deleted_Warp.getMessage().replace("%warp%", args.get(0)));

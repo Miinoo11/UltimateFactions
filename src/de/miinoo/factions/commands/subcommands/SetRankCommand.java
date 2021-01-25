@@ -25,7 +25,7 @@ import java.util.List;
 public class SetRankCommand extends PlayerCommand {
 
     public SetRankCommand() {
-        super("setrank", new CommandDescription("Sets a rank to a player", "<player> <rank>"), RankPermission.ASSIGN_ROLES);
+        super("setrank", new CommandDescription(OtherMessages.Help_SetRankCommand.getMessage(), OtherMessages.Help_SetRankCommandSyntax.getMessage()), RankPermission.ASSIGN_ROLES);
     }
 
     private Factions factions = FactionsSystem.getFactions();

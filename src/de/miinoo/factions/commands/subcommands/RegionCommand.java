@@ -23,7 +23,7 @@ import java.util.UUID;
 public class RegionCommand extends PlayerCommand {
 
     public RegionCommand() {
-        super("region", new CommandDescription("Sets a region where power and warpiece system is disabled", "<list> or <create / delete> <name>"));
+        super("region", new CommandDescription(OtherMessages.Help_RegionCommand.getMessage(), OtherMessages.Help_RegionCommandSyntax.getMessage()));
     }
 
     private Regions regions = FactionsSystem.getRegions();

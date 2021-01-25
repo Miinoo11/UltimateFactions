@@ -38,7 +38,7 @@ public class TeleportUtils {
         final int origX = x;
         final int origY = y;
         final int origZ = z;
-        location.setY((double) location.getWorld().getHighestBlockYAt(location));
+        location.setY(location.getWorld().getHighestBlockYAt(location));
         while (isBlockAboveAir(world, x, y, z)) {
             if (--y < 0) {
                 y = origY;

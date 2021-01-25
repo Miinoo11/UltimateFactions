@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 
 public enum SuccessMessage {
     Successfully_Created("&aSuccessfully created faction &e%faction%&a!"),
+    Successfully_Created_Costs("&e$%amount% &ahas been withdrawn to create a faction!"),
     Successfully_Set_Home("&aSuccessfully set home for faction &e%faction%&a!"),
     Successfully_Left("&aSuccessfully left faction &e%faction%&a!"),
     Successfully_Disbanded("&aSuccessfully disbanded faction &e%faction%&a!"),

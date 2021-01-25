@@ -1,6 +1,5 @@
 package de.miinoo.factions.listener;
 
-import de.miinoo.factions.util.BossUtil;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.commands.subcommands.ChatCommand;
 import de.miinoo.factions.model.ColorHelper;
@@ -41,9 +40,6 @@ public class JoinQuitListener implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        if (BossUtil.getBossBar(event.getPlayer()) != null) {
-            BossUtil.removeBar(event.getPlayer());
-        }
         for (Player all : Bukkit.getOnlinePlayers()) {
             new BukkitRunnable() {
                 @Override

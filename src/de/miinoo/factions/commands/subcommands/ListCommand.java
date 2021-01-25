@@ -3,6 +3,7 @@ package de.miinoo.factions.commands.subcommands;
 import de.miinoo.factions.api.command.ArgumentParser;
 import de.miinoo.factions.api.command.CommandDescription;
 import de.miinoo.factions.api.command.PlayerCommand;
+import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.model.guis.FactionsGUI;
 import org.bukkit.entity.Player;
 
@@ -13,7 +14,7 @@ import org.bukkit.entity.Player;
 public class ListCommand extends PlayerCommand {
 
     public ListCommand() {
-        super("list", new CommandDescription("Lists all factions"));
+        super("list", new CommandDescription(OtherMessages.Help_ListCommand.getMessage()));
     }
 
     @Override

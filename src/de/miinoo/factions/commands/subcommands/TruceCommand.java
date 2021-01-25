@@ -28,7 +28,7 @@ import java.util.*;
 public class TruceCommand extends PlayerCommand {
 
     public TruceCommand() {
-        super("truce", new CommandDescription("Adds a faction to your truces", "<faction>"), RankPermission.TRUCE);
+        super("truce", new CommandDescription(OtherMessages.Help_TruceCommand.getMessage(), OtherMessages.Help_TruceCommandSyntax.getMessage()), RankPermission.TRUCE);
     }
 
     private Factions factions = FactionsSystem.getFactions();

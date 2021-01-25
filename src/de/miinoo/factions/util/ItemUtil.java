@@ -127,7 +127,6 @@ public class ItemUtil {
                 items.add(inv.getItem(i));
             }
         }
-
         return items;
     }
 
