@@ -10,8 +10,10 @@ import de.miinoo.factions.api.xutils.XMaterial;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.GUITags;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
+import de.miinoo.factions.events.FactionUpgradedEvent;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.FactionLevel;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
@@ -46,7 +48,9 @@ public class UpgradeGUI extends GUI {
                 player.sendMessage(SuccessMessage.Successfully_Upgraded_Faction.getMessage().replace("%level%",
                         String.valueOf(faction.getNextLevel()))
                                 .replace("%cost%", String.valueOf(FactionsSystem.getFactionLevels().getCost(faction.getNextLevel()))));
-                faction.setLevel(new FactionLevel(faction.getNextLevel()));
+                Bukkit.getPluginManager().callEvent(new FactionUpgradedEvent(player, faction, faction.getLevel()));
+                //faction.setFactionLevel(new FactionLevel(faction.getNextLevel()));
+                faction.setLevel(faction.getNextLevel());
                 FactionsSystem.getFactions().saveFaction(faction);
                 close();
             }));

@@ -1,11 +1,12 @@
-package de.miinoo.factions.model;
+package de.miinoo.factions.region;
 
+import de.miinoo.factions.api.xutils.XMaterial;
+import de.miinoo.factions.configuration.messages.GUITags;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Region implements ConfigurationSerializable {
 
@@ -14,6 +15,7 @@ public class Region implements ConfigurationSerializable {
     private Location location1;
     private Location location2;
     private Cuboid cuboid;
+    private List<Flag> flags;
 
     public Region(UUID uuid, String name, Location location1, Location location2) {
         this.uuid = uuid;
@@ -22,6 +24,11 @@ public class Region implements ConfigurationSerializable {
         this.location2 = location2;
 
         cuboid = new Cuboid(location1, location2);
+        this.flags = new ArrayList<>();
+
+        flags.add(new Flag("disable-pvp", GUITags.Region_Flags_DisablePVP.getMessage(), false, XMaterial.IRON_SWORD.parseMaterial()));
+        flags.add(new Flag("disable-build", GUITags.Region_Flags_DisableBreak.getMessage(), false, XMaterial.IRON_PICKAXE.parseMaterial()));
+        flags.add(new Flag("disable-place", GUITags.Region_Flags_DisablePlace.getMessage(), false, XMaterial.GRASS_BLOCK.parseMaterial()));
     }
 
     public Region(Map<String, Object> args) {
@@ -30,6 +37,7 @@ public class Region implements ConfigurationSerializable {
         location1 = (Location) args.get("location1");
         location2 = (Location) args.get("location2");
         cuboid = (Cuboid) args.get("cuboid");
+        flags = ((List<Flag>) args.get("flags"));
     }
 
     public UUID getUuid() {
@@ -52,6 +60,26 @@ public class Region implements ConfigurationSerializable {
         return cuboid;
     }
 
+    public List<Flag> getFlags() {
+        return flags;
+    }
+
+    public boolean hasFlag(String identifier) {
+        return flags.stream().anyMatch(flag -> flag.getIdentifier().equals(identifier));
+    }
+
+    public void toggleFlagValue(Flag flag) {
+        flag.toggleValue();
+    }
+
+    public boolean getFlagValue(String identifier) {
+        return flags.stream().filter(flag -> flag.getIdentifier().equals(identifier)).findFirst().orElse(null).isEnabled();
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public Map<String, Object> serialize() {
         Map<String, Object> result = new HashMap<>();
@@ -60,6 +88,7 @@ public class Region implements ConfigurationSerializable {
         result.put("location1", location1);
         result.put("location2", location2);
         result.put("cuboid", cuboid);
+        result.put("flags", flags);
         return result;
     }
 }

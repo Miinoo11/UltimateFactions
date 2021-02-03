@@ -2,7 +2,7 @@ package de.miinoo.factions.configuration.configurations;
 
 import de.miinoo.factions.api.configuration.Configuration;
 import de.miinoo.factions.FactionsSystem;
-import de.miinoo.factions.model.Region;
+import de.miinoo.factions.region.Region;
 
 import java.util.Collection;
 import java.util.UUID;

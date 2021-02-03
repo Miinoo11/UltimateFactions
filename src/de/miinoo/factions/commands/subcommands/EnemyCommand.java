@@ -10,6 +10,7 @@ import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.RankPermission;
+import de.miinoo.factions.model.Relation;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class EnemyCommand extends PlayerCommand {
             return true;
         }
 
-        faction.getEnemyRelation().add(enemy.getId());
+        faction.getRelations().add(new Relation(enemy.getId(), "enemy", null));
         factions.saveFaction(faction);
         player.sendMessage(SuccessMessage.Successfully_Added_Enemy.getMessage().replace("%enemy%", enemy.getName()));
         return true;

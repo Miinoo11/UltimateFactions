@@ -36,7 +36,7 @@ public class BankCommand extends PlayerCommand {
             return true;
         }
 
-        new BankGUI(player, faction).open();
+        new BankGUI(player, faction, null).open();
 
         return true;
     }

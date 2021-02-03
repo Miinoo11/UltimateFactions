@@ -11,7 +11,7 @@ import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.GUITags;
 import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
-import de.miinoo.factions.model.Region;
+import de.miinoo.factions.region.Region;
 import de.miinoo.factions.model.guis.ConfirmationGUI;
 import de.miinoo.factions.util.RegionUtil;
 import org.bukkit.entity.Player;

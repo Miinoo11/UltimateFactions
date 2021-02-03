@@ -62,6 +62,7 @@ public class FactionCommand extends PlayerCommand {
         addCommand(new ReloadCommand());
         addCommand(new WandCommand());
         addCommand(new RegionCommand());
+        addCommand(new RegionsCommand());
         addCommand(new WildCommand());
         addCommand(new UpgradeCommand());
         addCommand(new FlyCommand());
@@ -69,6 +70,8 @@ public class FactionCommand extends PlayerCommand {
         addCommand(new EnergyCommand());
 
         addCommand(new ShopCommand());
+
+        addCommand(new InvitesCommand());
 
         //addCommand(new TestCommand());
 

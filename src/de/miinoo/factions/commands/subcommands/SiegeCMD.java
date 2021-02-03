@@ -66,7 +66,7 @@ public class SiegeCMD extends PlayerCommand {
         }
 
         siege.put(faction, target);
-        player.sendMessage(SuccessMessage.Successfully_Started_Siege.getMessage().replace("%time%", "" + (FactionsSystem.getSettings().getSiegeCount() / 60)));
+        player.sendMessage(SuccessMessage.Successfully_Started_Siege.getMessage().replace("%time%", "" + FactionsSystem.getSettings().getSiegeCount()));
 
 
         for(UUID uuid : target.getPlayers()) {

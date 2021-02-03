@@ -31,8 +31,9 @@ public class WarpsGUI extends GUI {
 
         if (faction.getWarps().size() > 9) {
             addElement(19, new GUIScrollBar(GUIScrollBar.HORIZONTAL, 7, list,
-                    new GUIItem(Items.createSkull("MHF_ArrowLeft").setDisplayName(GUITags.Back.getMessage()).getItem()),
+                    new GUIItem(Items.createSkull("MHF_ArrowLeft").setDisplayName(GUITags.Previous.getMessage()).getItem()),
                     new GUIItem(Items.createSkull("MHF_ArrowRight").setDisplayName(GUITags.Next.getMessage()).getItem())));
         }
+
     }
 }

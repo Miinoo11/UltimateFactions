@@ -71,6 +71,8 @@ public enum SuccessMessage {
     Successfully_Added_ShopItem("&aSuccessfully added a Shop Item!"),
     Successfully_Removed_ShopItem("&aSuccessfully removed a ShopItem!"),
     Successfully_Removed_ShopCategory("&aSuccessfully removed a ShopCategory!"),
+
+    Successfully_Edited_Region("&aSuccessfully edited region &e%region%&a!")
     ;
 
     private String message;

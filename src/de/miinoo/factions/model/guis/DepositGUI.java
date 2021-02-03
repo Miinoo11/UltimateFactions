@@ -6,6 +6,7 @@ import de.miinoo.factions.api.ui.ui.UIElement;
 import de.miinoo.factions.api.ui.ui.UIList;
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
+import de.miinoo.factions.api.xutils.XMaterial;
 import de.miinoo.factions.util.ItemUtil;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.GUITags;
@@ -30,13 +31,15 @@ public class DepositGUI extends GUI {
     private final BukkitTask updater;
     private final NumberFormat formatter = new DecimalFormat("#,###.00");
 
-    public DepositGUI(Player player, Faction faction, Collection<Material> elements) {
-        super(player, "Deposit", elements.size() > 45 ? 54 : (elements.size() >= 0 && elements.size() % 9 == 0 ? elements.size() + 9 : ((elements.size() / 9) + 2) * 9));
+    public DepositGUI(Player player, Faction faction, Collection<Material> elements, GUI gui) {
+        super(player, "Deposit", 45);
 
         UIElement element;
         int slot;
 
-        UIList<Material> list = new GUIList<Material>(9, elements.size() > 54 ? 5 : size / 9, elements, material ->
+        addElement(0, new GUIArea(9, 5).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName(" ").getItem())));
+
+        UIList<Material> list = new GUIList<Material>(9, 3, elements, material ->
                 new DependGUIItem(() -> Items.createItem(material).setLore(GUITags.Bank_Deposit_1.getMessage()
                                 .replace("%price%", "" + FactionsSystem.getBank().getPrice(material)),
                         GUITags.Bank_Deposit_32.getMessage().replace("%price%", formatter.format(FactionsSystem.getBank().getPrice(material) * 32)),
@@ -74,17 +77,20 @@ public class DepositGUI extends GUI {
                     ItemUtil.removeItems(player.getInventory(), material, amount);
                     player.sendMessage(SuccessMessage.Successfully_Deposit.getMessage()
                             .replace("%amount%", Integer.toString(amount))
-                            .replace("%item%", material.getKey().getKey()));
+                            .replace("%item%", material.toString()));
                     return false;
                 }));
 
-        addElement(slot = 0, element = list);
+        addElement(slot = 9, element = list);
 
-        if (elements.size() > 54) {
-            addElement(46, new GUIScrollBar(GUIScrollBar.HORIZONTAL, 7, list,
-                    new GUIItem(Items.createSkull("MHF_ArrowLeft").setDisplayName(GUITags.Back.getMessage()).getItem()),
+        if (elements.size() > 18) {
+            addElement(size - 6, new GUIScrollBar(GUIScrollBar.HORIZONTAL, 3, list,
+                    new GUIItem(Items.createSkull("MHF_ArrowLeft").setDisplayName(GUITags.Previous.getMessage()).getItem()),
                     new GUIItem(Items.createSkull("MHF_ArrowRight").setDisplayName(GUITags.Next.getMessage()).getItem())));
         }
+
+        addElement(getInventory().getSize() - 9, new GUIItem(Items.createBackArrow().setDisplayName(GUITags.Back.getMessage()).getItem(), () -> gui.open()));
+
         updater = new BukkitRunnable() {
             @Override
             public void run() {

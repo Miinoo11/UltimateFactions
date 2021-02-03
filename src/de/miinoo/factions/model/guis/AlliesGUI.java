@@ -17,7 +17,7 @@ import java.util.UUID;
  */
 public class AlliesGUI extends GUI {
 
-    public AlliesGUI(Player player, Faction faction) {
+    public AlliesGUI(Player player, Faction faction, GUI gui) {
         super(player, "Allies", 27);
 
         addElement(0, new GUIArea(9, 3).fill(0, 0, 9, 1, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName(" ").getItem()))
@@ -27,14 +27,17 @@ public class AlliesGUI extends GUI {
                 ally -> new GUIItem(Items.createItem(XMaterial.SLIME_BALL.parseMaterial())
                         .setDisplayName("§f" + FactionsSystem.getFactions().getFaction(ally).getName())
                         .setLore("§cAlly").getItem()).setOnClickListener(((player1, item, event) -> {
-                    new AlliesEditGUI(player, faction, FactionsSystem.getFactions().getFactionByUUID(ally)).open();
+                    new AlliesEditGUI(player, faction, FactionsSystem.getFactions().getFactionByUUID(ally), this).open();
                     return true;
                 })));
         addElement(9, list);
         if(faction.getRelations().size() > 9) {
-            addElement(19, new GUIScrollBar(GUIScrollBar.HORIZONTAL, 7, list,
-                    new GUIItem(Items.createSkull("MHF_ArrowLeft").setDisplayName(GUITags.Back.getMessage()).getItem()),
+            addElement(size - 6, new GUIScrollBar(GUIScrollBar.HORIZONTAL, 3, list,
+                    new GUIItem(Items.createSkull("MHF_ArrowLeft").setDisplayName(GUITags.Previous.getMessage()).getItem()),
                     new GUIItem(Items.createSkull("MHF_ArrowRight").setDisplayName(GUITags.Next.getMessage()).getItem())));
         }
+
+        if(gui != null)
+            addElement(getInventory().getSize() - 9, new GUIItem(Items.createBackArrow().setDisplayName(GUITags.Back.getMessage()).getItem(), () -> gui.open()));
     }
 }

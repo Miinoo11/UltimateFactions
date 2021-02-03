@@ -44,12 +44,12 @@ public class TownHallGUI extends GUI {
         addElement(slot = 11, element = new DependGUIItem(() -> Items.createItem(XMaterial.EMERALD.parseMaterial())
                 .setDisplayName(GUITags.Townhall_Energy.getMessage())
                 .setLore(GUITags.Townhall_Energy_Lore.getMessage()
-                        .replace("%count%", TimeUtil.convertSeconds(faction.getEnergy()))).getItem(), () -> new EnergyGUI(player, faction).open()));
+                        .replace("%count%", TimeUtil.convertSeconds(faction.getEnergy()))).getItem(), () -> new EnergyGUI(player, faction, this).open()));
 
         addElement(15, new GUIItem(Items.createItem(XMaterial.GOLD_INGOT.parseMaterial())
                 .setDisplayName(GUITags.Townhall_Bank.getMessage())
                 .setLore(GUITags.Townhall_Bank_Lore2.getMessage()
-                        .replace("%count%",faction.getBank() > 0 ? formatter.format(faction.getBank()) : "0.0")).getItem(), () -> new BankGUI(player, faction).open()));
+                        .replace("%count%",faction.getBank() > 0 ? formatter.format(faction.getBank()) : "0.0")).getItem(), () -> new BankGUI(player, faction, this).open()));
 
         addElement(slot1 = getInventory().getSize() - 5, element1 = new DependGUIItem(() -> Items.createItem(XMaterial.VILLAGER_SPAWN_EGG.parseMaterial())
                 .setDisplayName(GUITags.Townhall_Move.getMessage())

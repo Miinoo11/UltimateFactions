@@ -5,11 +5,10 @@ import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.commands.subcommands.*;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.OtherMessages;
-import de.miinoo.factions.configuration.messages.SuccessMessage;
 import de.miinoo.factions.events.FactionTerritoryEnterEvent;
 import de.miinoo.factions.events.FactionTerritoryLeaveEvent;
 import de.miinoo.factions.model.Faction;
-import de.miinoo.factions.model.FactionChunk;
+import de.miinoo.factions.region.Region;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
@@ -39,6 +38,7 @@ public class MoveListener implements Listener {
     private List<UUID> flyMessageStorage = new ArrayList<>();
 
     private HashMap<Player, String> move = new HashMap<>();
+
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
@@ -60,6 +60,19 @@ public class MoveListener implements Listener {
                 player.sendMessage(OtherMessages.Entering_Territory.getMessage().replace("%faction%", faction.getName()));
                 Bukkit.getPluginManager().callEvent(new FactionTerritoryEnterEvent(player, chunk));
             }
+        } else if (FactionsSystem.getRegionUtil().isInRegion(player)) {
+            Region region = FactionsSystem.getRegionUtil().getRegion(player.getLocation());
+            if(move.containsKey(player)) {
+                String string = move.get(player);
+                if(!string.equals(region.getName())) {
+                    move.remove(player);
+                    move.put(player, region.getName());
+                    player.sendMessage(OtherMessages.Entering_Region.getMessage().replace("%region%", region.getName()));
+                }
+            } else {
+                move.put(player, region.getName());
+                player.sendMessage(OtherMessages.Entering_Region.getMessage().replace("%region%", region.getName()));
+            }
         } else {
             if (move.containsKey(player)) {
                 String string = move.get(player);
@@ -75,8 +88,8 @@ public class MoveListener implements Listener {
                 Bukkit.getPluginManager().callEvent(new FactionTerritoryLeaveEvent(player, chunk));
             }
 
-            if(FlyCommand.flyList.contains(player.getUniqueId())) {
-                if(!flyMessageStorage.contains(player.getUniqueId())) {
+            if (FlyCommand.flyList.contains(player.getUniqueId())) {
+                if (!flyMessageStorage.contains(player.getUniqueId())) {
                     flyMessageStorage.add(player.getUniqueId());
                     player.sendMessage(OtherMessages.Fly_Left_Chunk.getMessage());
                     new BukkitRunnable() {
@@ -87,7 +100,7 @@ public class MoveListener implements Listener {
                             player.sendMessage(OtherMessages.Disabled_Fly.getMessage());
                             flyMessageStorage.remove(player.getUniqueId());
                         }
-                    }.runTaskLaterAsynchronously(FactionsSystem.getPlugin(), 20*3);
+                    }.runTaskLaterAsynchronously(FactionsSystem.getPlugin(), 20 * 3);
                 }
             }
         }

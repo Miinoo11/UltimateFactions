@@ -2,7 +2,6 @@ package de.miinoo.factions.model;
 
 import de.miinoo.factions.FactionsSystem;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.yaml.snakeyaml.events.AliasEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,8 +24,8 @@ public class FactionLevel implements ConfigurationSerializable {
     public FactionLevel(int level) {
         this.level = level;
 
-        this.hasFly = FactionsSystem.getFactionLevels().getFly(level);
-        this.hasFill = FactionsSystem.getFactionLevels().getFill(level);
+        this.hasFly = FactionsSystem.getFactionLevels().hasFly(level);
+        this.hasFill = FactionsSystem.getFactionLevels().hasFill(level);
         this.maxMember = FactionsSystem.getFactionLevels().getMaxMember(level);
         this.maxWarps = FactionsSystem.getFactionLevels().getMaxWarps(level);
         this.maxClaims = FactionsSystem.getFactionLevels().getMaxClaims(level);

@@ -17,11 +17,10 @@ import java.util.UUID;
  */
 public class PlayersGUI extends GUI {
 
-    public PlayersGUI(Player player, Faction faction) {
+    public PlayersGUI(Player player, Faction faction, GUI gui) {
         super(player, "Members", 27);
 
-        addElement(0, new GUIArea(9, 3).fill(0, 0, 9, 1, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName(" ").getItem()))
-                .fill(0, 2, 9, 3, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
+        addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName(" ").getItem())));
 
         UIList<UUID> list = new GUIList<UUID>(9, 1, faction.getPlayers(), uuid ->
                 new GUIItem(Items.createSkull(Bukkit.getOfflinePlayer(uuid).getName())
@@ -32,9 +31,11 @@ public class PlayersGUI extends GUI {
         addElement(9, list);
 
         if (faction.getPlayers().size() > 9) {
-            addElement(19, new GUIScrollBar(GUIScrollBar.HORIZONTAL, 7, list,
-                    new GUIItem(Items.createSkull("MHF_ArrowLeft").setDisplayName(GUITags.Back.getMessage()).getItem()),
+            addElement(size - 6, new GUIScrollBar(GUIScrollBar.HORIZONTAL, 3, list,
+                    new GUIItem(Items.createSkull("MHF_ArrowLeft").setDisplayName(GUITags.Previous.getMessage()).getItem()),
                     new GUIItem(Items.createSkull("MHF_ArrowRight").setDisplayName(GUITags.Next.getMessage()).getItem())));
         }
+
+        addElement(getInventory().getSize() - 9, new GUIItem(Items.createBackArrow().setDisplayName(GUITags.Back.getMessage()).getItem(), () -> gui.open()));
     }
 }

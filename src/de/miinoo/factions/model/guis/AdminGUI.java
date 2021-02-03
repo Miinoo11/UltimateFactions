@@ -34,7 +34,7 @@ public class AdminGUI extends GUI {
         }));
 
         addElement(15, new GUIItem(Items.createItem(XMaterial.CAKE.parseMaterial()).setDisplayName(GUITags.Admin_Factions.getMessage()).setLore(GUITags.Info_Click_Lore.getMessage()).getItem(), () -> {
-            new FactionsGUI(player).open();
+            new FactionsGUI(player, this).open();
         }));
     }
 }

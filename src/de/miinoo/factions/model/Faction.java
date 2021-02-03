@@ -2,6 +2,7 @@ package de.miinoo.factions.model;
 
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.configuration.messages.OtherMessages;
+import de.miinoo.factions.events.FactionUnclaimChunkEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -22,7 +23,8 @@ public class Faction implements ConfigurationSerializable {
 
     private final UUID id;
     private String name;
-    private FactionLevel level;
+    //private FactionLevel factionLevel;
+    private int level;
     private UUID leader;
     private String description;
     private double power;
@@ -45,7 +47,8 @@ public class Faction implements ConfigurationSerializable {
     public Faction(String name, UUID leader, String description) {
         id = UUID.randomUUID();
         this.name = name;
-        this.level = new FactionLevel(0);
+        //this.factionLevel = new FactionLevel(0);
+        this.level = 0;
         this.leader = leader;
         this.description = description;
 
@@ -75,7 +78,8 @@ public class Faction implements ConfigurationSerializable {
     public Faction(Map<String, Object> args) {
         id = UUID.fromString((String) args.get("id"));
         name = (String) args.get("name");
-        level = (FactionLevel) args.get("level");
+        //factionLevel = (FactionLevel) args.get("level");
+        level = ((Number) args.get("level")).intValue();
         leader = UUID.fromString((String) args.get("leader"));
         description = (String) args.get("description");
         power = (double) args.get("power");
@@ -104,8 +108,12 @@ public class Faction implements ConfigurationSerializable {
         return name;
     }
 
+    //public int getFactionLevel() {
+    //    return factionLevel.getLevel();
+    //}
+
     public int getLevel() {
-        return level.getLevel();
+        return level;
     }
 
     public OfflinePlayer getLeader() {
@@ -411,6 +419,7 @@ public class Faction implements ConfigurationSerializable {
                     }
                     for (FactionChunk chunk : getClaimed()) {
                         FactionsSystem.getFactions().unClaim(faction, chunk);
+                        Bukkit.getPluginManager().callEvent(new FactionUnclaimChunkEvent(faction));
                     }
                 }
                 energy = i;
@@ -441,7 +450,6 @@ public class Faction implements ConfigurationSerializable {
         townHall.stopMoveTask();
         this.townHall = null;
     }
-
 
     public double getBank() {
         return bank;
@@ -526,26 +534,34 @@ public class Faction implements ConfigurationSerializable {
     }
 
     public boolean hasFly() {
-        return level.hasFly;
+        return FactionsSystem.getFactionLevels().hasFly(level);
     }
 
     public boolean hasFill() {
-        return level.hasFill;
+        return FactionsSystem.getFactionLevels().hasFill(level);
     }
 
     public int getNextLevel() {
-        return level.nextLevel();
+        if (level + 1 <= FactionsSystem.getFactionLevels().maxLevel()) {
+            return level + 1;
+        }
+        return -1;
     }
 
-    public void setLevel(FactionLevel level) {
+    public void setLevel(int level) {
         this.level = level;
     }
+
+    //public void setFactionLevel(FactionLevel factionLevel) {
+    //    this.factionLevel = factionLevel;
+    //}
 
     @Override
     public Map<String, Object> serialize() {
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("id", id.toString());
         result.put("name", name);
+        //result.put("level", factionLevel);
         result.put("level", level);
         result.put("leader", leader.toString());
         result.put("description", description);

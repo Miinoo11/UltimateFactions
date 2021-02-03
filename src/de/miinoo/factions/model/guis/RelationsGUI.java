@@ -21,7 +21,7 @@ import java.util.UUID;
  */
 public class RelationsGUI extends GUI {
 
-    public RelationsGUI(Player player, Faction faction) {
+    public RelationsGUI(Player player, Faction faction, GUI gui) {
         super(player, "Relations: " + faction.getName(), 27);
 
         List<String> trucesList = new ArrayList<>();
@@ -62,12 +62,14 @@ public class RelationsGUI extends GUI {
 
         addElement(13, new GUIItem(Items.createItem(XMaterial.MUSHROOM_STEW.parseMaterial()).setDisplayName(GUITags.Info_Allies.getMessage()).
                 setLore(faction.getAlliesRelation().isEmpty() ? alliesNotFound : alliesList).getItem(), () -> {
-            if(faction.hasPermission(player.getUniqueId(), RankPermission.ALLY)) {
-                new AlliesGUI(player, faction).open();
+            if (faction.hasPermission(player.getUniqueId(), RankPermission.ALLY)) {
+                new AlliesGUI(player, faction, this).open();
             }
         }));
 
         addElement(15, new GUIItem(Items.createItem(XMaterial.MUSHROOM_STEW.parseMaterial()).setDisplayName(GUITags.Info_Enemies.getMessage()).
                 setLore(faction.getEnemyRelation().isEmpty() ? enemiesNotFound : enemiesList).getItem()));
+
+        addElement(getInventory().getSize() - 9, new GUIItem(Items.createBackArrow().setDisplayName(GUITags.Back.getMessage()).getItem(), () -> gui.open()));
     }
 }

@@ -1,7 +1,7 @@
 package de.miinoo.factions;
 
 import de.miinoo.factions.configuration.configurations.RegionConfiguration;
-import de.miinoo.factions.model.Region;
+import de.miinoo.factions.region.Region;
 
 import java.util.HashSet;
 import java.util.Set;

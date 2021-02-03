@@ -5,6 +5,7 @@ import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.model.Faction;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -119,6 +120,7 @@ public class SettingsConfiguration extends Configuration {
 
     //  Wild settings
     public boolean wildIsEnabled() { return configuration.getBoolean("Settings.Game.Wild.enabled"); }
+    public World getWildTeleportWorld() { return Bukkit.getWorld(configuration.getString("Settings.Game.Wild.teleport-world"));}
     public double wildCosts() {return configuration.getDouble("Settings.Game.Wild.costs"); }
     public int wildDelay() { return configuration.getInt("Settings.Game.Wild.delay"); }
     public boolean wildTeleportSafe() { return configuration.getBoolean("Settings.Game.Wild.teleport-safe"); }
@@ -133,6 +135,7 @@ public class SettingsConfiguration extends Configuration {
     public double getDefaultHealth() { return configuration.getDouble("Settings.Game.TownHall.defaultHealth");}
 
     // Claim Settings
+    public List<String> getClaimDisabledWorlds() { return configuration.getStringList("Settings.Game.Claims.disabled-worlds");}
     public boolean connectedClaims() { return configuration.getBoolean("Settings.Game.Claims.connected"); }
     public int getEnergyTimer() { return configuration.getInt("Settings.Game.Claims.energyTimer");}
     public int getClaimDefaultPrice() { return configuration.getInt("Settings.Game.Claims.defaultPrice");}
@@ -141,6 +144,7 @@ public class SettingsConfiguration extends Configuration {
     public int getEnergyMultiplier() { return configuration.getInt("Settings.Game.Claims.energyMultiplier"); }
     public boolean usePermissionInsteadOfUpgrade() {return configuration.getBoolean("Settings.Game.Claims.flyCommand.usePermissionInsteadOfUpgrade");}
     public String flyCommandPermission() { return configuration.getString("Settings.Game.Claims.flyCommand.permission");}
+    public boolean isTeleportBlocker() { return configuration.getBoolean("Settings.Game.Ckaims.teleport-blocker"); }
 
     // Power Settings
     public double getPowerJoinIncrease() {
@@ -280,6 +284,7 @@ public class SettingsConfiguration extends Configuration {
                         .replace("%count%", "" + Bukkit.getOnlinePlayers().size())
                         .replace("%power%", "" + faction.getPower())
                         .replace("%claims%", "" + faction.getClaimed().size())
+                        .replace("%online%", "" + Bukkit.getOnlinePlayers().size())
                         .replace("\\n", "\n"));
             } else {
                 return PlaceholderAPI.setPlaceholders(player, configuration.getString("Settings.Tab.header")
@@ -287,6 +292,7 @@ public class SettingsConfiguration extends Configuration {
                         .replace("%count%", "" + Bukkit.getOnlinePlayers().size())
                         .replace("%power%", "N/A")
                         .replace("%claims%", "N/A")
+                        .replace("%online%", "" + Bukkit.getOnlinePlayers().size())
                         .replace("\\n", "\n"));
             }
         } else {
@@ -296,6 +302,7 @@ public class SettingsConfiguration extends Configuration {
                         .replace("%count%", "" + Bukkit.getOnlinePlayers().size())
                         .replace("%power%", "" + faction.getPower())
                         .replace("%claims%", "" + faction.getClaimed().size())
+                        .replace("%online%", "" + Bukkit.getOnlinePlayers().size())
                         .replace("\\n", "\n");
             } else {
                 return configuration.getString("Settings.Tab.header")
@@ -303,6 +310,7 @@ public class SettingsConfiguration extends Configuration {
                         .replace("%count%", "" + Bukkit.getOnlinePlayers().size())
                         .replace("%power%", "N/A")
                         .replace("%claims%", "N/A")
+                        .replace("%online%", "" + Bukkit.getOnlinePlayers().size())
                         .replace("\\n", "\n");
             }
         }
@@ -317,6 +325,7 @@ public class SettingsConfiguration extends Configuration {
                         .replace("%count%", "" + Bukkit.getOnlinePlayers().size())
                         .replace("%power%", "" + faction.getPower())
                         .replace("%claims%", "" + faction.getClaimed().size())
+                        .replace("%online%", "" + Bukkit.getOnlinePlayers().size())
                         .replace("\\n", "\n"));
             } else {
                 return PlaceholderAPI.setPlaceholders(player, configuration.getString("Settings.Tab.footer")
@@ -324,6 +333,7 @@ public class SettingsConfiguration extends Configuration {
                         .replace("%count%", "" + Bukkit.getOnlinePlayers().size())
                         .replace("%power%", "N/A")
                         .replace("%claims%", "N/A")
+                        .replace("%online%", "" + Bukkit.getOnlinePlayers().size())
                         .replace("\\n", "\n"));
             }
         } else {
@@ -333,6 +343,7 @@ public class SettingsConfiguration extends Configuration {
                         .replace("%count%", "" + Bukkit.getOnlinePlayers().size())
                         .replace("%power%", "" + faction.getPower())
                         .replace("%claims%", "" + faction.getClaimed().size())
+                        .replace("%online%", "" + Bukkit.getOnlinePlayers().size())
                         .replace("\\n", "\n");
             } else {
                 return configuration.getString("Settings.Tab.footer")
@@ -340,6 +351,7 @@ public class SettingsConfiguration extends Configuration {
                         .replace("%count%", "" + Bukkit.getOnlinePlayers().size())
                         .replace("%power%", "N/A")
                         .replace("%claims%", "N/A")
+                        .replace("%online%", "" + Bukkit.getOnlinePlayers().size())
                         .replace("\\n", "\n");
             }
         }

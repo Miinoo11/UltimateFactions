@@ -11,8 +11,8 @@ import de.miinoo.factions.events.FactionClaimChunkEvent;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.FactionChunk;
 import de.miinoo.factions.model.RankPermission;
-import de.miinoo.factions.util.RegionUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
@@ -48,6 +48,16 @@ public class ClaimCommand extends PlayerCommand {
         if (FactionsSystem.getRegionUtil().isInRegion(player)) {
             player.sendMessage(ErrorMessage.Claim_Error_Region.getMessage());
             return true;
+        }
+
+        for(String s : FactionsSystem.getSettings().getClaimDisabledWorlds()) {
+            World world = Bukkit.getWorld(s);
+            if(world != null) {
+                if(player.getWorld().equals(world)) {
+                    player.sendMessage(ErrorMessage.Claim_Error_World.getMessage());
+                    return true;
+                }
+            }
         }
 
         if (faction.getClaimed().size() == FactionsSystem.getFactionLevels().getMaxClaims(faction.getLevel())) {

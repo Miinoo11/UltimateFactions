@@ -14,12 +14,16 @@ public class FactionUnclaimChunkEvent extends Event {
     Faction faction;
 
     /**
-     * @param player who claimed a chunk
+     * @param player who unclaimed a chunk
      * @param faction the chunk is owned by
      *
      */
     public FactionUnclaimChunkEvent(Player player, Faction faction) {
         this.player = player;
+        this.faction = faction;
+    }
+
+    public FactionUnclaimChunkEvent(Faction faction) {
         this.faction = faction;
     }
 
@@ -32,7 +36,7 @@ public class FactionUnclaimChunkEvent extends Event {
     }
 
     /**
-     * @return chunk the faction has claimed
+     * @return chunk the faction has unclaimed
      */
     public Chunk getChunk() {
         return player.getLocation().getChunk();

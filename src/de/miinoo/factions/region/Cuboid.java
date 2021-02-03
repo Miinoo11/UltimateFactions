@@ -1,4 +1,4 @@
-package de.miinoo.factions.model;
+package de.miinoo.factions.region;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;

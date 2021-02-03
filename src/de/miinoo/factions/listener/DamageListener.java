@@ -3,9 +3,11 @@ package de.miinoo.factions.listener;
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
+import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.model.ColorHelper;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.RankPermission;
+import de.miinoo.factions.region.Region;
 import de.miinoo.factions.util.RegionUtil;
 import de.miinoo.factions.util.ScoreboardUtil;
 import org.bukkit.Bukkit;
@@ -69,6 +71,20 @@ public class DamageListener implements Listener {
                         }
                     }
                 }
+
+                // Flag listener
+                if (event.getEntity() instanceof Player) {
+                    Player player = (Player) event.getEntity();
+                    if (FactionsSystem.getRegionUtil().isInRegion(player)) {
+                        Region region = FactionsSystem.getRegionUtil().getRegion(player.getLocation());
+                        if (region.hasFlag("disable-pvp")) {
+                            if (!player.hasPermission("ultimatefactions.regionflag.bypass")) {
+                                event.setCancelled(true);
+                                damager.sendMessage(OtherMessages.PvP_Disabled_In_Region.getMessage());
+                            }
+                        }
+                    }
+                }
             }
         } else if (event.getDamager() instanceof Projectile) {
             if (event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
@@ -96,6 +112,17 @@ public class DamageListener implements Listener {
                                 }
                             }
                         }
+
+                        // Flag listener
+                        if (FactionsSystem.getRegionUtil().isInRegion(player)) {
+                            Region region = FactionsSystem.getRegionUtil().getRegion(player.getLocation());
+                            if (region.hasFlag("disable-pvp")) {
+                                if (!player.hasPermission("ultimatefactions.regionflag.bypass")) {
+                                    event.setCancelled(true);
+                                    shooter.sendMessage(OtherMessages.PvP_Disabled_In_Region.getMessage());
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -111,11 +138,11 @@ public class DamageListener implements Listener {
             return;
         }
 
-        if(FactionsSystem.getRegionUtil().isInRegion(player)) {
+        if (FactionsSystem.getRegionUtil().isInRegion(player)) {
             return;
         }
 
-        if(FactionsSystem.getRegionUtil().isInDisabledWorld(player)) {
+        if (FactionsSystem.getRegionUtil().isInDisabledWorld(player)) {
             return;
         }
 
@@ -130,7 +157,7 @@ public class DamageListener implements Listener {
 
                     if (FactionsSystem.getSettings().enableTablist()) {
                         FactionsSystem.adapter.sendTabListHeaderFooter(killer, ColorHelper.colorize(FactionsSystem.getSettings().tabHeader(killer)),
-                            ColorHelper.colorize(FactionsSystem.getSettings().tabFooter(killer)));
+                                ColorHelper.colorize(FactionsSystem.getSettings().tabFooter(killer)));
                     }
                 }
 

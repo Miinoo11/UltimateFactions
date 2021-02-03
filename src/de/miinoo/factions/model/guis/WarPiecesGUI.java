@@ -11,6 +11,8 @@ import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.WarPiece;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
+
 /**
  * @author Mino
  * 03.05.2020
@@ -19,12 +21,11 @@ public class WarPiecesGUI extends GUI {
 
     private Factions factions = FactionsSystem.getFactions();
 
-    public WarPiecesGUI(Player player, Faction faction) {
+    public WarPiecesGUI(Player player, Faction faction, GUI gui) {
         super(player, "WarPieces", 27);
 
-        addElement(0, new GUIArea(9, 3).fill(0, 0, 9, 1, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName(" ").getItem()))
-                .fill(0, 2, 9, 3, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
-
+        addElement(0, new GUIArea(9, 3).
+                fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
 
         UIList<WarPiece> list1 = new GUIList<WarPiece>(9, 1, faction.getWarPieces(), warPiece -> new GUIItem(Items.createItem(XMaterial.SLIME_BALL.parseMaterial())
                 .setDisplayName("§c" + factions.getFaction(warPiece.getUuid()).getName())
@@ -37,9 +38,11 @@ public class WarPiecesGUI extends GUI {
         addElement(9, list1);
 
         if (faction.getWarPieces().size() > 9) {
-            addElement(19, new GUIScrollBar(GUIScrollBar.HORIZONTAL, 7, list1,
-                    new GUIItem(Items.createSkull("MHF_ArrowLeft").setDisplayName(GUITags.Back.getMessage()).getItem()),
+            addElement(size - 6, new GUIScrollBar(GUIScrollBar.HORIZONTAL, 3, list1,
+                    new GUIItem(Items.createSkull("MHF_ArrowLeft").setDisplayName(GUITags.Previous.getMessage()).getItem()),
                     new GUIItem(Items.createSkull("MHF_ArrowRight").setDisplayName(GUITags.Next.getMessage()).getItem())));
         }
+
+        addElement(getInventory().getSize() - 9, new GUIItem(Items.createBackArrow().setDisplayName(GUITags.Back.getMessage()).getItem(), () -> gui.open()));
     }
 }

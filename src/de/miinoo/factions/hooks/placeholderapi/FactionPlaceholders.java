@@ -1,6 +1,5 @@
 package de.miinoo.factions.hooks.placeholderapi;
 
-import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.model.Faction;

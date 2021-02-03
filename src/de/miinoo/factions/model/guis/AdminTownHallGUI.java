@@ -30,7 +30,7 @@ public class AdminTownHallGUI extends GUI {
 
     private Factions factions = FactionsSystem.getFactions();
 
-    public AdminTownHallGUI(Player player, Faction faction) {
+    public AdminTownHallGUI(Player player, Faction faction, GUI gui) {
         super(player, "Townhall options", 27);
 
         addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
@@ -69,5 +69,7 @@ public class AdminTownHallGUI extends GUI {
             player.sendMessage(SuccessMessage.Successfully_Removed_TownHall.getMessage());
             close();
         }));
+
+        addElement(getInventory().getSize() - 9, new GUIItem(Items.createBackArrow().setDisplayName(GUITags.Back.getMessage()).getItem(), () -> gui.open()));
     }
 }

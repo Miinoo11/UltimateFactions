@@ -31,7 +31,7 @@ public class AlliesCommand extends PlayerCommand {
             return true;
         }
 
-        new AlliesGUI(player, faction).open();
+        new AlliesGUI(player, faction, null).open();
 
         return true;
     }

@@ -4,7 +4,9 @@ import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.commands.subcommands.SiegeCMD;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
+import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.model.*;
+import de.miinoo.factions.region.Region;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -41,6 +43,17 @@ public class BuildListener implements Listener {
             Faction faction = FactionsSystem.getFactions().getFaction(new FactionChunk(chunk.getWorld(), chunk.getX(), chunk.getZ()));
             check(faction, player, ErrorMessage.Place_Error.getMessage(), event);
         }
+
+        // Flag listener
+        if(FactionsSystem.getRegionUtil().isInRegion(event.getBlock().getLocation())) {
+            Region region = FactionsSystem.getRegionUtil().getRegion(event.getBlock().getLocation());
+            if(region.hasFlag("disable-place")) {
+                if(!player.hasPermission("ultimatefactions.regionflag.bypass")) {
+                    event.setCancelled(true);
+                    player.sendMessage(OtherMessages.Region_Disabled_Action.getMessage());
+                }
+            }
+        }
     }
 
     @EventHandler
@@ -51,6 +64,17 @@ public class BuildListener implements Listener {
         if (FactionsSystem.getFactions().isClaimedChunk(chunk)) {
             Faction faction = FactionsSystem.getFactions().getFaction(new FactionChunk(chunk.getWorld(), chunk.getX(), chunk.getZ()));
             check(faction, player, ErrorMessage.Break_Error.getMessage(), event);
+        }
+
+        // Flag listener
+        if(FactionsSystem.getRegionUtil().isInRegion(event.getBlock().getLocation())) {
+            Region region = FactionsSystem.getRegionUtil().getRegion(event.getBlock().getLocation());
+            if(region.hasFlag("disable-break")) {
+                if(!player.hasPermission("ultimatefactions.regionflag.bypass")) {
+                    event.setCancelled(true);
+                    player.sendMessage(OtherMessages.Region_Disabled_Action.getMessage());
+                }
+            }
         }
     }
 

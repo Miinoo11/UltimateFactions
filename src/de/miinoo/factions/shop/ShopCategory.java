@@ -78,7 +78,7 @@ public class ShopCategory implements ConfigurationSerializable {
         result.put("name", name);
         result.put("lore", lore);
         result.put("icon", icon);
-        result.put("items", new ArrayList<>(items));
+        result.put("items", items);
         return result;
     }
 }

@@ -1,0 +1,16 @@
+# You can add more lines by your own!
+# if you want to use blank lines, make sure you add a &r on each new blank line
+# Example: &r&r -> &r&r&r
+# PlaceHolderAPI Supported!
+Scoreboard:
+  Header: "&b&lScoreboard"
+  Lines:
+    - "&r"
+    - "&l&f&m    &r&e&lOnline&l&f&m    "
+    - "&7%online%"
+    - "&r&r"
+    - "&l&f&m    &r&e&lFaction&l&f&m    "
+    - "&7%faction%"
+    - "&r&r&r"
+    - "&l&f&m    &r&e&lPower&l&f&m    "
+    - "&7%power%"

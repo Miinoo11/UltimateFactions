@@ -9,6 +9,7 @@ import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
+import de.miinoo.factions.events.FactionChangeNameEvent;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.RankPermission;
 import de.miinoo.factions.util.ScoreboardUtil;
@@ -67,6 +68,7 @@ public class SetNameCommand extends PlayerCommand {
 
         Bukkit.getOnlinePlayers().forEach(p -> FactionsSystem.adapter.sendScoreboard(p));
 
+        Bukkit.getPluginManager().callEvent(new FactionChangeNameEvent(player, faction, faction.getName(), args.get(0)));
         faction.setName(args.get(0));
         factions.saveFaction(faction);
         player.sendMessage(SuccessMessage.Successfully_Set_Name.getMessage().replace("%faction%", args.get(0)));

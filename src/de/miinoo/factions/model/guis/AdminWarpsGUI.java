@@ -1,10 +1,7 @@
 package de.miinoo.factions.model.guis;
 
 import de.miinoo.factions.api.item.Items;
-import de.miinoo.factions.api.ui.gui.GUI;
-import de.miinoo.factions.api.ui.gui.GUIItem;
-import de.miinoo.factions.api.ui.gui.GUIList;
-import de.miinoo.factions.api.ui.gui.GUIScrollBar;
+import de.miinoo.factions.api.ui.gui.*;
 import de.miinoo.factions.api.ui.ui.UIList;
 import de.miinoo.factions.api.xutils.XMaterial;
 import de.miinoo.factions.configuration.messages.GUITags;
@@ -20,19 +17,23 @@ import java.util.Collection;
  */
 public class AdminWarpsGUI extends GUI {
 
-    public AdminWarpsGUI(Player player, Faction faction, Collection<FactionWarp> elements) {
-        super(player, "Warps", elements.size() > 45 ? 54 : (elements.size() >= 0 && elements.size() % 9 == 0 ? elements.size() + 9 : ((elements.size() / 9) + 2) * 9));
+    public AdminWarpsGUI(Player player, Faction faction, Collection<FactionWarp> elements, GUI gui) {
+        super(player, "Warps", 45);
 
-        UIList<FactionWarp> list = new GUIList<FactionWarp>(9, elements.size() > 54 ? 5 : size / 9, elements, factionWarp ->
+        addElement(0, new GUIArea(9, 5).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
+
+        UIList<FactionWarp> list = new GUIList<FactionWarp>(9, 2, elements, factionWarp ->
                 new GUIItem(Items.createItem(XMaterial.ENDER_EYE.parseMaterial()).setDisplayName(GUITags.Admin_Warps_Warp.getMessage().replace("%warp%", factionWarp.getName()))
-                        .setLore(GUITags.Info_Click_Lore.getMessage()).getItem(), () -> new AdminWarpManageGUI(player, faction, factionWarp).open()));
+                        .setLore(GUITags.Info_Click_Lore.getMessage()).getItem(), () -> new AdminWarpManageGUI(player, faction, factionWarp, this).open()));
 
-        addElement(0, list);
+        addElement(9, list);
 
-        if (elements.size() > 54) {
-            addElement(46, new GUIScrollBar(GUIScrollBar.HORIZONTAL, 7, list,
-                    new GUIItem(Items.createSkull("MHF_ArrowLeft").setDisplayName(GUITags.Back.getMessage()).getItem()),
+        if (elements.size() > 17) {
+            addElement(size - 6, new GUIScrollBar(GUIScrollBar.HORIZONTAL, 3, list,
+                    new GUIItem(Items.createSkull("MHF_ArrowLeft").setDisplayName(GUITags.Previous.getMessage()).getItem()),
                     new GUIItem(Items.createSkull("MHF_ArrowRight").setDisplayName(GUITags.Next.getMessage()).getItem())));
         }
+
+        addElement(getInventory().getSize() - 9, new GUIItem(Items.createBackArrow().setDisplayName(GUITags.Back.getMessage()).getItem(), () -> gui.open()));
     }
 }

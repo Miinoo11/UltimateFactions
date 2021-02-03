@@ -33,7 +33,7 @@ public class FactionInfoGUI extends GUI {
             addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
 
             addElement(9, new GUIItem(Items.createSkull(player.getName()).setDisplayName(GUITags.Info_Members.getMessage()).setLore(GUITags.Info_Click_Lore.getMessage()).getItem(), () -> {
-                new PlayersGUI(player, faction).open();
+                new PlayersGUI(player, faction, this).open();
             }));
 
             addElement(slot = 11, element = new DependGUIItem(() -> Items.createItem(XMaterial.OAK_SIGN.parseMaterial()).setDisplayName(GUITags.Info_All.getMessage())
@@ -47,15 +47,15 @@ public class FactionInfoGUI extends GUI {
                             GUITags.Info_Claim_Energy.getMessage().replace("%count%", "" + TimeUtil.convertSeconds(faction.getEnergy()))).getItem()));
 
             addElement(13, new GUIItem(Items.createItem(XMaterial.MUSHROOM_STEW.parseMaterial()).setDisplayName(GUITags.Info_WarPieces.getMessage()).setLore(GUITags.Info_WarPieces_Lore.getMessage()).getItem(), () -> {
-                new WarPiecesGUI(player, faction).open();
+                new WarPiecesGUI(player, faction, this).open();
             }));
 
             addElement(15, new GUIItem(Items.createItem(XMaterial.DIAMOND_CHESTPLATE.parseMaterial()).setDisplayName(GUITags.Info_Ranks.getMessage()).setLore(GUITags.Info_Click_Lore.getMessage()).getItem(), () -> {
-                new RanksGUI(player, faction).open();
+                new RanksGUI(player, faction, this).open();
             }));
 
             addElement(17, new GUIItem(Items.createItem(XMaterial.PAPER.parseMaterial()).setDisplayName(GUITags.Info_Relations.getMessage()).getItem(), () -> {
-                new RelationsGUI(player, faction).open();
+                new RelationsGUI(player, faction, this).open();
             }));
 
         } else {
@@ -71,7 +71,7 @@ public class FactionInfoGUI extends GUI {
                             GUITags.Info_Claim_Energy.getMessage().replace("%count%", "" + TimeUtil.convertSeconds(faction.getEnergy()))).getItem()));
 
             addElement(14, new GUIItem(Items.createItem(XMaterial.PAPER.parseMaterial()).setDisplayName(GUITags.Info_Relations.getMessage()).getItem(), () -> {
-                new RelationsGUI(player, faction).open();
+                new RelationsGUI(player, faction, this).open();
             }));
 
         }

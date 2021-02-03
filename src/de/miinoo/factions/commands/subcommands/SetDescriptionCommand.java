@@ -8,8 +8,11 @@ import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
+import de.miinoo.factions.events.FactionChangeDescriptionEvent;
+import de.miinoo.factions.events.FactionChangeNameEvent;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.RankPermission;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
@@ -42,6 +45,7 @@ public class SetDescriptionCommand extends PlayerCommand {
             msg += args.get(i) + " ";
         }
 
+        Bukkit.getPluginManager().callEvent(new FactionChangeDescriptionEvent(player, faction, faction.getDescription(), msg));
         faction.setDescription(msg);
         factions.saveFaction(faction);
         player.sendMessage(SuccessMessage.Successfully_Set_Description.getMessage().replace("%faction%", faction.getName()).replace("%description%", msg));

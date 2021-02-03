@@ -28,7 +28,7 @@ public class RanksCommand extends PlayerCommand {
         }
 
         Faction faction = FactionsSystem.getFactions().getFaction(player);
-        RanksGUI gui = new RanksGUI(player, faction);
+        RanksGUI gui = new RanksGUI(player, faction, null);
         gui.open();
 
         return true;

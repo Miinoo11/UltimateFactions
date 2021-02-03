@@ -29,7 +29,7 @@ public class EnergyCommand extends PlayerCommand {
             return true;
         }
 
-        new EnergyGUI(player, faction).open();
+        new EnergyGUI(player, faction, null).open();
         return true;
     }
 }

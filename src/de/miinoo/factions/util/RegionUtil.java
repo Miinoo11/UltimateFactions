@@ -4,7 +4,7 @@ import de.miinoo.factions.api.item.Items;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.api.xutils.XMaterial;
 import de.miinoo.factions.configuration.messages.GUITags;
-import de.miinoo.factions.model.Region;
+import de.miinoo.factions.region.Region;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -28,6 +28,20 @@ public class RegionUtil {
             return region.getCuboid().contains(player.getLocation());
         }
         return false;
+    }
+
+    public boolean isInRegion(Location location) {
+        for(Region region : FactionsSystem.getRegions().getRegions()) {
+            return region.getCuboid().contains(location);
+        }
+        return false;
+    }
+
+    public Region getRegion(Location location) {
+        for(Region region : FactionsSystem.getRegions().getRegions()) {
+            if(region.getCuboid().contains(location)) return region;
+        }
+        return null;
     }
 
     public boolean isInDisabledWorld(Player player) {

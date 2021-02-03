@@ -20,38 +20,40 @@ public class TeleportListener implements Listener {
 
     @EventHandler
     public void onTeleport(PlayerTeleportEvent event) {
-        if (event.getCause() != PlayerTeleportEvent.TeleportCause.PLUGIN && event.getCause() != PlayerTeleportEvent.TeleportCause.COMMAND) {
-            return;
-        }
-        if (event.getTo() == null) {
-            return;
-        }
-        Player player = event.getPlayer();
-        Faction chunkFaction = factions.getFaction(event.getTo().getChunk());
-        if (chunkFaction != null) {
-            Faction faction = factions.getFaction(player);
-            if (faction == null) {
-                if (AdminUtil.advancedPermissions.contains(player)) {
+        if(FactionsSystem.getSettings().isTeleportBlocker()) {
+            if (event.getCause() != PlayerTeleportEvent.TeleportCause.PLUGIN && event.getCause() != PlayerTeleportEvent.TeleportCause.COMMAND) {
+                return;
+            }
+            if (event.getTo() == null) {
+                return;
+            }
+            Player player = event.getPlayer();
+            Faction chunkFaction = factions.getFaction(event.getTo().getChunk());
+            if (chunkFaction != null) {
+                Faction faction = factions.getFaction(player);
+                if (faction == null) {
+                    if (AdminUtil.advancedPermissions.contains(player)) {
+                        event.setCancelled(false);
+                        return;
+                    }
+                    player.sendMessage(ErrorMessage.Teleport_Error.getMessage());
+                    event.setCancelled(true);
+                    return;
+                }
+
+                if (chunkFaction.getAlliesRelation().contains(faction.getId()) || chunkFaction.getTrucesRelation().contains(faction.getId())) {
                     event.setCancelled(false);
                     return;
                 }
-                player.sendMessage(ErrorMessage.Teleport_Error.getMessage());
-                event.setCancelled(true);
-                return;
-            }
 
-            if (chunkFaction.getAlliesRelation().contains(faction.getId()) || chunkFaction.getTrucesRelation().contains(faction.getId())) {
-                event.setCancelled(false);
-                return;
-            }
-
-            if (!chunkFaction.getPlayers().contains(player.getUniqueId())) {
-                if (AdminUtil.advancedPermissions.contains(player)) {
-                    event.setCancelled(false);
-                    return;
+                if (!chunkFaction.getPlayers().contains(player.getUniqueId())) {
+                    if (AdminUtil.advancedPermissions.contains(player)) {
+                        event.setCancelled(false);
+                        return;
+                    }
+                    player.sendMessage(ErrorMessage.Teleport_Error.getMessage());
+                    event.setCancelled(true);
                 }
-                player.sendMessage(ErrorMessage.Teleport_Error.getMessage());
-                event.setCancelled(true);
             }
         }
     }

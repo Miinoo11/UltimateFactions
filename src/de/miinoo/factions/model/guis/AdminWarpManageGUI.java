@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
  */
 public class AdminWarpManageGUI extends GUI {
 
-    public AdminWarpManageGUI(Player player, Faction faction, FactionWarp factionWarp) {
+    public AdminWarpManageGUI(Player player, Faction faction, FactionWarp factionWarp, GUI gui) {
         super(player, "Manage Warp", 27);
 
         addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
@@ -45,5 +45,7 @@ public class AdminWarpManageGUI extends GUI {
                         player.sendMessage(SuccessMessage.Successfully_Deleted_Warp.getMessage().replace("%warp%", factionWarp.getName()));
                         FactionsSystem.getFactions().saveFaction(faction);
                     }).open()));
+
+        addElement(getInventory().getSize() - 9, new GUIItem(Items.createBackArrow().setDisplayName(GUITags.Back.getMessage()).getItem(), () -> gui.open()));
     }
 }

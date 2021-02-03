@@ -14,9 +14,11 @@ import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.GUITags;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
 import de.miinoo.factions.model.*;
+import de.miinoo.factions.util.ItemUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -33,7 +35,7 @@ public class CreateRankGUI extends GUI {
     private String prefix;
     private Collection<RankPermissionValue> permissions;
 
-    public CreateRankGUI(Player player, Faction faction, Rank rank) {
+    public CreateRankGUI(Player player, Faction faction, Rank rank, GUI gui) {
         super(player, "Create Rank", 27);
         if(rank != null) {
             material = rank.getMaterial();
@@ -44,10 +46,19 @@ public class CreateRankGUI extends GUI {
             permissions = RankPermission.getValues();
         }
         addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
+
+        //addElement(10, new DependGUIItem(() -> Items.createItem(material).setDisplayName(GUITags.Set_Icon.getMessage()).getItem(),
+        //        () -> new ListGUI<>(player, "Edit Icon", Arrays.asList(RankIcon.values()), icon -> new GUIItem(Items.createItem(icon.getMaterial()).getItem()),
+        //                (player2, list, index, element, event) -> {
+        //                    material = element.getMaterial();
+        //                    open();
+        //                    return true;
+        //                }).open()));
+
         addElement(10, new DependGUIItem(() -> Items.createItem(material).setDisplayName(GUITags.Set_Icon.getMessage()).getItem(),
-                () -> new ListGUI<>(player, "Edit Icon", Arrays.asList(RankIcon.values()), icon -> new GUIItem(Items.createItem(icon.getMaterial()).getItem()),
+                () -> new ListGUI<ItemStack>(player, GUITags.Shop_ChooseIcon.getMessage(), ItemUtil.getItemsAsList(player.getInventory()), icon -> new GUIItem(Items.createItem(icon).getItem()),
                         (player2, list, index, element, event) -> {
-                            material = element.getMaterial();
+                            material = element.getType();
                             open();
                             return true;
                         }).open()));
@@ -97,11 +108,12 @@ public class CreateRankGUI extends GUI {
                             permissions.stream().filter(RankPermissionValue::getValue).map(RankPermissionValue::getPermission).collect(Collectors.toList()));
                     faction.addRank(rank2);
                     FactionsSystem.getFactions().saveFaction(faction);
-                    player.sendMessage(SuccessMessage.Successfully_Created_Rank.getMessage());
+                    player.sendMessage(SuccessMessage.Successfully_Created_Rank.getMessage().replace("%rank%", rank2.getName()));
                 }
                 close();
             }
         }));
 
+        addElement(getInventory().getSize() - 9, new GUIItem(Items.createBackArrow().setDisplayName(GUITags.Back.getMessage()).getItem(), () -> gui.open()));
     }
 }

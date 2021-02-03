@@ -28,7 +28,7 @@ public class AlliesEditGUI extends GUI {
     private Factions factions = FactionsSystem.getFactions();
     private Collection<RelationPermissionValue> permissions;
 
-    public AlliesEditGUI(Player player, Faction faction, Faction ally) {
+    public AlliesEditGUI(Player player, Faction faction, Faction ally, GUI gui) {
         super(player, "Ally: " + ally.getName(), 27);
 
 
@@ -77,5 +77,6 @@ public class AlliesEditGUI extends GUI {
             return true;
         }));
 
+        addElement(getInventory().getSize() - 9, new GUIItem(Items.createBackArrow().setDisplayName(GUITags.Back.getMessage()).getItem(), () -> gui.open()));
     }
 }

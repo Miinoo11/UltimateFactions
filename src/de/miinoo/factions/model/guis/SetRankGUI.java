@@ -1,10 +1,7 @@
 package de.miinoo.factions.model.guis;
 
 import de.miinoo.factions.api.item.Items;
-import de.miinoo.factions.api.ui.gui.GUI;
-import de.miinoo.factions.api.ui.gui.GUIArea;
-import de.miinoo.factions.api.ui.gui.GUIItem;
-import de.miinoo.factions.api.ui.gui.GUIList;
+import de.miinoo.factions.api.ui.gui.*;
 import de.miinoo.factions.api.ui.ui.UIList;
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
@@ -46,5 +43,10 @@ public class SetRankGUI extends GUI {
         }).open()));
 
         addElement(9, list);
+
+        if (faction.getRanks().size() > 9)
+            addElement(size - 7, new GUIScrollBar(GUIScrollBar.HORIZONTAL, 5, list,
+                    new GUIItem(Items.createSkull("MHF_ArrowLeft").setDisplayName(GUITags.Previous.getMessage()).getItem()),
+                    new GUIItem(Items.createSkull("MHF_ArrowRight").setDisplayName(GUITags.Next.getMessage()).getItem())));
     }
 }

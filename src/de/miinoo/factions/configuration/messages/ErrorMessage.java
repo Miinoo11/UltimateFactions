@@ -62,8 +62,7 @@ public enum ErrorMessage {
     Cancelled_Action("&cCancelled!"),
     Chunk_Already_Claimed("&cAlready claimed!"),
     Chunk_Not_Claimed("&cThis chunk is not claimed!"),
-    Claim_Error_Nether("&cYou can't claim a chunk in the nether!"),
-    Claim_Error_End("&cYou can't claim a chunk in the end!"),
+    Claim_Error_World("You can't claim a chunk in this world!"),
     Claim_Error_Region("&cYou can't claim this chunk because it is in a blocked region!"),
     Chunk_Not_Connected("&cThis chunk is not connected with your faction!"),
     Not_Your_Chunk("&cThis chunk is not yours!"),
@@ -146,6 +145,8 @@ public enum ErrorMessage {
     Shop_Add_Item_Item_Error("&aPlease choose a item!"),
     Shop_Enabled_Error("&cThe shop function is disabled!"),
     Shop_Sell_Item_Error("&cYou don't have this item in your inventory!"),
+
+    Region_Name_Empty("&cThe region name can't be empty!")
     ;
 
     private String message;

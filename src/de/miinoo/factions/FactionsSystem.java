@@ -19,6 +19,9 @@ import de.miinoo.factions.hooks.bstats.Metrics;
 import de.miinoo.factions.hooks.placeholderapi.FactionPlaceholders;
 import de.miinoo.factions.listener.*;
 import de.miinoo.factions.model.*;
+import de.miinoo.factions.region.Cuboid;
+import de.miinoo.factions.region.Flag;
+import de.miinoo.factions.region.Region;
 import de.miinoo.factions.shop.ShopCategory;
 import de.miinoo.factions.shop.ShopItem;
 import de.miinoo.factions.updatechecker.UpdateChecker;
@@ -26,7 +29,6 @@ import de.miinoo.factions.util.RegionUtil;
 import de.miinoo.factions.util.ResourceUtil;
 import de.miinoo.factions.util.TopUtil;
 import net.milkbowl.vault.economy.Economy;
-import org.apache.logging.log4j.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -36,6 +38,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
@@ -60,6 +64,7 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
     private static RegionUtil regionUtil;
     private static ServerVersion version;
     private static FactionChestsConfiguration chestsConfiguration;
+    private static ScoreboardConfiguration scoreboardConfiguration;
 
     private final Map<String, Command> commands = new HashMap<>();
 
@@ -104,6 +109,9 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
         return factionLevels;
     }
     public static FactionChestsConfiguration getChestsConfiguration() { return chestsConfiguration; }
+    public static ScoreboardConfiguration getScoreboardConfiguration() {
+        return scoreboardConfiguration;
+    }
 
     private Command command;
 
@@ -118,6 +126,7 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
         ConfigurationSerialization.registerClass(Townhall.class);
         ConfigurationSerialization.registerClass(FactionWarp.class);
         ConfigurationSerialization.registerClass(Region.class);
+        ConfigurationSerialization.registerClass(Flag.class);
         ConfigurationSerialization.registerClass(Cuboid.class);
         ConfigurationSerialization.registerClass(FactionLevel.class);
         ConfigurationSerialization.registerClass(ShopItem.class);
@@ -164,6 +173,10 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
         file = new File(getDataFolder(), "faction_levels.yml");
         ResourceUtil.createAndWrite("/faction_levels.yml", file);
         factionLevels = new FactionLevelConfiguration(file);
+
+        file = new File(getDataFolder(), "scoreboard.yml");
+        ResourceUtil.createAndWrite("/scoreboard.yml", file);
+        scoreboardConfiguration = new ScoreboardConfiguration(file);
 
         bank = new BankConfiguration(this, "bank.yml", "");
         bank.initFile();
@@ -217,9 +230,22 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
         checkDynMap();
 
         // Loading Addons
+        loadAddons();
 
+        // starting count for the potion upgrades
+        startPotionEffectCount();
+
+    }
+
+    @Override
+    public void onDisable() {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.closeInventory();
+        }
+    }
+
+    private void loadAddons() {
         Collection<FactionsAddon> addons = AddonLoader.loadAddons(new File(getDataFolder(), "/addons"));
-
         addons.forEach(addon -> {
             addon.onEnable(FactionsSystem.this);
             Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a[FactionsAddon] loaded " + addon.getName()));
@@ -242,13 +268,6 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
                 }
             }
         }.runTask(this);
-    }
-
-    @Override
-    public void onDisable() {
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            player.closeInventory();
-        }
     }
 
     private void startRegenCount() {
@@ -280,6 +299,37 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
                 i++;
             }
         }.runTaskTimerAsynchronously(plugin, 20, 20);
+    }
+
+    private void startPotionEffectCount() {
+        new BukkitRunnable() {
+            int i = 0;
+
+            @Override
+            public void run() {
+                i++;
+                if(i == 5) {
+                    for(Player player : Bukkit.getOnlinePlayers()) {
+                        Faction faction = FactionsSystem.getFactions().getFaction(player);
+                        if(faction != null) {
+                            if(FactionsSystem.getFactionLevels().isEffectsEnabled(faction.getLevel())) {
+                                for(FactionChunk factionChunk : faction.getClaimed()) {
+                                    if(player.getLocation().getChunk().equals(factionChunk.getBukkitChunk())) {
+                                        for(String effect : FactionsSystem.getFactionLevels().getEffects(faction.getLevel())) {
+                                            PotionEffectType potionType = PotionEffectType.getByName(effect);
+                                            if(potionType != null) {
+                                                player.addPotionEffect(new PotionEffect(potionType, 200, 0));
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    i = 0;
+                }
+            }
+        }.runTaskTimer(this, 20, 20);
     }
 
     private boolean setupEconomy() {

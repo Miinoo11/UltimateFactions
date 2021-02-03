@@ -19,7 +19,7 @@ public class ListCommand extends PlayerCommand {
 
     @Override
     public boolean execute(Player player, ArgumentParser args) {
-        new FactionsGUI(player).open();
+        new FactionsGUI(player, null).open();
         return true;
     }
 }

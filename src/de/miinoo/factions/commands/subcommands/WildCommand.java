@@ -80,7 +80,7 @@ public class WildCommand extends PlayerCommand {
         }
         final int maxX = FactionsSystem.getSettings().wildMaxX();
         final int maxZ = FactionsSystem.getSettings().wildMaxZ();
-        final TeleportHandler teleportHandler = new TeleportHandler(FactionsSystem.getPlugin(), player, player.getWorld(), maxX, maxZ);
+        final TeleportHandler teleportHandler = new TeleportHandler(FactionsSystem.getPlugin(), player, FactionsSystem.getSettings().getWildTeleportWorld(), maxX, maxZ);
         teleportHandler.teleport();
     }
 

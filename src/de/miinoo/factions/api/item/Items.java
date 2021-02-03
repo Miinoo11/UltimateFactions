@@ -10,6 +10,7 @@ import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
 import de.miinoo.factions.api.xutils.SkullUtils;
 import de.miinoo.factions.api.xutils.XMaterial;
+import de.miinoo.factions.configuration.messages.GUITags;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;

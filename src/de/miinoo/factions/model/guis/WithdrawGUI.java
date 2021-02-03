@@ -6,6 +6,7 @@ import de.miinoo.factions.api.ui.ui.UIElement;
 import de.miinoo.factions.api.ui.ui.UIList;
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
+import de.miinoo.factions.api.xutils.XMaterial;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.GUITags;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
@@ -27,12 +28,14 @@ public class WithdrawGUI extends GUI {
     private Factions factions = FactionsSystem.getFactions();
     private final BukkitTask updater;
 
-    public WithdrawGUI(Player player, Faction faction, Collection<Material> elements) {
-        super(player, "Withdraw", elements.size() > 45 ? 54 : (elements.size() >= 0 && elements.size() % 9 == 0 ? elements.size() + 9 : ((elements.size() / 9) + 2) * 9));
+    public WithdrawGUI(Player player, Faction faction, Collection<Material> elements, GUI gui) {
+        super(player, "Withdraw", 45);
         UIElement element;
         int slot;
 
-        UIList<Material> list = new GUIList<Material>(9, elements.size() > 54 ? 5 : size / 9, elements, material ->
+        addElement(0, new GUIArea(9, 5).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName(" ").getItem())));
+
+        UIList<Material> list = new GUIList<Material>(9, 3, elements, material ->
                 new DependGUIItem(() -> Items.createItem(material).setLore(
                         GUITags.Bank_Item_Info_Lore.getMessage().replace("%amount%", Integer.toString(formatAmount(faction, material))),
                         GUITags.Bank_Withdraw_1.getMessage(),
@@ -55,7 +58,12 @@ public class WithdrawGUI extends GUI {
                             return false;
                     }
 
-                    if (faction.getBankItemAmount(material) < amount || faction.getBankItemAmount(material) == 0) {
+                    if(faction.getBankItems().get(material) == null) {
+                        player.sendMessage(ErrorMessage.Withdaw_Error.getMessage());
+                        return true;
+                    }
+
+                    if (faction.getBankItemAmount(material) == 0 || faction.getBankItemAmount(material) < amount) {
                         player.sendMessage(ErrorMessage.Withdaw_Error.getMessage());
                         return true;
                     }
@@ -66,16 +74,19 @@ public class WithdrawGUI extends GUI {
                     player.getInventory().addItem(new ItemStack(material, amount));
                     player.sendMessage(SuccessMessage.Successfully_Withdraw.getMessage()
                             .replace("%amount%", Integer.toString(amount))
-                            .replace("%item%", material.getKey().getKey()));
+                            .replace("%item%", material.toString()));
                     return false;
                 }));
-        addElement(slot = 0, element = list);
+        addElement(slot = 9, element = list);
 
-        if (elements.size() > 54) {
-            addElement(46, new GUIScrollBar(GUIScrollBar.HORIZONTAL, 7, list,
-                    new GUIItem(Items.createSkull("MHF_ArrowLeft").setDisplayName(GUITags.Back.getMessage()).getItem()),
+        if (elements.size() > 18) {
+            addElement(size - 6, new GUIScrollBar(GUIScrollBar.HORIZONTAL, 3, list,
+                    new GUIItem(Items.createSkull("MHF_ArrowLeft").setDisplayName(GUITags.Previous.getMessage()).getItem()),
                     new GUIItem(Items.createSkull("MHF_ArrowRight").setDisplayName(GUITags.Next.getMessage()).getItem())));
         }
+
+        addElement(getInventory().getSize() - 9, new GUIItem(Items.createBackArrow().setDisplayName(GUITags.Back.getMessage()).getItem(), () -> gui.open()));
+
         updater = new BukkitRunnable() {
             @Override
             public void run() {

@@ -2,8 +2,6 @@
 # https://www.spigotmc.org/members/kayloot.188238/
 # Do not sell, decompile or leak this plugin
 Settings:
-  Language:
-    identifier: "ENG"
   Other:
     # Maximal length of faction name
     factionNameLenght: 16
@@ -76,6 +74,8 @@ Settings:
       # set to true if a player shouldn't be abled to random teleport into other territories
       # set to false if a player should be abled to random teleport into other territories
       teleport-safe: true
+      # here you can choose a world where the player should be random teleported in.
+      teleport-world: world
       # set the cost for each teleport (using VAULT)
       # set to 0 if you don't want users to pay for a random teleport
       costs: 100
@@ -114,6 +114,9 @@ Settings:
       # set to false if players can choose random chunks over the world to claim
       # set to true if you want players only to claim connected chunks
       connected: true
+      # here you can add worlds where players can't use the /f claim command
+      disabled-worlds:
+        - test
       # default price of the first # chunks
       defaultPrice: 100
       # every # claims the price gets multiplied with the price multiplier
@@ -123,10 +126,16 @@ Settings:
       # timer in days
       energyTimer: 15
       # energy upgrade multiplier = # * amount of claims
+      # this sets the costs of energy for each claim
       energyMultiplier: 50
       flyCommand:
+        # set to true if you want players to use /f fly with a permission
+        # instead of using the faction upgrade
         usePermissionInsteadOfUpgrade: false
         permission: ultimatefactions.claims.fly
+      # set to false if you want that people can tpa or tp into other faction territories
+      # (not recommend)
+      teleport-blocker: true
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     #                                    Power Settings                               #
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -193,15 +202,6 @@ Settings:
       barrel: false
       fillBucket: false
       emptyBucket: false
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-    #                                  Hook Settings                                    #
-    #        here you can enable or disable specific features from hooked plugins       #
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-  Hooks:
-    DynMap:
-      enabled: true
-      # set to disabled if you don#t want to automatically create an area when a faction chunk is claimed
-      createArea: true
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
   #                                   Tablist Settings                                #
   #                        you can use same variables in scoreboard                   #

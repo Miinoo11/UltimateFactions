@@ -1,6 +1,5 @@
 package de.miinoo.factions.configuration.messages;
 
-import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
 import org.bukkit.ChatColor;
 
@@ -16,6 +15,7 @@ public enum OtherMessages {
     Command_CoolDown("&cPlease wait &e%ss &cbefore using this command again!"),
     Entering_Territory("&9Entering territory of &b%faction%"),
     Entering_Wilderness("&2Entering &awilderness"),
+    Entering_Region("&bEntering region &3%region%"),
     Entered_ChatMode("&aSwitched to &9%chat% &achat"),
     Public_Chat("&7[&b%faction%&7] &e%player%&8 : &f"),
     Public_Chat_No_Faction("&7[] &e%player%&8 : &f"),
@@ -50,7 +50,7 @@ public enum OtherMessages {
 
     TopFaction_None("None"),
 
-    Help_HelpCommandHeader("§8§m               §r§8[§c %title%§8 (§e%page%§7/§e%maxpages%§8) ]§m               "),
+    Help_HelpCommandHeader("&8&m               &r&8[&c %title%&8 (&e%page%&7/&e%maxpages%&8) ]&m               "),
     Help_HelpCommand("Shows this view"),
     Help_HelpCommandSyntax("[page]"),
     Help_AlliesCommand("Opens a GUI"),
@@ -78,6 +78,7 @@ public enum OtherMessages {
     Help_InfoCommandSyntax("[faction]"),
     Help_InviteCommand("Invites a player to the faction"),
     Help_InviteCommandSyntax("<player>"),
+    Help_InvitesCommand("Shows your invites"),
     Help_JoinCommand("Joins a faction"),
     Help_JoinCommandSyntax("<faction>"),
     Help_KickCommand("Kicks a player out of your faction"),
@@ -90,6 +91,7 @@ public enum OtherMessages {
     Help_RanksCommand("Opens a GUI"),
     Help_RegionCommand("Sets a region where power and warpiece system is disabled"),
     Help_RegionCommandSyntax("<list> or <create / delete> <name>"),
+    Help_RegionsCommand("Opens a region GUI"),
     Help_ReloadCommand("Reloads the plugin"),
     Help_SetDescriptionCommand("Changes the description of your faction"),
     Help_SetDescriptionCommandSyntax("<description>"),
@@ -118,17 +120,10 @@ public enum OtherMessages {
     Help_WarpCommandSyntax("<name> [password] | list"),
     Help_WildCommand("Teleports you to a random location"),
 
+    PvP_Disabled_In_Region("&cPVP is disabled in this region!"),
+    Region_Disabled_Action("&cThis is not allowed in this region!"),
+
     PlaceHolder_Faction_Not_Found("N/A"),
-    Scoreboard_Header("&b&lScoreboard"),
-    Scoreboard_Line0("&f"),
-    Scoreboard_Line1("&l&f&m    &r&e&lOnline&l&f&m    "),
-    Scoreboard_Line2("&7%online%"),
-    Scoreboard_Line3("&e"),
-    Scoreboard_Line4("&l&f&m    &r&e&lFaction&l&f&m    "),
-    Scoreboard_Line5("&7%faction%"),
-    Scoreboard_Line6("&6"),
-    Scoreboard_Line7("&l&f&m    &r&e&lPower&l&f&m    "),
-    Scoreboard_Line8("&7%power%"),
     ;
 
     private String message;
