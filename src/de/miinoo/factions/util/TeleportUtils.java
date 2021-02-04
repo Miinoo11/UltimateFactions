@@ -1,7 +1,7 @@
 package de.miinoo.factions.util;
 
 
-import de.miinoo.factions.api.xutils.XMaterial;
+import de.miinoo.factions.hooks.xseries.XMaterial;
 import org.bukkit.block.*;
 import org.bukkit.*;
 

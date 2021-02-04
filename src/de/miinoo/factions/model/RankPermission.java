@@ -1,7 +1,7 @@
 package de.miinoo.factions.model;
 
 import de.miinoo.factions.adapter.ServerVersion;
-import de.miinoo.factions.api.xutils.XMaterial;
+import de.miinoo.factions.hooks.xseries.XMaterial;
 import de.miinoo.factions.configuration.messages.GUITags;
 import org.bukkit.Material;
 

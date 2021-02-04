@@ -1,6 +1,6 @@
 package de.miinoo.factions.model;
 
-import de.miinoo.factions.api.xutils.XMaterial;
+import de.miinoo.factions.hooks.xseries.XMaterial;
 import org.bukkit.Material;
 
 import java.util.ArrayList;

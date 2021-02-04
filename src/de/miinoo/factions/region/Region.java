@@ -1,12 +1,11 @@
 package de.miinoo.factions.region;
 
-import de.miinoo.factions.api.xutils.XMaterial;
+import de.miinoo.factions.hooks.xseries.XMaterial;
 import de.miinoo.factions.configuration.messages.GUITags;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Region implements ConfigurationSerializable {
 

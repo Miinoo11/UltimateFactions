@@ -1,20 +1,19 @@
 package de.miinoo.factions.commands.subcommands;
 
 import de.miinoo.factions.adapter.ServerVersion;
-import de.miinoo.factions.api.command.ArgumentParser;
-import de.miinoo.factions.api.command.CommandDescription;
-import de.miinoo.factions.api.command.PlayerCommand;
-import de.miinoo.factions.api.item.Items;
+import de.miinoo.factions.core.command.ArgumentParser;
+import de.miinoo.factions.core.command.CommandDescription;
+import de.miinoo.factions.core.command.PlayerCommand;
+import de.miinoo.factions.core.item.Items;
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
-import de.miinoo.factions.api.xutils.XMaterial;
+import de.miinoo.factions.hooks.xseries.XMaterial;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.GUITags;
 import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
 import de.miinoo.factions.model.*;
 import de.miinoo.factions.model.guis.ConfirmationGUI;
-import net.minecraft.server.v1_10_R1.EntityInsentient;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;

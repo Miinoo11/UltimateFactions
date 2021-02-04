@@ -1,9 +1,9 @@
 package de.miinoo.factions.commands.subcommands;
 
 import com.google.common.collect.Lists;
-import de.miinoo.factions.api.command.ArgumentParser;
-import de.miinoo.factions.api.command.CommandDescription;
-import de.miinoo.factions.api.command.PlayerCommand;
+import de.miinoo.factions.core.command.ArgumentParser;
+import de.miinoo.factions.core.command.CommandDescription;
+import de.miinoo.factions.core.command.PlayerCommand;
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.configuration.messages.OtherMessages;

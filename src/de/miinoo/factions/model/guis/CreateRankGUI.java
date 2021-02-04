@@ -1,15 +1,15 @@
 package de.miinoo.factions.model.guis;
 
-import de.miinoo.factions.api.gui.ListGUI;
-import de.miinoo.factions.api.item.Items;
-import de.miinoo.factions.api.ui.gui.DependGUIItem;
-import de.miinoo.factions.api.ui.gui.GUI;
-import de.miinoo.factions.api.ui.gui.GUIArea;
-import de.miinoo.factions.api.ui.gui.GUIItem;
-import de.miinoo.factions.api.ui.input.AnvilInput;
-import de.miinoo.factions.api.ui.input.GUIInput;
+import de.miinoo.factions.core.gui.ListGUI;
+import de.miinoo.factions.core.item.Items;
+import de.miinoo.factions.core.ui.gui.DependGUIItem;
+import de.miinoo.factions.core.ui.gui.GUI;
+import de.miinoo.factions.core.ui.gui.GUIArea;
+import de.miinoo.factions.core.ui.gui.GUIItem;
+import de.miinoo.factions.core.ui.input.AnvilInput;
+import de.miinoo.factions.core.ui.input.GUIInput;
 import de.miinoo.factions.FactionsSystem;
-import de.miinoo.factions.api.xutils.XMaterial;
+import de.miinoo.factions.hooks.xseries.XMaterial;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.GUITags;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
@@ -20,7 +20,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 

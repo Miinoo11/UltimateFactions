@@ -1,6 +1,6 @@
 package de.miinoo.factions.factionchest;
 
-import de.miinoo.factions.api.ui.gui.GUI;
+import de.miinoo.factions.core.ui.gui.GUI;
 import org.bukkit.entity.Player;
 
 public class FactionChestGUI extends GUI {

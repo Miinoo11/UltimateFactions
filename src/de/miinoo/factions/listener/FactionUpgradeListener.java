@@ -2,19 +2,12 @@ package de.miinoo.factions.listener;
 
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
-import de.miinoo.factions.api.xutils.XBlock;
-import de.miinoo.factions.api.xutils.XMaterial;
 import de.miinoo.factions.model.Faction;
-import de.miinoo.factions.model.FactionChunk;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockGrowEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**

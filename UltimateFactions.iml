@@ -50,7 +50,6 @@
     <orderEntry type="library" name="PlaceholderAPI-2.10.9" level="project" />
     <orderEntry type="library" name="spigot-1.16.3" level="project" />
     <orderEntry type="library" name="spigot-1.16.4" level="project" />
-    <orderEntry type="library" name="UltimateFactionsAPI" level="project" />
-    <orderEntry type="library" name="Holograms-2.13" level="project" />
+    <orderEntry type="library" name="StackMob-2.2.18-SNAPSHOT" level="project" />
   </component>
 </module>

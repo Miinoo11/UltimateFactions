@@ -47,6 +47,8 @@ public class ChatListener implements Listener {
                                     } else if (senderFaction.getAlliesRelation().contains(receiverFaction.getId())) {
                                         all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getAllyColor(), message));
                                     } else if (senderFaction.getEnemyRelation().contains(receiverFaction.getId())) {
+                                        System.out.println("sender: " + senderFaction.getName());
+                                        System.out.println("rec: " + receiverFaction.getName());
                                         all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getEnemyColor(), message));
                                     } else {
                                         all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getDefaultColor(), message));
@@ -70,12 +72,16 @@ public class ChatListener implements Listener {
                             if (receiverFaction != null) {
                                 if (senderFaction.equals(receiverFaction)) {
                                     all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getFactionColor(), message));
+
                                 } else if (senderFaction.getTrucesRelation().contains(receiverFaction.getId())) {
                                     all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getTruceColor(), message));
+
                                 } else if (senderFaction.getAlliesRelation().contains(receiverFaction.getId())) {
                                     all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getAllyColor(), message));
-                                } else if (senderFaction.getEnemyRelation().contains(receiverFaction.getId())) {
+
+                                } else if (receiverFaction.getEnemyRelation().contains(senderFaction.getId())) {
                                     all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getEnemyColor(), message));
+
                                 } else {
                                     all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getDefaultColor(), message));
                                 }
@@ -216,6 +222,14 @@ public class ChatListener implements Listener {
     }
 
     private String extendedFormat(Player sender, Faction senderFaction, String format, String color, String message) {
+        if(FactionsSystem.isPlaceHolderAPIFound) {
+            return PlaceholderAPI.setPlaceholders(sender, format.replace("&", "§")
+                    .replace("%color%", color.replace("&", "§"))
+                    .replace("%faction%", senderFaction.getName())
+                    .replace("%player%", sender.getDisplayName())
+                    .replace("%rank%", senderFaction.getRankOfPlayer(sender.getUniqueId()).getName())
+                    .replace("%message%", message.replace("%", "%%")));
+        }
         return format.replace("&", "§")
                 .replace("%color%", color.replace("&", "§"))
                 .replace("%faction%", senderFaction.getName())

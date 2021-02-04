@@ -1,7 +1,7 @@
 package de.miinoo.factions.configuration.configurations;
 
 import de.miinoo.factions.FactionsSystem;
-import de.miinoo.factions.api.configuration.Configuration;
+import de.miinoo.factions.core.configuration.Configuration;
 import de.miinoo.factions.factionchest.FactionChest;
 import de.miinoo.factions.model.Faction;
 

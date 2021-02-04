@@ -1,9 +1,9 @@
 package de.miinoo.factions.model.guis;
 
-import de.miinoo.factions.api.item.Items;
-import de.miinoo.factions.api.ui.gui.*;
-import de.miinoo.factions.api.ui.ui.UIList;
-import de.miinoo.factions.api.xutils.XMaterial;
+import de.miinoo.factions.core.item.Items;
+import de.miinoo.factions.core.ui.gui.*;
+import de.miinoo.factions.core.ui.ui.UIList;
+import de.miinoo.factions.hooks.xseries.XMaterial;
 import de.miinoo.factions.configuration.messages.GUITags;
 import de.miinoo.factions.model.RelationPermissionValue;
 import org.bukkit.entity.Player;

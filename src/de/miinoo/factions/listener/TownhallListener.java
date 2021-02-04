@@ -3,7 +3,8 @@ package de.miinoo.factions.listener;
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.adapter.ServerVersion;
-import de.miinoo.factions.api.xutils.XMaterial;
+import de.miinoo.factions.events.TownhallDieEvent;
+import de.miinoo.factions.hooks.xseries.XMaterial;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.model.Faction;
@@ -24,6 +25,8 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
+import uk.antiperson.stackmob.StackMob;
+import uk.antiperson.stackmob.api.EntityManager;
 
 /**
  * @author Mino
@@ -58,11 +61,11 @@ public class TownhallListener implements Listener {
                     }
                 }
                 Faction target = factions.getFaction(player);
-                if(target != null) {
-                    if(target.getAlliesRelation().contains(factions.getFactionByTownHallID(entity.getUniqueId()).getId())) {
+                if (target != null) {
+                    if (target.getAlliesRelation().contains(factions.getFactionByTownHallID(entity.getUniqueId()).getId())) {
                         return;
                     }
-                    if(target.getTrucesRelation().contains(factions.getFactionByTownHallID(entity.getUniqueId()).getId())) {
+                    if (target.getTrucesRelation().contains(factions.getFactionByTownHallID(entity.getUniqueId()).getId())) {
                         return;
                     }
                 }
@@ -83,6 +86,7 @@ public class TownhallListener implements Listener {
                     }
                     faction.getTownHall().stopMoveTask();
 
+                    // removing townhall
                     if (ServerVersion.isLegacy()) {
                         for (Entity en : player.getWorld().getEntities()) {
                             if (en.getUniqueId().equals(faction.getTownHall().getEntityUUID())) {
@@ -92,6 +96,7 @@ public class TownhallListener implements Listener {
                     } else {
                         Bukkit.getEntity(faction.getTownHall().getEntityUUID()).remove();
                     }
+                    Bukkit.getPluginManager().callEvent(new TownhallDieEvent(player, faction));
                     faction.removeTownHall();
                     factions.saveFaction(faction);
                 }
@@ -133,7 +138,8 @@ public class TownhallListener implements Listener {
                             try {
                                 player.closeInventory();
                                 new TownHallGUI(player, faction).open();
-                            } catch (IllegalStateException exception) {}
+                            } catch (IllegalStateException exception) {
+                            }
                         }
                     }.runTask(FactionsSystem.getPlugin());
                 }
@@ -168,9 +174,11 @@ public class TownhallListener implements Listener {
                         entity.setCustomName(OtherMessages.TownHall_DisplayName.getMessage().replace("%faction%", faction.getName())
                                 + " §8(§e" + faction.getTownHall().getHealth() + "§7 / §e" + FactionsSystem.getSettings().getDefaultHealth() + "§8)");
                         entity.setSilent(true);
+
                         if (entity instanceof LivingEntity) {
                             ((LivingEntity) entity).setAI(false);
                         }
+
                         if (faction.getTownHall() != null) {
                             faction.getTownHall().setLocation(location);
                             faction.getTownHall().setEntityUUID(entity.getUniqueId());

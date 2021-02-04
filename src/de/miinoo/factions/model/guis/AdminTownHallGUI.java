@@ -1,12 +1,12 @@
 package de.miinoo.factions.model.guis;
 
-import de.miinoo.factions.api.item.Items;
-import de.miinoo.factions.api.ui.gui.GUI;
-import de.miinoo.factions.api.ui.gui.GUIArea;
-import de.miinoo.factions.api.ui.gui.GUIItem;
+import de.miinoo.factions.core.item.Items;
+import de.miinoo.factions.core.ui.gui.GUI;
+import de.miinoo.factions.core.ui.gui.GUIArea;
+import de.miinoo.factions.core.ui.gui.GUIItem;
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
-import de.miinoo.factions.api.xutils.XMaterial;
+import de.miinoo.factions.hooks.xseries.XMaterial;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.GUITags;
 import de.miinoo.factions.configuration.messages.OtherMessages;
@@ -14,13 +14,8 @@ import de.miinoo.factions.configuration.messages.SuccessMessage;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.FactionChunk;
 import de.miinoo.factions.util.ItemUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * @author Mino

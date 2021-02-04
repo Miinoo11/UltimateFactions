@@ -1,11 +1,11 @@
 package de.miinoo.factions.region.guis;
 
-import de.miinoo.factions.api.item.Items;
-import de.miinoo.factions.api.ui.gui.GUI;
-import de.miinoo.factions.api.ui.gui.GUIItem;
-import de.miinoo.factions.api.ui.gui.GUIList;
-import de.miinoo.factions.api.ui.gui.GUIScrollBar;
-import de.miinoo.factions.api.ui.ui.UIList;
+import de.miinoo.factions.core.item.Items;
+import de.miinoo.factions.core.ui.gui.GUI;
+import de.miinoo.factions.core.ui.gui.GUIItem;
+import de.miinoo.factions.core.ui.gui.GUIList;
+import de.miinoo.factions.core.ui.gui.GUIScrollBar;
+import de.miinoo.factions.core.ui.ui.UIList;
 import de.miinoo.factions.configuration.messages.GUITags;
 import de.miinoo.factions.region.Flag;
 import org.bukkit.entity.Player;

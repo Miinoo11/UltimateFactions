@@ -6,11 +6,11 @@ import de.miinoo.factions.adapter.ServerVersion;
 import de.miinoo.factions.addon.AddonLoader;
 import de.miinoo.factions.addon.AddonRegistry;
 import de.miinoo.factions.addon.FactionsAddon;
-import de.miinoo.factions.api.command.Command;
-import de.miinoo.factions.api.command.CommandRegistry;
-import de.miinoo.factions.api.ui.UIs;
-import de.miinoo.factions.api.ui.manager.EmptyLockManager;
-import de.miinoo.factions.api.ui.manager.GUIManager;
+import de.miinoo.factions.core.command.Command;
+import de.miinoo.factions.core.command.CommandRegistry;
+import de.miinoo.factions.core.ui.UIs;
+import de.miinoo.factions.core.ui.manager.EmptyLockManager;
+import de.miinoo.factions.core.ui.manager.GUIManager;
 import de.miinoo.factions.commands.FactionCommand;
 import de.miinoo.factions.configuration.Messages;
 import de.miinoo.factions.configuration.configurations.*;
@@ -19,6 +19,12 @@ import de.miinoo.factions.hooks.bstats.Metrics;
 import de.miinoo.factions.hooks.placeholderapi.FactionPlaceholders;
 import de.miinoo.factions.listener.*;
 import de.miinoo.factions.model.*;
+import de.miinoo.factions.quest.Quest;
+import de.miinoo.factions.quest.QuestDescription;
+import de.miinoo.factions.quest.QuestReward;
+import de.miinoo.factions.quest.QuestType;
+import de.miinoo.factions.quest.rewardtypes.MoneyReward;
+import de.miinoo.factions.quest.types.KillQuest;
 import de.miinoo.factions.region.Cuboid;
 import de.miinoo.factions.region.Flag;
 import de.miinoo.factions.region.Region;
@@ -41,6 +47,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import uk.antiperson.stackmob.StackMob;
+import uk.antiperson.stackmob.api.EntityManager;
 
 import java.io.File;
 import java.util.*;
@@ -65,12 +73,14 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
     private static ServerVersion version;
     private static FactionChestsConfiguration chestsConfiguration;
     private static ScoreboardConfiguration scoreboardConfiguration;
+    private static Quests quests;
 
     private final Map<String, Command> commands = new HashMap<>();
 
     public static FactionsAdapter adapter;
     public static boolean isPlaceHolderAPIFound = false;
     public static boolean isDynMapFound = false;
+    public static boolean isStackMobFound = false;
 
     public static FactionsSystem getPlugin() {
         return plugin;
@@ -112,6 +122,7 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
     public static ScoreboardConfiguration getScoreboardConfiguration() {
         return scoreboardConfiguration;
     }
+    public static Quests getQuests() { return quests; }
 
     private Command command;
 
@@ -132,6 +143,12 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
         ConfigurationSerialization.registerClass(ShopItem.class);
         ConfigurationSerialization.registerClass(ShopCategory.class);
         ConfigurationSerialization.registerClass(FactionChest.class);
+        ConfigurationSerialization.registerClass(Quest.class);
+        ConfigurationSerialization.registerClass(QuestDescription.class);
+        ConfigurationSerialization.registerClass(KillQuest.class);
+        ConfigurationSerialization.registerClass(QuestType.class);
+        ConfigurationSerialization.registerClass(QuestReward.class);
+        ConfigurationSerialization.registerClass(MoneyReward.class);
         plugin = this;
 
         version = ServerVersion.getServerVersion();
@@ -185,6 +202,7 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
 
         factions = new Factions(this);
         regions = new Regions(this);
+        quests = new Quests(this);
 
         regionUtil = new RegionUtil();
 
@@ -227,7 +245,6 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
 
         // Other Hooks
         loadBStats();
-        checkDynMap();
 
         // Loading Addons
         loadAddons();
@@ -371,12 +388,6 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
 
     private void loadBStats() {
         Metrics metrics = new Metrics(getPlugin(), 9794);
-    }
-
-    private void checkDynMap() {
-        if (Bukkit.getPluginManager().getPlugin("dynmap") != null) {
-            isDynMapFound = true;
-        }
     }
 
     @Override

@@ -2,7 +2,7 @@ package de.miinoo.factions.listener;
 
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.adapter.ServerVersion;
-import de.miinoo.factions.api.xutils.XMaterial;
+import de.miinoo.factions.hooks.xseries.XMaterial;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
 import de.miinoo.factions.util.RegionUtil;
 import org.bukkit.block.Block;

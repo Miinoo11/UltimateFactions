@@ -1,6 +1,6 @@
 name: UltimateFactions
 main: de.miinoo.factions.FactionsSystem
-version: 4.0.2
+version: 4.1.1
 api-version: 1.13
 author: Miinoo_
 softdepend:
@@ -11,3 +11,4 @@ depend:
 commands:
   faction:
     aliases: [f]
+

@@ -1,6 +1,6 @@
 package de.miinoo.factions.configuration.configurations;
 
-import de.miinoo.factions.api.configuration.Configuration;
+import de.miinoo.factions.core.configuration.Configuration;
 
 import java.io.File;
 import java.util.List;

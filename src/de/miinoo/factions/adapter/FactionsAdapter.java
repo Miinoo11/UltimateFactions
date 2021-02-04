@@ -1,6 +1,6 @@
 package de.miinoo.factions.adapter;
 
-import de.miinoo.factions.api.ui.ui.AnvilUI;
+import de.miinoo.factions.core.ui.ui.AnvilUI;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 

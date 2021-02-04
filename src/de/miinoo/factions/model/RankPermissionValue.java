@@ -1,6 +1,6 @@
 package de.miinoo.factions.model;
 
-import de.miinoo.factions.api.item.Items;
+import de.miinoo.factions.core.item.Items;
 import org.bukkit.inventory.ItemStack;
 
 /**

@@ -30,6 +30,10 @@ Settings:
     # Set to true if you want people to pay ingame money to create a faction
       enabled: true
       costs: 100.0
+    # Here you can set if a player should get notified in chat if he enteres the territory of [a faction / region / wilderness]
+    # you can edit the messages in the messages.yml file
+    territory:
+      enterMessage: true
   # Set boolean to true if you want to enable faction warps outside a claimed chunk
   Warps:
     outsideFactionChunk: false

@@ -12,6 +12,8 @@ public enum GUITags {
     Back("&eBack"),
     Enabled("&aenabled"),
     Disabled("&cdisabled"),
+    True("&atrue"),
+    False("&cfalse"),
     Create_Rank("&aCreate Rank"),
     Set_Icon("&aSet Icon"),
     Set_Name("&aSet Name"),
@@ -256,6 +258,13 @@ public enum GUITags {
     Permission_Fly("Fly"),
     Permission_Fill("Fill"),
     Permission_Change_Info("Change Info"),
+
+    Quests_Title(""),
+    Quests_Quest("&e%quest%"),
+    Quests_Quest_Lore("&7accepted: %value%\n" +
+                           "&7type: &b%type%\n" +
+                           "&7action: %action%"), // action: %type% %amount% %object%
+
     ;
 
     private String message;

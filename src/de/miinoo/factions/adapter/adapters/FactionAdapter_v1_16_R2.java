@@ -1,8 +1,8 @@
 package de.miinoo.factions.adapter.adapters;
 
 import de.miinoo.factions.adapter.FactionsAdapter;
-import de.miinoo.factions.api.ui.gui.anvil.AnvilGUI_v1_16_R2;
-import de.miinoo.factions.api.ui.ui.AnvilUI;
+import de.miinoo.factions.core.ui.gui.anvil.AnvilGUI_v1_16_R2;
+import de.miinoo.factions.core.ui.ui.AnvilUI;
 import de.miinoo.factions.util.ScoreboardUtil;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;

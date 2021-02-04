@@ -1,8 +1,7 @@
 package de.miinoo.factions.util;
 
-import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.adapter.ServerVersion;
-import de.miinoo.factions.api.xutils.XMaterial;
+import de.miinoo.factions.hooks.xseries.XMaterial;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;

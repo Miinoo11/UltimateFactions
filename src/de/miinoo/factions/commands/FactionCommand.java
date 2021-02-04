@@ -1,10 +1,9 @@
 package de.miinoo.factions.commands;
 
-import de.miinoo.factions.addon.FactionsAddon;
-import de.miinoo.factions.api.command.ArgumentParser;
-import de.miinoo.factions.api.command.Command;
-import de.miinoo.factions.api.command.HelpCommand;
-import de.miinoo.factions.api.command.PlayerCommand;
+import de.miinoo.factions.core.command.ArgumentParser;
+import de.miinoo.factions.core.command.Command;
+import de.miinoo.factions.core.command.HelpCommand;
+import de.miinoo.factions.core.command.PlayerCommand;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.commands.subcommands.*;
 import org.bukkit.entity.Player;
@@ -37,7 +36,7 @@ public class FactionCommand extends PlayerCommand {
         addCommand(new SetRankCommand());
         addCommand(new DisbandCommand());
         addCommand(new ClaimCommand());
-        addCommand(new AutoClaimCommand());
+        //addCommand(new AutoClaimCommand());
         //addCommand(new ChunkSeeCommand());
         addCommand(new UnClaimCommand());
         if(FactionsSystem.getSettings().enableWarps()) {
@@ -73,7 +72,7 @@ public class FactionCommand extends PlayerCommand {
 
         addCommand(new InvitesCommand());
 
-        //addCommand(new TestCommand());
+        addCommand(new TestCommand());
 
 
 

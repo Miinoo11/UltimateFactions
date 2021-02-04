@@ -3,7 +3,7 @@ package de.miinoo.factions.listener;
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.adapter.ServerVersion;
-import de.miinoo.factions.api.xutils.XMaterial;
+import de.miinoo.factions.hooks.xseries.XMaterial;
 import de.miinoo.factions.commands.subcommands.SiegeCMD;
 import de.miinoo.factions.configuration.configurations.SettingsConfiguration;
 import de.miinoo.factions.configuration.messages.ErrorMessage;

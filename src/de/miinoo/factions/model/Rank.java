@@ -1,7 +1,7 @@
 package de.miinoo.factions.model;
 
-import de.miinoo.factions.api.item.Items;
-import de.miinoo.factions.api.xutils.XMaterial;
+import de.miinoo.factions.core.item.Items;
+import de.miinoo.factions.hooks.xseries.XMaterial;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.ItemStack;

@@ -1,10 +1,10 @@
 package de.miinoo.factions.shop.gui;
 
 import de.miinoo.factions.FactionsSystem;
-import de.miinoo.factions.api.item.Items;
-import de.miinoo.factions.api.ui.gui.GUI;
-import de.miinoo.factions.api.ui.gui.GUIItem;
-import de.miinoo.factions.api.ui.gui.GUIList;
+import de.miinoo.factions.core.item.Items;
+import de.miinoo.factions.core.ui.gui.GUI;
+import de.miinoo.factions.core.ui.gui.GUIItem;
+import de.miinoo.factions.core.ui.gui.GUIList;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.GUITags;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
@@ -15,7 +15,6 @@ import de.miinoo.factions.shop.ShopItem;
 import de.miinoo.factions.util.ItemUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;

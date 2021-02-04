@@ -1,29 +1,19 @@
 package de.miinoo.factions.listener;
 
-import de.miinoo.factions.FactionsSystem;
-import de.miinoo.factions.adapter.ServerVersion;
-import de.miinoo.factions.adapter.adapters.FactionAdapter_v1_8_R1;
-import de.miinoo.factions.api.item.Items;
-import de.miinoo.factions.api.xutils.XMaterial;
+import de.miinoo.factions.hooks.xseries.XMaterial;
 import de.miinoo.factions.commands.subcommands.FillCommand;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
-import de.miinoo.factions.util.ItemUtil;
-import net.minecraft.server.v1_8_R1.ChestLock;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
-import org.bukkit.craftbukkit.v1_8_R1.block.CraftBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Miinoo_

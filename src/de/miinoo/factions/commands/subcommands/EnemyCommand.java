@@ -1,8 +1,8 @@
 package de.miinoo.factions.commands.subcommands;
 
-import de.miinoo.factions.api.command.ArgumentParser;
-import de.miinoo.factions.api.command.CommandDescription;
-import de.miinoo.factions.api.command.PlayerCommand;
+import de.miinoo.factions.core.command.ArgumentParser;
+import de.miinoo.factions.core.command.CommandDescription;
+import de.miinoo.factions.core.command.PlayerCommand;
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
@@ -11,6 +11,7 @@ import de.miinoo.factions.configuration.messages.SuccessMessage;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.RankPermission;
 import de.miinoo.factions.model.Relation;
+import de.miinoo.factions.model.RelationPermission;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class EnemyCommand extends PlayerCommand {
             return true;
         }
 
-        faction.getRelations().add(new Relation(enemy.getId(), "enemy", null));
+        faction.getRelations().add(new Relation(enemy.getId(), "enemy", new ArrayList<RelationPermission>()));
         factions.saveFaction(faction);
         player.sendMessage(SuccessMessage.Successfully_Added_Enemy.getMessage().replace("%enemy%", enemy.getName()));
         return true;

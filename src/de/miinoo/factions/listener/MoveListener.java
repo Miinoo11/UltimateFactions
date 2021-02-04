@@ -7,6 +7,8 @@ import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.events.FactionTerritoryEnterEvent;
 import de.miinoo.factions.events.FactionTerritoryLeaveEvent;
+import de.miinoo.factions.events.RegionEnterEvent;
+import de.miinoo.factions.events.RegionLeaveEvent;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.region.Region;
 import org.bukkit.Bukkit;
@@ -52,40 +54,58 @@ public class MoveListener implements Listener {
                 if (!string.equals(faction.getName())) {
                     move.remove(player);
                     move.put(player, faction.getName());
-                    player.sendMessage(OtherMessages.Entering_Territory.getMessage().replace("%faction%", faction.getName()));
+                    if(FactionsSystem.getSettings().sendTerritoryEnterMessages()) {
+                        player.sendMessage(OtherMessages.Entering_Territory.getMessage().replace("%faction%", faction.getName()));
+                    }
                     Bukkit.getPluginManager().callEvent(new FactionTerritoryEnterEvent(player, chunk));
                 }
             } else {
                 move.put(player, faction.getName());
-                player.sendMessage(OtherMessages.Entering_Territory.getMessage().replace("%faction%", faction.getName()));
+                if(FactionsSystem.getSettings().sendTerritoryEnterMessages()) {
+                    player.sendMessage(OtherMessages.Entering_Territory.getMessage().replace("%faction%", faction.getName()));
+                }
                 Bukkit.getPluginManager().callEvent(new FactionTerritoryEnterEvent(player, chunk));
             }
         } else if (FactionsSystem.getRegionUtil().isInRegion(player)) {
             Region region = FactionsSystem.getRegionUtil().getRegion(player.getLocation());
-            if(move.containsKey(player)) {
+            if (move.containsKey(player)) {
                 String string = move.get(player);
-                if(!string.equals(region.getName())) {
+                if (!string.equals(region.getName())) {
                     move.remove(player);
                     move.put(player, region.getName());
-                    player.sendMessage(OtherMessages.Entering_Region.getMessage().replace("%region%", region.getName()));
+                    if(FactionsSystem.getSettings().sendTerritoryEnterMessages()) {
+                        player.sendMessage(OtherMessages.Entering_Region.getMessage().replace("%region%", region.getName()));
+                    }
+                    Bukkit.getPluginManager().callEvent(new RegionEnterEvent(player, FactionsSystem.getRegionUtil().getRegion(player.getLocation())));
                 }
             } else {
                 move.put(player, region.getName());
-                player.sendMessage(OtherMessages.Entering_Region.getMessage().replace("%region%", region.getName()));
+                if(FactionsSystem.getSettings().sendTerritoryEnterMessages()) {
+                    player.sendMessage(OtherMessages.Entering_Region.getMessage().replace("%region%", region.getName()));
+                }
+                Bukkit.getPluginManager().callEvent(new RegionEnterEvent(player, FactionsSystem.getRegionUtil().getRegion(player.getLocation())));
             }
         } else {
             if (move.containsKey(player)) {
                 String string = move.get(player);
                 if (!string.equals("wilderness")) {
+                    for (Region region : FactionsSystem.getRegions().getRegions()) {
+                        if (move.get(player).equals(region.getName())) {
+                            Bukkit.getPluginManager().callEvent(new RegionLeaveEvent(player));
+                        }
+                    }
                     move.remove(player);
                     move.put(player, "wilderness");
-                    player.sendMessage(OtherMessages.Entering_Wilderness.getMessage());
+                    if(FactionsSystem.getSettings().sendTerritoryEnterMessages()) {
+                        player.sendMessage(OtherMessages.Entering_Wilderness.getMessage());
+                    }
                     Bukkit.getPluginManager().callEvent(new FactionTerritoryLeaveEvent(player, chunk));
                 }
             } else {
                 move.put(player, "wilderness");
-                player.sendMessage(OtherMessages.Entering_Wilderness.getMessage());
-                Bukkit.getPluginManager().callEvent(new FactionTerritoryLeaveEvent(player, chunk));
+                if(FactionsSystem.getSettings().sendTerritoryEnterMessages()) {
+                    player.sendMessage(OtherMessages.Entering_Wilderness.getMessage());
+                }
             }
 
             if (FlyCommand.flyList.contains(player.getUniqueId())) {
@@ -137,18 +157,14 @@ public class MoveListener implements Listener {
                     autoclaimStorage.put(player, chunk);
                     Faction chunkFaction = factions.getFaction(chunk);
                     if (chunkFaction == null) {
-                        if (faction != null) {
-                            if (!((FactionsSystem.getEconomy().getBalance(player) - price) >= 0)) {
-                                player.sendMessage(ErrorMessage.Not_Enough_Money.getMessage());
-                                return;
-                            }
-                            FactionsSystem.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask(FactionsSystem.getPlugin(), () -> {
-                                player.performCommand("f claim");
-                            });
-                        }
+                        FactionsSystem.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask(FactionsSystem.getPlugin(), () -> {
+                            player.performCommand("f claim");
+                        });
                     } else {
                         player.sendMessage(ErrorMessage.AutoClaim_Error.getMessage());
                     }
+                } else {
+                    player.sendMessage("still in same chunk");
                 }
             }
         });

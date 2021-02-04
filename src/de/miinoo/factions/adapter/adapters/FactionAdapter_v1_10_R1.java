@@ -1,8 +1,8 @@
 package de.miinoo.factions.adapter.adapters;
 
 import de.miinoo.factions.adapter.FactionsAdapter;
-import de.miinoo.factions.api.ui.gui.anvil.AnvilGUI_v1_10_R1;
-import de.miinoo.factions.api.ui.ui.AnvilUI;
+import de.miinoo.factions.core.ui.gui.anvil.AnvilGUI_v1_10_R1;
+import de.miinoo.factions.core.ui.ui.AnvilUI;
 import de.miinoo.factions.util.ScoreboardUtil;
 import net.minecraft.server.v1_10_R1.EnumParticle;
 import net.minecraft.server.v1_10_R1.IChatBaseComponent;

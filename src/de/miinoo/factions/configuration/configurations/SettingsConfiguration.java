@@ -1,6 +1,6 @@
 package de.miinoo.factions.configuration.configurations;
 
-import de.miinoo.factions.api.configuration.Configuration;
+import de.miinoo.factions.core.configuration.Configuration;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.model.Faction;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -256,6 +256,7 @@ public class SettingsConfiguration extends Configuration {
     public boolean enableChatSystem() { return configuration.getBoolean("Settings.Other.chat-system.enabled"); }
     public boolean useExtendedChatFormat() { return configuration.getBoolean("Settings.Other.extendedChatFormat.enabled"); }
     public boolean enableShop() {return configuration.getBoolean("Settings.Other.enableShop"); }
+    public boolean sendTerritoryEnterMessages() {return configuration.getBoolean("Settings.Other.territory.enterMessage"); }
 
     public String getFactionColor() { return configuration.getString("Settings.Other.extendedChatFormat.factionColor"); }
     public String getAllyColor() { return configuration.getString("Settings.Other.extendedChatFormat.allyColor"); }

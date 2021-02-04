@@ -1,12 +1,12 @@
 package de.miinoo.factions.commands.subcommands;
 
-import de.miinoo.factions.api.command.ArgumentParser;
-import de.miinoo.factions.api.command.CommandDescription;
-import de.miinoo.factions.api.command.PlayerCommand;
-import de.miinoo.factions.api.item.Items;
+import de.miinoo.factions.core.command.ArgumentParser;
+import de.miinoo.factions.core.command.CommandDescription;
+import de.miinoo.factions.core.command.PlayerCommand;
+import de.miinoo.factions.core.item.Items;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.Regions;
-import de.miinoo.factions.api.xutils.XMaterial;
+import de.miinoo.factions.hooks.xseries.XMaterial;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.GUITags;
 import de.miinoo.factions.configuration.messages.OtherMessages;
