@@ -11,10 +11,13 @@ import de.miinoo.factions.configuration.messages.SuccessMessage;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.RankPermission;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -65,9 +68,23 @@ public class SiegeCMD extends PlayerCommand {
             return true;
         }
 
+        if(FactionsSystem.getSettings().getMinPlayerToSiege() > 0) {
+            List<UUID> online = new ArrayList<>();
+            for(UUID uuid : target.getPlayers()) {
+                OfflinePlayer facPlayer = Bukkit.getOfflinePlayer(uuid);
+                if(facPlayer.isOnline()) {
+                    online.add(uuid);
+                }
+            }
+
+            if((online.size() < FactionsSystem.getSettings().getMinPlayerToSiege()) || online.isEmpty()) {
+                player.sendMessage(ErrorMessage.Siege_Online_Error.getMessage());
+                return true;
+            }
+        }
+
         siege.put(faction, target);
         player.sendMessage(SuccessMessage.Successfully_Started_Siege.getMessage().replace("%time%", "" + FactionsSystem.getSettings().getSiegeCount()));
-
 
         for(UUID uuid : target.getPlayers()) {
             Player all = Bukkit.getPlayer(uuid);

@@ -88,6 +88,7 @@ public enum OtherMessages {
     Help_MapCommand("Shows territory map"),
     Help_NeutralCommand("Removes a faction from you relations"),
     Help_NeutralCommandSyntax("<faction>"),
+    Help_QuestsCommand("Opens the quests GUI"),
     Help_RanksCommand("Opens a GUI"),
     Help_RegionCommand("Sets a region where power and warpiece system is disabled"),
     Help_RegionCommandSyntax("<list> or <create / delete> <name>"),

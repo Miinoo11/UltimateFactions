@@ -52,6 +52,11 @@ public enum ServerVersion {
                 || version.equals(VERSION_1_13_R1.toString()) || version.equals(VERSION_1_13_R2.toString());
     }
 
+    public static boolean hasHex() {
+        String version = getServerVersion().toString();
+        return version.equals(VERSION_1_16_R1.toString()) || version.equals(VERSION_1_16_R2.toString()) || version.equals(VERSION_1_16_R3.toString());
+    }
+
     public static ServerVersion getServerVersion() {
         String version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
 

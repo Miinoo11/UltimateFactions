@@ -119,6 +119,16 @@ class ItemCreator implements ItemBuilder {
 		return this;
 	}
 
+	public ItemBuilder addGlow(boolean bool) {
+		if(ServerVersion.is1_8_X()) {
+			meta.addEnchant(Enchantment.DAMAGE_ALL, 0, bool);
+		} else {
+			meta.addEnchant(Enchantment.LURE, 0, bool);
+		}
+		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		return this;
+	}
+
 	public ItemBuilder addGlow() {
 		if(ServerVersion.is1_8_X()) {
 			meta.addEnchant(Enchantment.DAMAGE_ALL, 0, true);

@@ -58,6 +58,8 @@ public enum RankPermission {
     FLY(GUITags.Permission_Fly.getMessage(), XMaterial.FEATHER.parseMaterial()),
     FILL(GUITags.Permission_Fill.getMessage(), XMaterial.TNT_MINECART.parseMaterial()),
     CHANGE_INFO(GUITags.Permission_Change_Info.getMessage(), XMaterial.OAK_SIGN.parseMaterial()),
+    MANAGE_QUESTS(GUITags.Permission_Manage_Quests.getMessage(), XMaterial.PAPER.parseMaterial()),
+    CLAIM_QUESTS(GUITags.Permission_Claim_Quests.getMessage(), XMaterial.CHEST_MINECART.parseMaterial()),
 
     ;
     public static RankPermission forName(String name) {

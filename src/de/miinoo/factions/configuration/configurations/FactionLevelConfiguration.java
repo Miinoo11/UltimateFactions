@@ -24,6 +24,7 @@ public class FactionLevelConfiguration extends Configuration {
     public int getWarpCooldown(int level) { return configuration.getInt(level + ".warp-cooldown");}
     public int getMaxClaims(int level) { return configuration.getInt(level + ".claims"); }
     public double getMobDropMultiplier(int level) { return configuration.getDouble(level + ".mobdrop-multiplier"); }
+    public int getMaxActiveQuests(int level) {return configuration.getInt(level + ".max-active-quests"); }
     public double getGrowSpeedMultiplier(int level) { return configuration.getDouble(level + ".grow-speed"); }
 
     public int maxLevel() { return configuration.getValues(false).size() - 1; }

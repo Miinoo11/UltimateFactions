@@ -109,6 +109,7 @@ public enum ErrorMessage {
     Faction_Not_In_Relation("&cYou are not in a relation with this faction!"),
     Already_Siege_Faction("&cYou are already siege a faction!"),
     Siege_Error("&cYou can't siege this faction! You need at least %needed% WarPieces to do that!"),
+    Siege_Online_Error("&cYou can't siege this faction! This faction needs at least &e%vaule% &conline players!"),
     WarPiece_Error("&cYou have no WarPieces with this faction!"),
     Help_Error("&cThis page does not exist!"),
     Not_Enough_Money("&cYou don't have enough money!"),
@@ -146,7 +147,13 @@ public enum ErrorMessage {
     Shop_Enabled_Error("&cThe shop function is disabled!"),
     Shop_Sell_Item_Error("&cYou don't have this item in your inventory!"),
 
-    Region_Name_Empty("&cThe region name can't be empty!")
+    Region_Name_Empty("&cThe region name can't be empty!"),
+
+    Quest_Max_Reached("&cYou have reached the maximum amount of active quests!"),
+    Quest_Create_Select_First("&cPlease select a quest type first!"),
+    Quest_Create_Missing_Argument("&cPlease fill out each argument!"),
+    Quest_Create_Entity_Not_Found("&cEntity not Found!"),
+    Quest_Create_Item_Not_Found("&cItem not Found!"),
     ;
 
     private String message;

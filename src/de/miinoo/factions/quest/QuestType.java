@@ -1,36 +1,44 @@
 package de.miinoo.factions.quest;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
-public enum QuestType implements ConfigurationSerializable {
+public class QuestType implements ConfigurationSerializable {
 
-    KILL("KILL"),
-    COLLECT("COLLECT"),
-    PLACE("PLACE"),
-    BREAK("BREAK");
-
-
+    private UUID id;
     private String name;
+    private Material icon;
 
-    QuestType(String name) {
-        this.name = name;
+    public QuestType(QuestTypes type) {
+        this.id = UUID.randomUUID();
+        this.name = type.getName();
+        this.icon = type.getIcon();
     }
 
-    QuestType(Map<String, Object> args) {
+    public QuestType(Map<String, Object> args) {
+        this.id = UUID.fromString((String) args.get("id"));
         this.name = (String) args.get("name");
+        this.icon = Material.valueOf((String) args.get("icon"));
     }
 
     public String getName() {
         return name;
     }
 
+    public Material getIcon() {
+        return icon;
+    }
+
     @Override
     public Map<String, Object> serialize() {
         Map<String, Object> result = new HashMap<>();
+        result.put("id", id.toString());
         result.put("name", name);
+        result.put("icon", icon.toString());
         return result;
     }
 }

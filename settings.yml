@@ -61,6 +61,8 @@ Settings:
     enableHome: true
     # enable info scoreboard (right display site)
     enableScoreboard: true
+    # every # seconds the scoreboard will get updated
+    scoreboardUpdateCount: 20
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     #                                FactionsTop Settings                           #
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -175,6 +177,8 @@ Settings:
       maxWarPiece: 25
       # minimum warpieces you can have with a faction
       minWarPiece: -25
+      # minimum of online players of the faction that is getting sieged
+      siegeMinPlayerOnline: 2
       # duration of a siege in minutes
       siegeCount: 30
       # warpieces you need to siege a faction

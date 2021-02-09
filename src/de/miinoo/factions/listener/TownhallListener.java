@@ -3,6 +3,7 @@ package de.miinoo.factions.listener;
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.adapter.ServerVersion;
+import de.miinoo.factions.configuration.messages.GUITags;
 import de.miinoo.factions.events.TownhallDieEvent;
 import de.miinoo.factions.hooks.xseries.XMaterial;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
@@ -127,11 +128,32 @@ public class TownhallListener implements Listener {
         Player player = event.getPlayer();
         Faction faction = factions.getFaction(player);
         if (faction == null) {
+            event.setCancelled(true);
+            if(event.getRightClicked().getCustomName() != null && event.getRightClicked().getCustomName().contains(OtherMessages.TownHall_DisplayName.getMessage().substring(0, 5))) {
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        player.closeInventory();
+                    }
+                }.runTask(FactionsSystem.getPlugin());
+            }
             return;
         }
+
+        if(event.getRightClicked().getCustomName() != null && event.getRightClicked().getCustomName().contains(OtherMessages.TownHall_DisplayName.getMessage().substring(0, 5))) {
+            event.setCancelled(true);
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    player.closeInventory();
+                }
+            }.runTask(FactionsSystem.getPlugin());
+        }
+
         if (faction.getTownHall() != null) {
             if (FactionsSystem.getSettings().townhallIsEnabled()) {
                 if (faction.getTownHall().getEntityUUID().equals(event.getRightClicked().getUniqueId())) {
+                    event.setCancelled(true);
                     new BukkitRunnable() {
                         @Override
                         public void run() {

@@ -51,6 +51,8 @@ public interface ItemBuilder {
 	ItemBuilder removeItemFlags(ItemFlag... flags);
 	
 	ItemBuilder addGlow();
+
+	ItemBuilder addGlow(boolean bool);
 	
 	ItemBuilder If(boolean condition, Consumer<ItemBuilder> action);
 	

@@ -33,6 +33,9 @@ public class ShopBuyGUI extends GUI {
                         .setAmount(item.getAmount())
                         .getItem()).setOnClickListener((player1, item1, event) -> {
 
+                    System.out.println(item.getItemStack());
+                    System.out.println(item1.getItem());
+
                     switch (event.getClick()) {
                         case LEFT:
                             if ((FactionsSystem.getEconomy().getBalance(player) - item.getPrice()) >= 0) {
@@ -57,17 +60,19 @@ public class ShopBuyGUI extends GUI {
                             }
                             break;
                         case RIGHT:
-                            if (!ItemUtil.takeItem(player.getInventory(),item.getItemStack(), item.getAmount())) {
-                                close();
-                                player.sendMessage(ErrorMessage.Shop_Sell_Item_Error.getMessage());
-                                break;
-                            } else {
-                                Bukkit.getPluginManager().callEvent(new ShopSellItemEvent(player, item));
-                                FactionsSystem.getEconomy().depositPlayer(player, item.getSell());
-                                close();
-                                player.sendMessage(SuccessMessage.Successfully_Sold_ShopItem.getMessage()
-                                        .replace("%amount%", String.valueOf(item.getAmount()))
-                                        .replace("%item%", item.getDisplayName()));
+                            if(item.canSell()) {
+                                if (!ItemUtil.takeItem(player.getInventory(),item.getItemStack(), item.getAmount())) {
+                                    close();
+                                    player.sendMessage(ErrorMessage.Shop_Sell_Item_Error.getMessage());
+                                    break;
+                                } else {
+                                    Bukkit.getPluginManager().callEvent(new ShopSellItemEvent(player, item));
+                                    FactionsSystem.getEconomy().depositPlayer(player, item.getSell());
+                                    close();
+                                    player.sendMessage(SuccessMessage.Successfully_Sold_ShopItem.getMessage()
+                                            .replace("%amount%", String.valueOf(item.getAmount()))
+                                            .replace("%item%", item.getDisplayName()));
+                                }
                             }
                             break;
                     }

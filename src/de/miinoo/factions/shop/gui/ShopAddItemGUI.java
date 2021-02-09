@@ -111,7 +111,11 @@ public class ShopAddItemGUI extends GUI {
                 return;
             }
 
-            category.addItem(new ShopItem(item, name, item.getAmount(), description, Double.parseDouble(price), Double.parseDouble(sellPrice), canSell));
+            if(canSell) {
+                category.addItem(new ShopItem(item, name, item.getAmount(), description, Double.parseDouble(price), Double.parseDouble(sellPrice), canSell));
+            } else {
+                category.addItem(new ShopItem(item, name, item.getAmount(), description, Double.parseDouble(price), 0.0, canSell));
+            }
             FactionsSystem.getShopConfiguration().saveCategory(category);
             close();
             player.sendMessage(SuccessMessage.Successfully_Added_ShopItem.getMessage());

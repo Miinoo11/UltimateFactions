@@ -57,11 +57,7 @@ public class ChatListener implements Listener {
                                     all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getDefaultColor(), message));
                                 }
                             } else {
-                                all.sendMessage(settings.getExtendedFormat2()
-                                        .replace("&", "§")
-                                        .replace("%color%", settings.getEnemyColor().replace("&", "§"))
-                                        .replace("%player%", sender.getDisplayName())
-                                        .replace("%message%", message.replace("%", "%%")));
+                                all.sendMessage(extendedFormat2(sender, message));
                             }
                         }
                     }
@@ -89,11 +85,7 @@ public class ChatListener implements Listener {
                                 all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getDefaultColor(), message));
                             }
                         } else {
-                            all.sendMessage(settings.getExtendedFormat2()
-                                    .replace("&", "§")
-                                    .replace("%color%", settings.getDefaultColor().replace("&", "§"))
-                                    .replace("%player%", sender.getDisplayName())
-                                    .replace("%message%", message.replace("%", "%%")));
+                            all.sendMessage(extendedFormat2(sender, message));
                         }
                     }
                 }
@@ -222,20 +214,36 @@ public class ChatListener implements Listener {
     }
 
     private String extendedFormat(Player sender, Faction senderFaction, String format, String color, String message) {
+        final String replace = format.replace("&", "§")
+                .replace("%color%", color.replace("&", "§"));
         if(FactionsSystem.isPlaceHolderAPIFound) {
-            return PlaceholderAPI.setPlaceholders(sender, format.replace("&", "§")
-                    .replace("%color%", color.replace("&", "§"))
+            return PlaceholderAPI.setPlaceholders(sender, replace
                     .replace("%faction%", senderFaction.getName())
                     .replace("%player%", sender.getDisplayName())
                     .replace("%rank%", senderFaction.getRankOfPlayer(sender.getUniqueId()).getName())
                     .replace("%message%", message.replace("%", "%%")));
         }
-        return format.replace("&", "§")
-                .replace("%color%", color.replace("&", "§"))
+        return replace
                 .replace("%faction%", senderFaction.getName())
                 .replace("%player%", sender.getDisplayName())
                 .replace("%rank%", senderFaction.getRankOfPlayer(sender.getUniqueId()).getName())
                 .replace("%message%", message.replace("%", "%%"));
+    }
+
+    private String extendedFormat2(Player sender, String message) {
+        if(FactionsSystem.isPlaceHolderAPIFound) {
+            return PlaceholderAPI.setPlaceholders(sender, settings.getExtendedFormat2()
+                    .replace("&", "§")
+                    .replace("%color%", settings.getEnemyColor().replace("&", "§"))
+                    .replace("%player%", sender.getDisplayName())
+                    .replace("%message%", message.replace("%", "%%")));
+        } else {
+            return settings.getExtendedFormat2()
+                    .replace("&", "§")
+                    .replace("%color%", settings.getEnemyColor().replace("&", "§"))
+                    .replace("%player%", sender.getDisplayName())
+                    .replace("%message%", message.replace("%", "%%"));
+        }
     }
 
 }

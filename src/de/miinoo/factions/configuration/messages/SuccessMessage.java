@@ -72,7 +72,12 @@ public enum SuccessMessage {
     Successfully_Removed_ShopItem("&aSuccessfully removed a ShopItem!"),
     Successfully_Removed_ShopCategory("&aSuccessfully removed a ShopCategory!"),
 
-    Successfully_Edited_Region("&aSuccessfully edited region &e%region%&a!")
+    Successfully_Edited_Region("&aSuccessfully edited region &e%region%&a!"),
+
+    Successfully_Created_Quest("&aSuccessfully created a quest!"),
+    Successfully_Accepted_Quest("&aSuccessfully accepted quest &e%quest%&a!"),
+    Successfully_Claimed_Reward("&aSuccessfully claimed &e%reward% &aof &e%quest%&a!"),
+    Successfully_Completed_Quest("&aYour faction has completed the quest '&e%quest%&a'! You can claim your rewards now!"),
     ;
 
     private String message;

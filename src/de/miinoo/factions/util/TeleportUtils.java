@@ -79,6 +79,7 @@ public class TeleportUtils {
     static {
         (UNSAFE_MATERIALS = new HashSet<Material>()).add(XMaterial.LAVA.parseMaterial());
         TeleportUtils.UNSAFE_MATERIALS.add(XMaterial.FIRE.parseMaterial());
+        TeleportUtils.UNSAFE_MATERIALS.add(XMaterial.WATER.parseMaterial());
         final List<Vector3D> pos = new ArrayList<Vector3D>();
         for (int x = -3; x <= 3; ++x) {
             for (int y = -3; y <= 3; ++y) {

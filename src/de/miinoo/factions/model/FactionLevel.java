@@ -20,6 +20,7 @@ public class FactionLevel implements ConfigurationSerializable {
     int maxClaims;
     int teleportDelay;
     int maxWarps;
+    int maxActiveQuests;
 
     public FactionLevel(int level) {
         this.level = level;
@@ -30,6 +31,7 @@ public class FactionLevel implements ConfigurationSerializable {
         this.maxWarps = FactionsSystem.getFactionLevels().getMaxWarps(level);
         this.maxClaims = FactionsSystem.getFactionLevels().getMaxClaims(level);
         this.teleportDelay = FactionsSystem.getFactionLevels().getWarpCooldown(level);
+        this.maxActiveQuests = FactionsSystem.getFactionLevels().getMaxActiveQuests(level);
     }
 
     public FactionLevel(Map<String, Object> args) {
@@ -40,6 +42,7 @@ public class FactionLevel implements ConfigurationSerializable {
         maxClaims = ((Number) args.get("maxClaims")).intValue();
         teleportDelay = ((Number) args.get("teleportDelay")).intValue();
         maxWarps = ((Number) args.get("maxWarps")).intValue();
+        maxActiveQuests = ((Number) args.get("maxActiveQuests")).intValue();
     }
 
     public int nextLevel() {
@@ -85,6 +88,10 @@ public class FactionLevel implements ConfigurationSerializable {
         return maxWarps;
     }
 
+    public int getMaxActiveQuests() {
+        return maxActiveQuests;
+    }
+
     @Override
     public Map<String, Object> serialize() {
         Map<String, Object> result = new HashMap<>();
@@ -95,6 +102,7 @@ public class FactionLevel implements ConfigurationSerializable {
         result.put("maxClaims", maxClaims);
         result.put("teleportDelay", teleportDelay);
         result.put("maxWarps", maxWarps);
+        result.put("maxActiveQuests", maxActiveQuests);
         return result;
     }
 }

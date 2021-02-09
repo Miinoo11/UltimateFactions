@@ -541,6 +541,8 @@ public class Faction implements ConfigurationSerializable {
         return FactionsSystem.getFactionLevels().hasFill(level);
     }
 
+    public int maxActiveQuests() { return FactionsSystem.getFactionLevels().getMaxActiveQuests(level);}
+
     public int getNextLevel() {
         if (level + 1 <= FactionsSystem.getFactionLevels().maxLevel()) {
             return level + 1;

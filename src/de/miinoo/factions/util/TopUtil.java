@@ -1,12 +1,15 @@
 package de.miinoo.factions.util;
 
+import com.google.common.util.concurrent.AtomicDouble;
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
+import de.miinoo.factions.events.TopFactionUpdateEvent;
 import de.miinoo.factions.hooks.xseries.XMaterial;
 import de.miinoo.factions.configuration.configurations.BankConfiguration;
 import de.miinoo.factions.configuration.messages.GUITags;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.FactionChunk;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -36,49 +39,60 @@ public class TopUtil {
 
     public static void calculate() {
         topFactions.clear();
-        Faction faction = null;
-        for (Faction faction1 : factions.getFactions()) {
-            faction = faction1;
-        }
-        if(faction == null) {
-            return;
-        }
-        for(Faction fac : factions.getFactions()) {
-            fac.getPlacedBlocks().clear();
-            double value = fac.getBank();
-            for (FactionChunk chunk : fac.getClaimed()) {
-                Chunk bukkitChunk = chunk.getBukkitChunk();
-                for (int y = 1; y < 256; ++y) {
-                    for (int x = 0; x < 16; ++x) {
-                        for (int z = 0; z < 16; ++z) {
-                            Block block = bukkitChunk.getBlock(x, y, z);
-                            Material material = block.getType();
-                            if(materials.containsKey(material)) {
-                                value += materials.get(material);
-                                if(fac.getPlacedBlocks().get(material) != null) {
-                                    fac.getPlacedBlocks().replace(material, fac.getPlacedBlocks().get(material) + 1);
-                                } else {
-                                    fac.getPlacedBlocks().put(material, 1);
-                                }
-                            }
-                            if(block.getState() instanceof CreatureSpawner) {
-                                final CreatureSpawner spawner = (CreatureSpawner) block.getState();
-                                if(spawners.containsKey(spawner.getCreatureTypeName().toUpperCase() + "_SPAWNER")) {
-                                    value += spawners.get(spawner.getCreatureTypeName().toUpperCase() + "_SPAWNER");
-                                    if(fac.getPlacedBlocks().get(XMaterial.SPAWNER.parseMaterial()) != null) {
-                                        fac.getPlacedBlocks().replace(XMaterial.SPAWNER.parseMaterial(), fac.getPlacedBlocks().get(XMaterial.SPAWNER.parseMaterial()) + 1);
-                                    } else {
-                                        fac.getPlacedBlocks().put(XMaterial.SPAWNER.parseMaterial(), 1);
+        runAsync(() -> {
+
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    for (Faction fac : factions.getFactions()) {
+                        fac.getPlacedBlocks().clear();
+                        double value = fac.getBank();
+                        for (FactionChunk chunk : fac.getClaimed()) {
+                            Chunk bukkitChunk = chunk.getBukkitChunk();
+                            for (int y = 1; y < 256; ++y) {
+                                for (int x = 0; x < 16; ++x) {
+                                    for (int z = 0; z < 16; ++z) {
+                                        Block block = bukkitChunk.getBlock(x, y, z);
+                                        Material material = block.getType();
+                                        if (materials.containsKey(material)) {
+                                            value += materials.get(material);
+                                            if (fac.getPlacedBlocks().get(material) != null) {
+                                                fac.getPlacedBlocks().replace(material, fac.getPlacedBlocks().get(material) + 1);
+                                            } else {
+                                                fac.getPlacedBlocks().put(material, 1);
+                                            }
+                                        }
+                                        if (block.getState() instanceof CreatureSpawner) {
+                                            final CreatureSpawner spawner = (CreatureSpawner) block.getState();
+                                            if (spawners.containsKey(spawner.getCreatureTypeName().toUpperCase() + "_SPAWNER")) {
+                                                value += spawners.get(spawner.getCreatureTypeName().toUpperCase() + "_SPAWNER");
+                                                if (fac.getPlacedBlocks().get(XMaterial.SPAWNER.parseMaterial()) != null) {
+                                                    fac.getPlacedBlocks().replace(XMaterial.SPAWNER.parseMaterial(), fac.getPlacedBlocks().get(XMaterial.SPAWNER.parseMaterial()) + 1);
+                                                } else {
+                                                    fac.getPlacedBlocks().put(XMaterial.SPAWNER.parseMaterial(), 1);
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
+                        items.put(fac, fac.getPlacedBlocks());
+                        topFactions.put(fac, value);
                     }
                 }
+            }.runTask(FactionsSystem.getPlugin());
+        });
+        Bukkit.getPluginManager().callEvent(new TopFactionUpdateEvent(getTopFactions()));
+    }
+
+    private static void runAsync(final Runnable runnable) {
+        BukkitRunnable r = new BukkitRunnable() {
+            public void run() {
+                runnable.run();
             }
-            items.put(fac, fac.getPlacedBlocks());
-            topFactions.put(fac, value);
-        }
+        };
+        r.runTaskAsynchronously(FactionsSystem.getPlugin());
     }
 
     public static Collection<Faction> getTopFactions() {
@@ -91,22 +105,22 @@ public class TopUtil {
     public static List<String> itemLores(Faction faction) {
         List<String> lores = new ArrayList<>();
         Map<Material, Integer> materialCount = items.get(faction);
-        for(Material material : materials.keySet()) {
-            if(materialCount != null && materialCount.isEmpty()) {
+        for (Material material : materials.keySet()) {
+            if (materialCount != null && materialCount.isEmpty()) {
                 lores.add(GUITags.TopFactions_PlacedBlock_Empty.getMessage());
                 break;
             }
-            if(materialCount.get(material) != null && materialCount.get(material) > 0) {
+            if (materialCount.get(material) != null && materialCount.get(material) > 0) {
                 String mat = material.name();
                 lores.add(GUITags.TopFactions_PlacedBlock.getMessage()
-                        .replace("%block%",mat.substring(0, 1).toUpperCase() + mat.substring(1).toLowerCase())
+                        .replace("%block%", mat.substring(0, 1).toUpperCase() + mat.substring(1).toLowerCase())
                         .replace("%amount%", Integer.toString(materialCount.get(material))));
             }
         }
-        if(materialCount.get(XMaterial.SPAWNER.parseMaterial()) != null && materialCount.get(XMaterial.SPAWNER.parseMaterial()) > 0) {
+        if (materialCount.get(XMaterial.SPAWNER.parseMaterial()) != null && materialCount.get(XMaterial.SPAWNER.parseMaterial()) > 0) {
             String mat = "Spawner";
             lores.add(GUITags.TopFactions_PlacedBlock.getMessage()
-                    .replace("%block%",mat.substring(0, 1).toUpperCase() + mat.substring(1).toLowerCase())
+                    .replace("%block%", mat.substring(0, 1).toUpperCase() + mat.substring(1).toLowerCase())
                     .replace("%amount%", Integer.toString(materialCount.get(XMaterial.SPAWNER.parseMaterial()))));
         }
         return lores;
@@ -115,6 +129,7 @@ public class TopUtil {
     public static void startUpdateTask() {
         updateTask = new BukkitRunnable() {
             int i = (FactionsSystem.getSettings().getTopUpdater() * 60);
+
             @Override
             public void run() {
                 if (i == 0) {
@@ -127,9 +142,10 @@ public class TopUtil {
     }
 
     public static double getFactionValue(Faction faction) {
-        if(topFactions.containsKey(faction)) {
+        if (topFactions.containsKey(faction)) {
             return topFactions.get(faction);
         }
         return 0.0D;
     }
+
 }

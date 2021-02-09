@@ -6,8 +6,10 @@ import de.miinoo.factions.core.command.PlayerCommand;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.OtherMessages;
 import de.miinoo.factions.configuration.messages.SuccessMessage;
+import de.miinoo.factions.events.TopFactionUpdateEvent;
 import de.miinoo.factions.model.guis.TopGUI;
 import de.miinoo.factions.util.TopUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -35,6 +37,7 @@ public class TopCommand extends PlayerCommand {
             }
             if(args.get(0).equalsIgnoreCase("update")) {
                 TopUtil.calculate();
+                Bukkit.getPluginManager().callEvent(new TopFactionUpdateEvent(TopUtil.getTopFactions()));
                 player.sendMessage(SuccessMessage.Successfully_Updated_Top.getMessage());
             }
         }

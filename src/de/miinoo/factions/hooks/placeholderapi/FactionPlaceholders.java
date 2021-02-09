@@ -86,60 +86,60 @@ public class FactionPlaceholders extends PlaceholderExpansion {
             return player.getDisplayName();
         }
         if(s.equals("topfaction_1")) {
-            if(topFactions.get(0) != null) {
+            if(!topFactions.isEmpty() && topFactions.get(0) != null) {
                 return topFactions.get(0).getName();
             }
             return OtherMessages.TopFaction_None.getMessage();
         }
         if(s.equals("topfaction_2")) {
-            if(topFactions.get(1) != null) {
+            if(topFactions.size() > 1 && topFactions.get(1) != null) {
                 return topFactions.get(1).getName();
             }
             return OtherMessages.TopFaction_None.getMessage();
         }
         if(s.equals("topfaction_3")) {
-            if(topFactions.get(2) != null) {
+            if(topFactions.size() > 2 && topFactions.get(2) != null) {
                 return topFactions.get(2).getName();
             }
             return OtherMessages.TopFaction_None.getMessage();
         }
         if(s.equals("topfaction_4")) {
-            if(topFactions.get(3) != null) {
+            if(topFactions.size() > 3 && topFactions.get(3) != null) {
                 return topFactions.get(3).getName();
             }
             return OtherMessages.TopFaction_None.getMessage();
         }
         if(s.equals("topfaction_5")) {
-            if(topFactions.get(4) != null) {
+            if(topFactions.size() > 4 && topFactions.get(4) != null) {
                 return topFactions.get(4).getName();
             }
             return OtherMessages.TopFaction_None.getMessage();
         }
         if(s.equals("topfaction_6")) {
-            if(topFactions.get(5) != null) {
+            if(topFactions.size() > 5 && topFactions.get(5) != null) {
                 return topFactions.get(5).getName();
             }
             return OtherMessages.TopFaction_None.getMessage();
         }
         if(s.equals("topfaction_7")) {
-            if(topFactions.get(6) != null) {
+            if(topFactions.size() > 6 && topFactions.get(6) != null) {
                 return topFactions.get(6).getName();
             }
             return OtherMessages.TopFaction_None.getMessage();
         }
         if(s.equals("topfaction_8")) {
-            if(topFactions.get(7) != null) {
+            if(topFactions.size() > 7 && topFactions.get(7) != null) {
                 return topFactions.get(7).getName();
             }
             return OtherMessages.TopFaction_None.getMessage();
         }
         if(s.equals("topfaction_9")) {
-            if(topFactions.get(8) != null) {
+            if(topFactions.size() > 8 && topFactions.get(8) != null) {
                 return topFactions.get(8).getName();
             }
             return OtherMessages.TopFaction_None.getMessage();
         }
-        if(s.equals("topfaction_10")) {
+        if(topFactions.size() > 9 && s.equals("topfaction_10")) {
             if(topFactions.get(9) != null) {
                 return topFactions.get(9).getName();
             }

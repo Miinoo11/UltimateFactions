@@ -98,6 +98,7 @@ public class SettingsConfiguration extends Configuration {
    // }
     public boolean enableTablist() { return configuration.getBoolean("Settings.Tab.enabled"); }
     public boolean enableScoreboard() { return configuration.getBoolean("Settings.Game.enableScoreboard");}
+    public int getScoreboardUpdateCount() { return configuration.getInt("Settings.Game.scoreboardUpdateCount"); }
 
     // Map Settings
     public String getChatColor(String name) {
@@ -174,6 +175,7 @@ public class SettingsConfiguration extends Configuration {
     public int getPowerRegenCount() { return configuration.getInt("Settings.Game.Power.powerRegenCount");}
 
     // Warpiece Settings
+    public int getMinPlayerToSiege() { return configuration.getInt("Settings.Game.WarPieces.siegeMinPlayerOnline"); }
     public int getSiegePieceNeeded() { return configuration.getInt("Settings.Game.WarPieces.siegePieceNeeded");}
     public int getSiegeCount() { return configuration.getInt("Settings.Game.WarPieces.siegeCount");}
     public int getMinWarPiece() {

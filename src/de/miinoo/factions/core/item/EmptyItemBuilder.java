@@ -110,6 +110,11 @@ final class EmptyItemBuilder implements ItemBuilder {
 	}
 
 	@Override
+	public ItemBuilder addGlow(boolean bool) {
+		return builder;
+	}
+
+	@Override
 	public ItemBuilder If(boolean condition, Consumer<ItemBuilder> action) {
 		return this;
 	}

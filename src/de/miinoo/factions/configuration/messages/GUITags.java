@@ -17,6 +17,7 @@ public enum GUITags {
     Create_Rank("&aCreate Rank"),
     Set_Icon("&aSet Icon"),
     Set_Name("&aSet Name"),
+    Set_Description("&aSet Description"),
     Set_Prefix("&aSet Prefix"),
     Set_Permissions("&aSet Permissions"),
     Rank_Enter_Name("Enter name"),
@@ -258,13 +259,42 @@ public enum GUITags {
     Permission_Fly("Fly"),
     Permission_Fill("Fill"),
     Permission_Change_Info("Change Info"),
+    Permission_Manage_Quests("Manage Quests"),
+    Permission_Claim_Quests("Claim Quest Reward"),
 
-    Quests_Title(""),
+    Quests_Title("Quests"),
+    Quests_Completed_Title("Completed Quests"),
+    Quests_Completed_Quests("&aCompleted Quests"),
     Quests_Quest("&e%quest%"),
-    Quests_Quest_Lore("&7accepted: %value%\n" +
-                           "&7type: &b%type%\n" +
-                           "&7action: %action%"), // action: %type% %amount% %object%
+    Quests_Quest_Completed("&e%quest% &8(&aCompleted&8)"),
+    Quests_Quest_Lore("&7accepted: %value%"),
+    Quests_Quest_Completed_Lore("&7completed: &atrue"),
+    Quests_Quest_Lore1("&7type: &b%type%"),
+    Quests_Quest_Lore_Reward("&7reward: &e%reward%"),
+    Quests_Quest_Completed_Claim_Lore("&7&o- click to claim &ereward &7&o-"),
+    Quests_Quest_Completed_Claim_Lore2("&c&lalready claimed"),
+    Quests_Quest_Lore2("&8&m               "),
+    Quests_Quest_Description("&7%description%"),
+    Quests_Quest_Process("&7process: &b%value%&7 / &3%max%"),
 
+    Quests_Create_Quest_Title("Create Quest"),
+    Quests_Create_Quest("&eCreate Quest"),
+
+    Quest_Type_Kill("Kill"),
+    Quest_Type_Collect("Collect"),
+    Quest_Type_Tame("Tame"),
+
+    Quest_Choose_Icon("Choose Icon"),
+    Quest_Choose_Type("Choose Type"),
+    Quest_Choose_Reward("Choose Choose Reward"),
+    Quest_Enter_Description("Enter description"),
+    Quest_Enter_Name("Enter name"),
+    Quest_Enter_Reward("Enter reward"),
+    Quest_Set_Type("&eSet Type"),
+    Quest_Set_Reward("&eSet reward"),
+    Quest_Set_Action("&eSet Action"),
+    Quest_Enter_Action("<amount>;<type>"),
+    Quest_Reward_Text("&e$%reward%")
     ;
 
     private String message;

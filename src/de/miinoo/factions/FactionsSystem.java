@@ -6,25 +6,24 @@ import de.miinoo.factions.adapter.ServerVersion;
 import de.miinoo.factions.addon.AddonLoader;
 import de.miinoo.factions.addon.AddonRegistry;
 import de.miinoo.factions.addon.FactionsAddon;
+import de.miinoo.factions.commands.FactionCommand;
+import de.miinoo.factions.configuration.Messages;
+import de.miinoo.factions.configuration.configurations.*;
 import de.miinoo.factions.core.command.Command;
 import de.miinoo.factions.core.command.CommandRegistry;
 import de.miinoo.factions.core.ui.UIs;
 import de.miinoo.factions.core.ui.manager.EmptyLockManager;
 import de.miinoo.factions.core.ui.manager.GUIManager;
-import de.miinoo.factions.commands.FactionCommand;
-import de.miinoo.factions.configuration.Messages;
-import de.miinoo.factions.configuration.configurations.*;
 import de.miinoo.factions.factionchest.FactionChest;
 import de.miinoo.factions.hooks.bstats.Metrics;
 import de.miinoo.factions.hooks.placeholderapi.FactionPlaceholders;
 import de.miinoo.factions.listener.*;
 import de.miinoo.factions.model.*;
-import de.miinoo.factions.quest.Quest;
-import de.miinoo.factions.quest.QuestDescription;
-import de.miinoo.factions.quest.QuestReward;
-import de.miinoo.factions.quest.QuestType;
-import de.miinoo.factions.quest.rewardtypes.MoneyReward;
+import de.miinoo.factions.quest.*;
+import de.miinoo.factions.quest.rewards.MoneyReward;
+import de.miinoo.factions.quest.types.CollectQuest;
 import de.miinoo.factions.quest.types.KillQuest;
+import de.miinoo.factions.quest.types.TameQuest;
 import de.miinoo.factions.region.Cuboid;
 import de.miinoo.factions.region.Flag;
 import de.miinoo.factions.region.Region;
@@ -47,8 +46,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import uk.antiperson.stackmob.StackMob;
-import uk.antiperson.stackmob.api.EntityManager;
 
 import java.io.File;
 import java.util.*;
@@ -62,18 +59,19 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
     private static FactionsSystem plugin;
     private static Factions factions;
     private static Regions regions;
+    private static Quests quests;
     private static Messages messages;
     private static SettingsConfiguration settings;
     private static FactionLevelConfiguration factionLevels;
     private static BankConfiguration bank;
     private static ShopConfiguration shop;
+    private static SoundsConfiguration sounds;
     private static Economy economy;
     private static Random random;
     private static RegionUtil regionUtil;
     private static ServerVersion version;
     private static FactionChestsConfiguration chestsConfiguration;
     private static ScoreboardConfiguration scoreboardConfiguration;
-    private static Quests quests;
 
     private final Map<String, Command> commands = new HashMap<>();
 
@@ -88,6 +86,7 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
     public static Factions getFactions() {
         return factions;
     }
+    public static Quests getQuests() { return quests; }
     public static Regions getRegions() {
         return regions;
     }
@@ -102,6 +101,9 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
     }
     public static ShopConfiguration getShopConfiguration() {
         return shop;
+    }
+    public static SoundsConfiguration getSounds() {
+        return sounds;
     }
     public static Economy getEconomy() {
         return economy;
@@ -122,7 +124,6 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
     public static ScoreboardConfiguration getScoreboardConfiguration() {
         return scoreboardConfiguration;
     }
-    public static Quests getQuests() { return quests; }
 
     private Command command;
 
@@ -144,11 +145,13 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
         ConfigurationSerialization.registerClass(ShopCategory.class);
         ConfigurationSerialization.registerClass(FactionChest.class);
         ConfigurationSerialization.registerClass(Quest.class);
-        ConfigurationSerialization.registerClass(QuestDescription.class);
-        ConfigurationSerialization.registerClass(KillQuest.class);
         ConfigurationSerialization.registerClass(QuestType.class);
+        ConfigurationSerialization.registerClass(QuestAction.class);
         ConfigurationSerialization.registerClass(QuestReward.class);
+        ConfigurationSerialization.registerClass(KillQuest.class);
         ConfigurationSerialization.registerClass(MoneyReward.class);
+        ConfigurationSerialization.registerClass(CollectQuest.class);
+        ConfigurationSerialization.registerClass(TameQuest.class);
         plugin = this;
 
         version = ServerVersion.getServerVersion();
@@ -195,6 +198,10 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
         ResourceUtil.createAndWrite("/scoreboard.yml", file);
         scoreboardConfiguration = new ScoreboardConfiguration(file);
 
+        file = new File(getDataFolder(), "sounds.yml");
+        ResourceUtil.createAndWrite("/sounds.yml", file);
+        sounds = new SoundsConfiguration(file);
+
         bank = new BankConfiguration(this, "bank.yml", "");
         bank.initFile();
 
@@ -225,12 +232,19 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
         Bukkit.getPluginManager().registerEvents(new PistonListener(), this);
         Bukkit.getPluginManager().registerEvents(new FillListener(), this);
         Bukkit.getPluginManager().registerEvents(new FactionUpgradeListener(), this);
+        Bukkit.getPluginManager().registerEvents(new QuestListener(), this);
 
         registerCommand(command = new FactionCommand());
 
         // Faction stuff
         startRegenCount();
         updateFactionTop();
+
+        // starting count for the potion upgrades
+        startPotionEffectCount();
+
+        // starting scoreboard updater
+        startScoreboardUpdateCount();
 
         for (Faction faction : factions.getFactions()) {
             faction.startEnergyTask();
@@ -249,15 +263,15 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
         // Loading Addons
         loadAddons();
 
-        // starting count for the potion upgrades
-        startPotionEffectCount();
-
     }
 
     @Override
     public void onDisable() {
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.closeInventory();
+        }
+        for(Quest quest : quests.getQuests()) {
+            quests.saveQuest(quest);
         }
     }
 
@@ -286,6 +300,8 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
             }
         }.runTask(this);
     }
+
+    // Runnables
 
     private void startRegenCount() {
         new BukkitRunnable() {
@@ -349,6 +365,31 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
         }.runTaskTimer(this, 20, 20);
     }
 
+    private void startScoreboardUpdateCount() {
+        new BukkitRunnable() {
+            int i = settings.getScoreboardUpdateCount();
+            @Override
+            public void run() {
+                if(i == 0) {
+                    for(Player all : Bukkit.getOnlinePlayers()) {
+                        if(settings.enableScoreboard()) {
+                            adapter.sendScoreboard(all);
+                        }
+                    }
+                    i = settings.getScoreboardUpdateCount();
+                }
+                i--;
+            }
+        }.runTaskTimer(this, 20, 20);
+    }
+
+    // update top factions
+    private void updateFactionTop() {
+        TopUtil.calculate();
+        TopUtil.startUpdateTask();
+    }
+
+    // Hooks
     private boolean setupEconomy() {
         RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
         if (economyProvider != null) {
@@ -369,6 +410,11 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
         isPlaceHolderAPIFound = true;
     }
 
+    private void loadBStats() {
+        Metrics metrics = new Metrics(getPlugin(), 9794);
+    }
+
+    // UpdateChecker
     private void checkUpdate() {
         new UpdateChecker(getPlugin(), 81103).getVersion(version -> {
             if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
@@ -379,15 +425,6 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
                         "&4[UltimateFactions] There is a new update available! Please download the newer version!"));
             }
         });
-    }
-
-    private void updateFactionTop() {
-        TopUtil.calculate();
-        TopUtil.startUpdateTask();
-    }
-
-    private void loadBStats() {
-        Metrics metrics = new Metrics(getPlugin(), 9794);
     }
 
     @Override

@@ -5,7 +5,6 @@ import de.miinoo.factions.core.configuration.Configuration;
 import de.miinoo.factions.quest.Quest;
 
 import java.util.Collection;
-import java.util.UUID;
 
 public class QuestsConfiguration extends Configuration {
 
@@ -14,15 +13,15 @@ public class QuestsConfiguration extends Configuration {
     }
 
     public void saveQuest(Quest quest) {
-        set(quest.getId().toString(), quest);
+        set(quest.getUuid().toString(), quest);
     }
 
     public void removeQuest(Quest quest) {
-        set(quest.getId().toString(), null);
+        set(quest.getUuid().toString(), null);
     }
 
-    public Quest getQuest(UUID uuid) {
-        return get(uuid.toString(), Quest.class);
+    public Quest getQuest(String name) {
+        return get(name, Quest.class);
     }
 
     public Collection<Quest> getQuests() {

@@ -65,7 +65,7 @@ public class FactionsGUI extends GUI {
 
         addElement(9, list);
 
-        if (factions.getFactions().size() > 9) {
+        if (factions.getFactions().size() > 18) {
             addElement(size - 6, new GUIScrollBar(GUIScrollBar.HORIZONTAL, 3, list,
                     new GUIItem(Items.createSkull("MHF_ArrowLeft").setDisplayName(GUITags.Previous.getMessage()).getItem()),
                     new GUIItem(Items.createSkull("MHF_ArrowRight").setDisplayName(GUITags.Next.getMessage()).getItem())));

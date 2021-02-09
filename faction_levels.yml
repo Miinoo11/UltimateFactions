@@ -22,6 +22,7 @@
 #     enabled: false    # set to true if the effects should be enabled
 #     effects:          # here you can add the effects a player should have
 #       - jump_boost
+#   max-active-quests: 1 # here you can set the maximum amount of active quests a faction can have
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 0:
   cost: 0
@@ -36,7 +37,7 @@
     enabled: false
     effects:
       -
-  grow-speed: 1.0
+  max-active-quests: 1
 1:
   cost: 10000
   fly: false
@@ -50,7 +51,7 @@
     enabled: true
     effects:
       - jump
-  grow-speed: 1.0
+  max-active-quests: 2
 2:
   cost: 150000
   fly: true
@@ -65,4 +66,4 @@
     effects:
       - speed
       - regeneration
-  grow-speed: 1.0
+  max-active-quests: 3
