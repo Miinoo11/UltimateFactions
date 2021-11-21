@@ -10,9 +10,6 @@ import org.bukkit.craftbukkit.v1_14_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_14_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 public class AnvilContainer1_14_4_R1 extends ContainerAnvil {
 
     public AnvilContainer1_14_4_R1(Player player, int containerId, String guiTitle) {
@@ -25,12 +22,14 @@ public class AnvilContainer1_14_4_R1 extends ContainerAnvil {
     @Override
     public void e() {
         super.e();
-        try {
-            Method method = ContainerProperty.class.getMethod("a", Integer.class);
-            method.invoke(levelCost, 0);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
+    }
+
+    @Override
+    public void b(EntityHuman entityhuman) {
+    }
+
+    @Override
+    protected void a(EntityHuman entityhuman, World world, IInventory iinventory) {
     }
 
     public int getContainerId() {

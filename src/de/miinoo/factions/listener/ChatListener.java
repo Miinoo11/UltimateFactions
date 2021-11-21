@@ -4,6 +4,7 @@ import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.commands.subcommands.ChatCommand;
 import de.miinoo.factions.configuration.configurations.SettingsConfiguration;
 import de.miinoo.factions.configuration.messages.OtherMessages;
+import de.miinoo.factions.events.PlayerSendChannelMessageEvent;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.Rank;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -12,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerChatEvent;
 
 import java.util.UUID;
 
@@ -24,7 +26,7 @@ public class ChatListener implements Listener {
     SettingsConfiguration settings = FactionsSystem.getSettings();
 
     @EventHandler
-    public void onChat(AsyncPlayerChatEvent event) {
+    public void onChat(PlayerChatEvent event) {
 
         Player sender = event.getPlayer();
         String message = event.getMessage();
@@ -47,8 +49,6 @@ public class ChatListener implements Listener {
                                     } else if (senderFaction.getAlliesRelation().contains(receiverFaction.getId())) {
                                         all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getAllyColor(), message));
                                     } else if (senderFaction.getEnemyRelation().contains(receiverFaction.getId())) {
-                                        System.out.println("sender: " + senderFaction.getName());
-                                        System.out.println("rec: " + receiverFaction.getName());
                                         all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getEnemyColor(), message));
                                     } else {
                                         all.sendMessage(extendedFormat(sender, senderFaction, settings.getExtendedFormat(), settings.getDefaultColor(), message));
@@ -60,6 +60,8 @@ public class ChatListener implements Listener {
                                 all.sendMessage(extendedFormat2(sender, message));
                             }
                         }
+                        FactionsSystem.getPlugin().getLogger().info(sender.getDisplayName() + ": " + message);
+                        Bukkit.getPluginManager().callEvent(new PlayerSendChannelMessageEvent(event.getPlayer(), "public", message));
                     }
                 } else {
                     for (Player all : Bukkit.getOnlinePlayers()) {
@@ -88,17 +90,20 @@ public class ChatListener implements Listener {
                             all.sendMessage(extendedFormat2(sender, message));
                         }
                     }
+                    FactionsSystem.getPlugin().getLogger().info(sender.getDisplayName() + ": " + message);
+                    Bukkit.getPluginManager().callEvent(new PlayerSendChannelMessageEvent(event.getPlayer(), "public", message));
                 }
             } else {
                 if (ChatCommand.chatMode.containsKey(sender)) {
                     if (ChatCommand.chatMode.get(sender).equalsIgnoreCase("faction")) {
-                        event.setCancelled(true);
                         for (UUID uuid : senderFaction.getPlayers()) {
                             Player all = Bukkit.getPlayer(uuid);
                             if (all != null && all.isOnline()) {
                                 all.sendMessage(factionChat(senderFaction, sender, message));
                             }
                         }
+                        Bukkit.getPluginManager().callEvent(new PlayerSendChannelMessageEvent(event.getPlayer(), "faction", message));
+                        event.setCancelled(true);
                     } else if (ChatCommand.chatMode.get(sender).equalsIgnoreCase("ally")) {
                         event.setCancelled(true);
                         for (UUID uuid : senderFaction.getAlliesRelation()) {
@@ -117,6 +122,7 @@ public class ChatListener implements Listener {
                             if (all != null && all.isOnline())
                                 all.sendMessage(allyChat(senderFaction, sender, message));
                         }
+                        Bukkit.getPluginManager().callEvent(new PlayerSendChannelMessageEvent(event.getPlayer(), "ally", message));
                     } else if (ChatCommand.chatMode.get(sender).equalsIgnoreCase("truce")) {
                         event.setCancelled(true);
                         for (UUID uuid : senderFaction.getTrucesRelation()) {
@@ -136,12 +142,14 @@ public class ChatListener implements Listener {
                                 all.sendMessage(truceChat(senderFaction, sender, message));
                             }
                         }
+                        Bukkit.getPluginManager().callEvent(new PlayerSendChannelMessageEvent(event.getPlayer(), "truce", message));
                     } else if (ChatCommand.chatMode.get(sender).equalsIgnoreCase("public")) {
                         if (senderFaction != null) {
                             event.setFormat(publicChat(senderFaction, sender, message));
                         } else {
                             event.setFormat(publicChatNoFaction(sender, message));
                         }
+                        Bukkit.getPluginManager().callEvent(new PlayerSendChannelMessageEvent(event.getPlayer(), "public", message));
                     }
                 } else {
                     if (senderFaction != null) {
@@ -149,6 +157,7 @@ public class ChatListener implements Listener {
                     } else {
                         event.setFormat(publicChatNoFaction(sender, message));
                     }
+                    Bukkit.getPluginManager().callEvent(new PlayerSendChannelMessageEvent(event.getPlayer(), "public", message));
                 }
             }
         }

@@ -17,8 +17,7 @@ public class ShopRemoveItemGUI extends GUI {
     public ShopRemoveItemGUI(Player player, ShopCategory category) {
         super(player, GUITags.Shop_RemoveItem.getMessage(), 27);
 
-        addElement(0, new GUIArea(9, 4).fill(0, 0, 9, 1, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName(" ").getItem()))
-                .fill(0, 3, 9, 4, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
+        addElement(0, new GUIArea(9, 3).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
 
         UIList<ShopItem> list = new GUIList<ShopItem>(9, 2, category.getItems(), item ->
                 new GUIItem(Items.createItem(item.getItemStack())

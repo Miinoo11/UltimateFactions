@@ -12,6 +12,7 @@ import de.miinoo.factions.model.FactionChunk;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -75,9 +76,15 @@ public class MapCommand extends PlayerCommand {
             header = OtherMessages.Map_Header.getMessage().replace("%faction%", "Wilderness")
                     .replace("%direction%", getLookDirection(player));
         } else {
-            header = OtherMessages.Map_Header.getMessage()
-                    .replace("%faction%", Factions.getColor(myFaction, factionHere) + factionHere.getName())
-                    .replace("%direction%", getLookDirection(player));
+            if(myFaction != null) {
+                header = OtherMessages.Map_Header.getMessage()
+                        .replace("%faction%", Factions.getColor(myFaction, factionHere) + factionHere.getName())
+                        .replace("%direction%", getLookDirection(player));
+            } else {
+                header = OtherMessages.Map_Header.getMessage()
+                        .replace("%faction%", FactionsSystem.getSettings().getChatColor("enemy") + factionHere.getName())
+                        .replace("%direction%", getLookDirection(player));
+            }
         }
         final StringBuilder legend = new StringBuilder();
         boolean isEmpty = true;

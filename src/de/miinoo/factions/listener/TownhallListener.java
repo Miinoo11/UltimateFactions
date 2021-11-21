@@ -8,6 +8,7 @@ import de.miinoo.factions.events.TownhallDieEvent;
 import de.miinoo.factions.hooks.xseries.XMaterial;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.OtherMessages;
+import de.miinoo.factions.hooks.xseries.XSound;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.Townhall;
 import de.miinoo.factions.model.guis.TownHallGUI;
@@ -28,6 +29,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import uk.antiperson.stackmob.StackMob;
 import uk.antiperson.stackmob.api.EntityManager;
+
+import java.util.UUID;
 
 /**
  * @author Mino
@@ -96,6 +99,14 @@ public class TownhallListener implements Listener {
                         }
                     } else {
                         Bukkit.getEntity(faction.getTownHall().getEntityUUID()).remove();
+                    }
+
+                    for(UUID uuid : faction.getPlayers()) {
+                        Player p = Bukkit.getPlayer(uuid);
+                        if(p != null && p.isOnline()) {
+                            p.sendMessage(OtherMessages.Townhall_Killed.getMessage());
+                            p.playSound(p.getLocation(), XSound.matchXSound(FactionsSystem.getSounds().getTownhallDieSound()).parseSound(), 1, 1);
+                        }
                     }
                     Bukkit.getPluginManager().callEvent(new TownhallDieEvent(player, faction));
                     faction.removeTownHall();

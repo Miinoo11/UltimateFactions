@@ -16,7 +16,7 @@ public class ShopRemoveCategoryGUI extends GUI {
     public ShopRemoveCategoryGUI(Player player) {
         super(player, GUITags.Shop_RemoveCategory.getMessage(), 27);
 
-        addElement(0, new GUIArea(9, 4).fill(0, 0, 9, 1, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName(" ").getItem()))
+        addElement(0, new GUIArea(9, 3).fill(0, 0, 9, 1, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName(" ").getItem()))
                 .fill(0, 3, 9, 4, new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
 
         UIList<ShopCategory> list = new GUIList<ShopCategory>(9, 2, FactionsSystem.getShopConfiguration().getCategories(), category ->

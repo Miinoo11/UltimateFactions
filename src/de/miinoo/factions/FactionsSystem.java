@@ -80,6 +80,7 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
     public static boolean isDynMapFound = false;
     public static boolean isStackMobFound = false;
 
+
     public static FactionsSystem getPlugin() {
         return plugin;
     }
@@ -232,13 +233,16 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
         Bukkit.getPluginManager().registerEvents(new PistonListener(), this);
         Bukkit.getPluginManager().registerEvents(new FillListener(), this);
         Bukkit.getPluginManager().registerEvents(new FactionUpgradeListener(), this);
-        Bukkit.getPluginManager().registerEvents(new QuestListener(), this);
+
+        if(ServerVersion.hasEntityPickupItemEvent()) {
+            Bukkit.getPluginManager().registerEvents(new LegacyQuestListener(), this);
+        }
 
         registerCommand(command = new FactionCommand());
 
         // Faction stuff
         startRegenCount();
-        updateFactionTop();
+        //updateFactionTop();
 
         // starting count for the potion upgrades
         startPotionEffectCount();
@@ -272,6 +276,9 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
         }
         for(Quest quest : quests.getQuests()) {
             quests.saveQuest(quest);
+        }
+        for(Faction faction : FactionsSystem.getFactions().getFactions()) {
+            FactionsSystem.getFactions().saveFaction(faction);
         }
     }
 
@@ -374,6 +381,9 @@ public class FactionsSystem extends JavaPlugin implements AddonRegistry, Command
                     for(Player all : Bukkit.getOnlinePlayers()) {
                         if(settings.enableScoreboard()) {
                             adapter.sendScoreboard(all);
+                        }
+                        if(settings.enableTablist()) {
+                            adapter.sendTabListHeaderFooter(all, settings.tabHeader(all), settings.tabFooter(all));
                         }
                     }
                     i = settings.getScoreboardUpdateCount();

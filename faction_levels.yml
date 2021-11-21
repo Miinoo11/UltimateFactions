@@ -17,7 +17,6 @@
 #   warps: 2        # here you can choose the maximum amount of warps in a faction in this level
 #   warp-cooldown: 10  # here you can choose the warp-delay time in a faction in this level
 #   claims: 10      # here you can choose the maximum amount of claims a faction can have in this level
-#   mobdrop-multiplier: 0.1   # here you can choose the multiplier a mob drops more items (DONT SET TO 0.0 TO AVOID CONSOLE ERRORS)
 #   potion-effects:     # here you can edit the potion effects that a player has in its factions chunk
 #     enabled: false    # set to true if the effects should be enabled
 #     effects:          # here you can add the effects a player should have
@@ -32,7 +31,6 @@
   warps: 2
   warp-cooldown: 10
   claims: 10
-  mobdrop-multiplier: 0.1
   potion-effects:
     enabled: false
     effects:
@@ -46,7 +44,6 @@
   warps: 5
   warp-cooldown: 8
   claims: 15
-  mobdrop-multiplier: 0.5
   potion-effects:
     enabled: true
     effects:
@@ -60,7 +57,6 @@
   warps: 10
   warp-cooldown: 6
   claims: 20
-  mobdrop-multiplier: 1.0
   potion-effects:
     enabled: true
     effects:

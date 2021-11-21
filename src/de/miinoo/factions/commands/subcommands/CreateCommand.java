@@ -26,6 +26,11 @@ public class CreateCommand extends PlayerCommand {
     @Override
     public boolean execute(Player player, ArgumentParser args) {
 
+        if(!player.hasPermission("ultimatefactions.create")) {
+            player.sendMessage(ErrorMessage.Player_Not_Permitted.getMessage());
+            return true;
+        }
+
         if (!args.hasAtLeast(1)) {
             player.sendMessage(ErrorMessage.Create_Syntax.getMessage());
             return true;

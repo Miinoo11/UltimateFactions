@@ -37,11 +37,11 @@ public class AnvilGUI_v1_14_R1 implements AnvilUI {
     }
 
     private int getRealNextContainerId(Player player) {
-        return ((CraftPlayer) player).getHandle().nextContainerCounter();
+        return toNMS(player).nextContainerCounter();
     }
 
     public static int getNextContainerId(Player player, Object container) {
-        if(IS_ONE_FOURTEEN) {
+        if (IS_ONE_FOURTEEN) {
             return ((AnvilContainer1_14_4_R1) container).getContainerId();
         } else {
             return ((AnvilContainer) container).getContainerId();
@@ -111,6 +111,10 @@ public class AnvilGUI_v1_14_R1 implements AnvilUI {
     @Override
     public Inventory getInventory() {
         return inventory;
+    }
+
+    private EntityPlayer toNMS(Player player) {
+        return ((CraftPlayer) player).getHandle();
     }
 
     private final class AnvilContainer extends ContainerAnvil {

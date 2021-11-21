@@ -1,5 +1,6 @@
 package de.miinoo.factions.model;
 
+import de.miinoo.factions.configuration.messages.GUITags;
 import de.miinoo.factions.core.item.Items;
 import org.bukkit.inventory.ItemStack;
 
@@ -33,6 +34,6 @@ public class RankPermissionValue {
     }
 
     public ItemStack getItem() {
-        return Items.createItem(permission.getMaterial()).setDisplayName("§7" + permission.getName()).setLore(value ? "§aenabled" : "§cdisabled").If(value, builder -> builder.addGlow()).getItem();
+        return Items.createItem(permission.getMaterial()).setDisplayName("§7" + permission.getName()).setLore(value ? GUITags.Enabled.getMessage() : GUITags.Disabled.getMessage()).If(value, builder -> builder.addGlow()).getItem();
     }
 }

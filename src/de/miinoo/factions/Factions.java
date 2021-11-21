@@ -73,7 +73,6 @@ public class Factions {
     public void claimChunk(Faction faction, FactionChunk chunk) {
         factionChunks.put(chunk, faction);
         faction.getClaimed().add(chunk);
-        saveFaction(faction);
     }
 
     public void unClaim(Faction faction, FactionChunk chunk) {

@@ -28,7 +28,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class CreateQuestGUI extends GUI {
+public class    CreateQuestGUI extends GUI {
 
     private String name;
     private String description;

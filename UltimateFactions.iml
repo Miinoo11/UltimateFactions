@@ -27,6 +27,9 @@
       </configuration>
     </facet>
   </component>
+  <component name="McpModuleSettings">
+    <option name="srgType" value="SRG" />
+  </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
@@ -51,5 +54,7 @@
     <orderEntry type="library" name="spigot-1.16.3" level="project" />
     <orderEntry type="library" name="StackMob-2.2.18-SNAPSHOT" level="project" />
     <orderEntry type="library" name="spigot-1.16.4" level="project" />
+    <orderEntry type="library" name="Vehicles(11.0)-API" level="project" />
+    <orderEntry type="library" name="spigot-1.171" level="project" />
   </component>
 </module>

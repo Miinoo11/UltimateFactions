@@ -283,11 +283,7 @@ public class Faction implements ConfigurationSerializable {
     }
 
     public WarPiece getWarPieces(Faction enemy) {
-        Optional<WarPiece> optional = warPieces.stream().filter(warPiece -> warPiece.getUuid().equals(enemy.getId())).findFirst();
-        if (optional.isPresent()) {
-            return optional.get();
-        }
-        return null;
+        return warPieces.stream().filter(warPiece -> warPiece.getUuid().equals(enemy.getId())).findFirst().orElseGet(() -> null);
     }
 
     public void addWarPiece(Faction enemy, int amount) {
@@ -298,6 +294,7 @@ public class Faction implements ConfigurationSerializable {
         } else {
             warPiece = new WarPiece(enemy.getId(), amount);
         }
+        warPieces.remove(warPiece);
         warPieces.add(warPiece);
     }
 
@@ -309,6 +306,7 @@ public class Faction implements ConfigurationSerializable {
         } else {
             warPiece = new WarPiece(enemy.getId(), 0);
         }
+        warPieces.remove(warPiece);
         warPieces.add(warPiece);
     }
 
@@ -326,6 +324,7 @@ public class Faction implements ConfigurationSerializable {
         } else {
             warPiece = new WarPiece(enemy.getId(), 0);
         }
+        warPieces.remove(warPiece);
         warPieces.add(warPiece);
     }
 

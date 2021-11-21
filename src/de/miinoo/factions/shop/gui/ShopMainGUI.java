@@ -21,7 +21,7 @@ public class ShopMainGUI extends GUI {
                 new GUIItem(Items.createItem(category.getIcon())
                         .setDisplayName(category.getName())
                         .setLore(category.getLore()).getItem(), () -> {
-                    new ShopBuyGUI(player, category).open();
+                    new ShopBuyGUI(player, category, this).open();
                 }));
 
         addElement(9, list);

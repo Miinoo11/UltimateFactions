@@ -36,66 +36,6 @@ public class SettingsConfiguration extends Configuration {
         }
     }
 
-    // @Override
-   // protected void setupconfiguration() {
-   //     configuration.options().copyDefaults(true);
-   //     configuration.addDefault("Settings.Warps.outsideFactionChunk", false);
-   //     configuration.addDefault("Settings.Map.Height", 11);
-   //     configuration.addDefault("Settings.Map.Width", 15);
-   //     configuration.addDefault("Settings.Map.Colors.Indicators.player", "AQUA");
-   //     configuration.addDefault("Settings.Map.Colors.Indicators.border", "BLACK");
-   //     configuration.addDefault("Settings.Map.Colors.empty", "BLUE");
-   //     configuration.addDefault("Settings.Map.Colors.enemy", "DARK_RED");
-   //     configuration.addDefault("Settings.Map.Colors.truce", "GOLD");
-   //     configuration.addDefault("Settings.Map.Colors.ally", "LIGHT_PURPLE");
-   //     configuration.addDefault("Settings.Map.Colors.ownFaction", "GREEN");
-   //     configuration.addDefault("Settings.Map.Colors.hostile", "RED");
-   //     configuration.addDefault("Settings.Game.teleportDelay", 6);
-   //     configuration.addDefault("Settings.Game.TownHall.defaultHealth", 100.0);
-   //     configuration.addDefault("Settings.Game.TownHall.moveCooldown", 24);
-   //     configuration.addDefault("Settings.Game.TownHall.maxLevel", 5);
-   //     configuration.addDefault("Settings.Game.Claims.maxClaims", 100);
-   //     configuration.addDefault("Settings.Game.Claims.defaultPrice", 100);
-   //     configuration.addDefault("Settings.Game.Claims.PriceStreak", 5);
-   //     configuration.addDefault("Settings.Game.Claims.PriceMultiplier", 1.5);
-   //     configuration.addDefault("Settings.Game.Claims.energyTimer", 15);
-   //     configuration.addDefault("Settings.Game.Power.powerJoinIncrease", 10);
-   //     configuration.addDefault("Settings.Game.Power.powerKillIncrease", 5);
-   //     configuration.addDefault("Settings.Game.Power.powerDecrease", 5);
-   //     configuration.addDefault("Settings.Game.Power.maxPower", 200);
-   //     configuration.addDefault("Settings.Game.Power.minPower", -25);
-   //     configuration.addDefault("Settings.Game.Power.player1Power", 35);
-   //     configuration.addDefault("Settings.Game.Power.player2Power", 25);
-   //     configuration.addDefault("Settings.Game.Power.player3Power", 15);
-   //     configuration.addDefault("Settings.Game.Power.powerRegenCount", 600);
-   //     configuration.addDefault("Settings.Game.Power.powerRegenValue", 15);
-   //     configuration.addDefault("Settings.Game.WarPieces.maxWarPiece", 25);
-   //     configuration.addDefault("Settings.Game.WarPieces.minWarPiece", -25);
-   //     configuration.addDefault("Settings.Game.WarPieces.siegeCount", 1800);
-   //     configuration.addDefault("Settings.Game.WarPieces.siegePieceNeeded", 25);
-   //     configuration.addDefault("Settings.Game.InteractAll.chest", false);
-   //     configuration.addDefault("Settings.Game.InteractAll.trapped_chest", false);
-   //     configuration.addDefault("Settings.Game.InteractAll.ender_chest", false);
-   //     configuration.addDefault("Settings.Game.InteractAll.shulker", false);
-   //     configuration.addDefault("Settings.Game.InteractAll.trapdoor", false);
-   //     configuration.addDefault("Settings.Game.InteractAll.door", false);
-   //     configuration.addDefault("Settings.Game.InteractAll.button", false);
-   //     configuration.addDefault("Settings.Game.InteractAll.lever", false);
-   //     configuration.addDefault("Settings.Game.InteractAll.fence_gate", false);
-   //     configuration.addDefault("Settings.Game.InteractAll.oven", false);
-   //     configuration.addDefault("Settings.Game.InteractAll.dispenser", false);
-   //     configuration.addDefault("Settings.Game.InteractAll.dropper", false);
-   //     configuration.addDefault("Settings.Game.InteractAll.anvil", false);
-   //     configuration.addDefault("Settings.Game.InteractAll.comparator", false);
-   //     configuration.addDefault("Settings.Game.InteractAll.repeater", false);
-   //     configuration.addDefault("Settings.Game.InteractAll.hopper", false);
-   //     configuration.addDefault("Settings.Game.InteractAll.barrel", false);
-   //     configuration.addDefault("Settings.Game.InteractAll.fillBucket", false);
-   //     configuration.addDefault("Settings.Game.InteractAll.emptyBucket", false);
-   //     configuration.addDefault("Settings.Tab.header", "&5&lThis is a &e&lHeader\\n&9Edit everything!");
-   //     configuration.addDefault("Settings.Tab.footer", "&5&lThis is a &e&lFooter\\n&9Online: &e%count%\\n&9Power: &e%power%!");
-   //     save();
-   // }
     public boolean enableTablist() { return configuration.getBoolean("Settings.Tab.enabled"); }
     public boolean enableScoreboard() { return configuration.getBoolean("Settings.Game.enableScoreboard");}
     public int getScoreboardUpdateCount() { return configuration.getInt("Settings.Game.scoreboardUpdateCount"); }

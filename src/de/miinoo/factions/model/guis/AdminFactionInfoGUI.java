@@ -8,6 +8,7 @@ import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
 import de.miinoo.factions.core.ui.input.AnvilInput;
 import de.miinoo.factions.core.ui.input.GUIInput;
+import de.miinoo.factions.events.FactionDisbandEvent;
 import de.miinoo.factions.hooks.xseries.XMaterial;
 import de.miinoo.factions.configuration.messages.ErrorMessage;
 import de.miinoo.factions.configuration.messages.GUITags;
@@ -90,6 +91,8 @@ public class AdminFactionInfoGUI extends GUI {
                     factions.removeRelation(truce, faction.getId());
                     factions.saveFaction(truce);
                 }
+
+                Bukkit.getPluginManager().callEvent(new FactionDisbandEvent(player, faction));
             }).open();
         }));
 

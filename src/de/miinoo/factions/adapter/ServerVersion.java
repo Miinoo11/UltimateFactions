@@ -24,7 +24,21 @@ public enum ServerVersion {
     VERSION_1_15_R1(FactionAdapter_v1_15_R1.class),
     VERSION_1_16_R1(FactionAdapter_v1_16_R1.class),
     VERSION_1_16_R2(FactionAdapter_v1_16_R2.class),
-    VERSION_1_16_R3(FactionAdapter_v1_16_R3.class);
+    VERSION_1_16_R3(FactionAdapter_v1_16_R3.class),
+    VERSION_1_17_R1(FactionAdapter_v1_17_R1.class),
+    ;
+
+    public static boolean hasEntityPickupItemEvent() {
+        String version = getServerVersion().toString();
+        return version.equals(VERSION_1_13_R1.toString()) ||
+                version.equals(VERSION_1_13_R2.toString()) ||
+                version.equals(VERSION_1_14.toString()) ||
+                version.equals(VERSION_1_15_R1.toString()) ||
+                version.equals(VERSION_1_16_R1.toString()) ||
+                version.equals(VERSION_1_16_R2.toString()) ||
+                version.equals(VERSION_1_16_R3.toString()) ||
+                version.equals(VERSION_1_17_R1.toString());
+    }
 
     public static boolean is1_8_X() {
         String version = getServerVersion().toString();
@@ -54,7 +68,10 @@ public enum ServerVersion {
 
     public static boolean hasHex() {
         String version = getServerVersion().toString();
-        return version.equals(VERSION_1_16_R1.toString()) || version.equals(VERSION_1_16_R2.toString()) || version.equals(VERSION_1_16_R3.toString());
+        return version.equals(VERSION_1_16_R1.toString())
+                || version.equals(VERSION_1_16_R2.toString())
+                || version.equals(VERSION_1_16_R3.toString())
+                || version.equals(VERSION_1_17_R1.toString());
     }
 
     public static ServerVersion getServerVersion() {

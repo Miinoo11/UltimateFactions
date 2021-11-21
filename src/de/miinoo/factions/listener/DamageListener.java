@@ -161,20 +161,20 @@ public class DamageListener implements Listener {
                     }
                 }
 
-                if (killerFac.getWarPieces(faction) != null) {
+                if(faction.getWarPieces(killerFac) == null) {
+                    killerFac.addWarPiece(faction, 1);
+                } else {
                     if (killerFac.getWarPieces(faction).getAmount() < FactionsSystem.getSettings().getMaxWarPiece()) {
                         killerFac.addWarPiece(faction, 1);
                     }
-                } else {
-                    killerFac.addWarPiece(faction, 1);
                 }
 
-                if (faction.getWarPieces(killerFac) != null) {
+                if(faction.getWarPieces(killerFac) == null) {
+                    faction.removeWarPiece(killerFac, 1);
+                } else {
                     if (faction.getWarPieces(killerFac).getAmount() > FactionsSystem.getSettings().getMinWarPiece()) {
                         faction.removeWarPiece(killerFac, 1);
                     }
-                } else {
-                    faction.addWarPiece(killerFac, -1);
                 }
 
                 factions.saveFaction(killerFac);

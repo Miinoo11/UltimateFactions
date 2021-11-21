@@ -81,6 +81,7 @@ public class BuildListener implements Listener {
 
     private void check(Faction faction, Player player, String message, BlockPlaceEvent event) {
         Faction siege = factions.getFaction(player);
+
         if (SiegeCMD.siege.containsKey(siege)) {
             event.setCancelled(false);
             return;
@@ -88,6 +89,10 @@ public class BuildListener implements Listener {
 
         if (faction.getPlayers().contains(player.getUniqueId())) {
             if (faction.hasPermission(player.getUniqueId(), RankPermission.BUILD)) {
+                if(event.isCancelled()) {
+                    event.setCancelled(true);
+                    return;
+                }
                 event.setCancelled(false);
             } else {
                 event.setCancelled(true);
@@ -103,6 +108,10 @@ public class BuildListener implements Listener {
                             event.setCancelled(true);
                             player.sendMessage(message);
                         } else {
+                            if(event.isCancelled()) {
+                                event.setCancelled(true);
+                                return;
+                            }
                             event.setCancelled(false);
                             return;
                         }
@@ -116,6 +125,10 @@ public class BuildListener implements Listener {
                     player.sendMessage(message);
                 }
             } else {
+                if(event.isCancelled()) {
+                    event.setCancelled(true);
+                    return;
+                }
                 event.setCancelled(false);
             }
         }
@@ -123,12 +136,19 @@ public class BuildListener implements Listener {
     private void check(Faction faction, Player player, String message, BlockBreakEvent event) {
         Faction siege = factions.getFaction(player);
         if (SiegeCMD.siege.containsKey(siege)) {
+            if(event.isCancelled()) {
+                event.setCancelled(true);
+            }
             event.setCancelled(false);
             return;
         }
 
         if (faction.getPlayers().contains(player.getUniqueId())) {
             if (faction.hasPermission(player.getUniqueId(), RankPermission.BREAK)) {
+                if(event.isCancelled()) {
+                    event.setCancelled(true);
+                    return;
+                }
                 event.setCancelled(false);
             } else {
                 event.setCancelled(true);
@@ -139,11 +159,16 @@ public class BuildListener implements Listener {
                 for (UUID uuid : faction.getAlliesRelation()) {
                     Relation relation = faction.getRelation(uuid);
                     Faction ally = factions.getFaction(uuid);
+                    if(ally == null) return;
                     if (ally.getPlayers().contains(player.getUniqueId())) {
                         if (!faction.relationIsPermitted(relation, RelationPermission.BREAK)) {
                             event.setCancelled(true);
                             player.sendMessage(message);
                         } else {
+                            if(event.isCancelled()) {
+                                event.setCancelled(true);
+                                return;
+                            }
                             event.setCancelled(false);
                             return;
                         }
@@ -157,6 +182,10 @@ public class BuildListener implements Listener {
                     player.sendMessage(message);
                 }
             } else {
+                if(event.isCancelled()) {
+                    event.setCancelled(true);
+                    return;
+                }
                 event.setCancelled(false);
             }
         }

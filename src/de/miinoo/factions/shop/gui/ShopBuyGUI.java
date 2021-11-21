@@ -22,8 +22,8 @@ import java.util.List;
 
 public class ShopBuyGUI extends GUI {
 
-    public ShopBuyGUI(Player player, ShopCategory category) {
-        super(player, category.getName(), 36);
+    public ShopBuyGUI(Player player, ShopCategory category, GUI gui) {
+        super(player, category.getName(), 45);
 
         addElement(0, new GUIList<ShopItem>(9, 3, category.getItems(),
                 item -> new GUIItem(Items.createItem(item.getItemStack())
@@ -32,9 +32,6 @@ public class ShopBuyGUI extends GUI {
                         .addEnchantments(item.getItemStack().getEnchantments())
                         .setAmount(item.getAmount())
                         .getItem()).setOnClickListener((player1, item1, event) -> {
-
-                    System.out.println(item.getItemStack());
-                    System.out.println(item1.getItem());
 
                     switch (event.getClick()) {
                         case LEFT:
@@ -47,8 +44,6 @@ public class ShopBuyGUI extends GUI {
                                     Bukkit.getPluginManager().callEvent(new ShopBuyItemEvent(player, item));
 
                                     FactionsSystem.getEconomy().withdrawPlayer(player, item.getPrice());
-                                    close();
-
                                     player.getInventory().addItem(item.getItemStack());
                                     player.sendMessage(SuccessMessage.Successfully_Bought_ShopItem.getMessage()
                                             .replace("%amount%", String.valueOf(item.getAmount()))
@@ -68,7 +63,6 @@ public class ShopBuyGUI extends GUI {
                                 } else {
                                     Bukkit.getPluginManager().callEvent(new ShopSellItemEvent(player, item));
                                     FactionsSystem.getEconomy().depositPlayer(player, item.getSell());
-                                    close();
                                     player.sendMessage(SuccessMessage.Successfully_Sold_ShopItem.getMessage()
                                             .replace("%amount%", String.valueOf(item.getAmount()))
                                             .replace("%item%", item.getDisplayName()));
@@ -79,6 +73,9 @@ public class ShopBuyGUI extends GUI {
 
                     return true;
                 })));
+
+        if(gui != null)
+            addElement(getInventory().getSize() - 5, new GUIItem(Items.createBackArrow().setDisplayName(GUITags.Back.getMessage()).getItem(), () -> gui.open()));
 
     }
 

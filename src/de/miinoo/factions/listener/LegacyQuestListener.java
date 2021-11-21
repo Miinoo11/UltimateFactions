@@ -1,6 +1,7 @@
 package de.miinoo.factions.listener;
 
 import de.miinoo.factions.FactionsSystem;
+import de.miinoo.factions.adapter.ServerVersion;
 import de.miinoo.factions.quest.Quest;
 import de.miinoo.factions.quest.QuestTypes;
 import org.bukkit.event.EventHandler;
@@ -8,8 +9,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntityTameEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 
-public class QuestListener implements Listener {
+public class LegacyQuestListener implements Listener {
 
     @EventHandler
     public void onKill(EntityDeathEvent event) {

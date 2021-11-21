@@ -22,7 +22,7 @@ public class RelationPermissionsGUI extends GUI {
 
         addElement(0, new GUIArea(9, 5).fill(new GUIItem(Items.createItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem()).setDisplayName("§r").getItem())));
 
-        UIList<RelationPermissionValue> list = new GUIList<>(9, elements.size() > 54 ? 5 : size / 9, elements,
+        UIList<RelationPermissionValue> list = new GUIList<>(9, 3, elements,
                 value -> new GUIItem(value.getItem())).setOnClickListener((player2, list1, index, element, event) -> {
             element.toggleValue();
             return true;
@@ -30,7 +30,7 @@ public class RelationPermissionsGUI extends GUI {
 
         addElement(9, list);
 
-        if (elements.size() > 18) {
+        if (elements.size() > 27) {
             addElement(size - 7, new GUIScrollBar(GUIScrollBar.HORIZONTAL, 5, list,
                     new GUIItem(Items.createSkull("MHF_ArrowLeft").setDisplayName(GUITags.Previous.getMessage()).getItem()),
                     new GUIItem(Items.createSkull("MHF_ArrowRight").setDisplayName(GUITags.Next.getMessage()).getItem())));

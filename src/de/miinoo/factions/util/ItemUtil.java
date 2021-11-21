@@ -105,7 +105,7 @@ public class ItemUtil {
                     toTake -= current.getAmount();
                     inventory.setItem(i, null);
                 } else if (toTake - current.getAmount() < 0) {
-                    //System.out.println("Stack ist größer: "+toTake+">"+current.getAmount());
+                    //System.out.println("Stack ist groeßer: "+toTake+">"+current.getAmount());
                     current.setAmount(current.getAmount() - toTake);
                     break;
                 } else {
@@ -115,7 +115,7 @@ public class ItemUtil {
                 }
             }
         }
-        return true;
+        return false;
     }
 
     public static List<ItemStack> getItemsAsList(Inventory inv) {

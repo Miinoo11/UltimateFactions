@@ -35,7 +35,7 @@ public class CompletedQuestsGUI extends GUI {
                                 !quest.hasClaimed(player) ? GUITags.Quests_Quest_Completed_Claim_Lore.getMessage() : GUITags.Quests_Quest_Completed_Claim_Lore2.getMessage())
                         .getItem(), () -> {
 
-                    if(!faction.hasPermission(player.getUniqueId(), RankPermission.MANAGE_QUESTS)) {
+                    if(!faction.hasPermission(player.getUniqueId(), RankPermission.CLAIM_QUESTS)) {
                         player.sendMessage(ErrorMessage.Player_Not_Permitted.getMessage());
                         close();
                         return;

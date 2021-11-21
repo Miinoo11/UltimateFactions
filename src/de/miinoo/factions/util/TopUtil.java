@@ -1,16 +1,15 @@
 package de.miinoo.factions.util;
 
-import com.google.common.util.concurrent.AtomicDouble;
 import de.miinoo.factions.Factions;
 import de.miinoo.factions.FactionsSystem;
-import de.miinoo.factions.events.TopFactionUpdateEvent;
-import de.miinoo.factions.hooks.xseries.XMaterial;
 import de.miinoo.factions.configuration.configurations.BankConfiguration;
 import de.miinoo.factions.configuration.messages.GUITags;
+import de.miinoo.factions.hooks.xseries.XMaterial;
 import de.miinoo.factions.model.Faction;
 import de.miinoo.factions.model.FactionChunk;
 import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
+import org.bukkit.ChunkSnapshot;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
@@ -37,53 +36,78 @@ public class TopUtil {
     // Anzahl der Items (für Lores)
     private static Map<Faction, Map<Material, Integer>> items = new HashMap<>();
 
+   // private static final Map<Faction, Location> map = new HashMap<>();
+
     public static void calculate() {
         topFactions.clear();
-        runAsync(() -> {
+        List<Location> spawnerLocations = new ArrayList<>();
+        for (Faction fac : factions.getFactions()) {
+            //List<UUID> onlinePlayers = new ArrayList<>();
+            //for (UUID uuid : fac.getPlayers()) {
+            //    if (Bukkit.getPlayer(uuid) != null && Bukkit.getPlayer(uuid).isOnline()) {
+            //        onlinePlayers.add(uuid);
+            //    }
+            //}
+            //if (onlinePlayers.size() == 0) {
+            //    continue;
+            //}
+            fac.getPlacedBlocks().clear();
+            for (FactionChunk chunk : fac.getClaimed()) {
+                ChunkSnapshot chunkSnapshot = chunk.getBukkitChunk().getChunkSnapshot();
+                // Chunk bukkitChunk = chunk.getBukkitChunk();
+                final double[] value = {fac.getBank()};
+                runAsync(() -> {
+                    for (int x = 0; x < 16; ++x) {
+                        for (int y = 1; y < 256; ++y) {
+                            for (int z = 0; z < 16; ++z) {
+                                //Block block = chunk.getBukkitChunk().getBlock(x, y, z);
+                                //Material material = block.getType();
+                                Material material = chunkSnapshot.getBlockType(x, y, z);
 
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    for (Faction fac : factions.getFactions()) {
-                        fac.getPlacedBlocks().clear();
-                        double value = fac.getBank();
-                        for (FactionChunk chunk : fac.getClaimed()) {
-                            Chunk bukkitChunk = chunk.getBukkitChunk();
-                            for (int y = 1; y < 256; ++y) {
-                                for (int x = 0; x < 16; ++x) {
-                                    for (int z = 0; z < 16; ++z) {
-                                        Block block = bukkitChunk.getBlock(x, y, z);
-                                        Material material = block.getType();
-                                        if (materials.containsKey(material)) {
-                                            value += materials.get(material);
-                                            if (fac.getPlacedBlocks().get(material) != null) {
-                                                fac.getPlacedBlocks().replace(material, fac.getPlacedBlocks().get(material) + 1);
-                                            } else {
-                                                fac.getPlacedBlocks().put(material, 1);
-                                            }
-                                        }
-                                        if (block.getState() instanceof CreatureSpawner) {
-                                            final CreatureSpawner spawner = (CreatureSpawner) block.getState();
-                                            if (spawners.containsKey(spawner.getCreatureTypeName().toUpperCase() + "_SPAWNER")) {
-                                                value += spawners.get(spawner.getCreatureTypeName().toUpperCase() + "_SPAWNER");
-                                                if (fac.getPlacedBlocks().get(XMaterial.SPAWNER.parseMaterial()) != null) {
-                                                    fac.getPlacedBlocks().replace(XMaterial.SPAWNER.parseMaterial(), fac.getPlacedBlocks().get(XMaterial.SPAWNER.parseMaterial()) + 1);
-                                                } else {
-                                                    fac.getPlacedBlocks().put(XMaterial.SPAWNER.parseMaterial(), 1);
-                                                }
-                                            }
-                                        }
+                                //if (material == XMaterial.SPAWNER.parseMaterial()) {
+                                //    //spawnerLocations.add(new Location(Bukkit.getWorld(chunkSnapshot.getWorldName()),  (chunk.getX() * 16) + x , y,  (chunk.getZ() * 16) + z ));
+                                //    //map.put(fac, new Location(Bukkit.getWorld(chunkSnapshot.getWorldName()),  (chunk.getX() * 16) + x , y,  (chunk.getZ() * 16) + z ));
+                                //}
+
+                                if (materials.containsKey(material)) {
+                                    value[0] += materials.get(material);
+                                    if (fac.getPlacedBlocks().get(material) != null) {
+                                        fac.getPlacedBlocks().replace(material, fac.getPlacedBlocks().get(material) + 1);
+                                    } else {
+                                        fac.getPlacedBlocks().put(material, 1);
                                     }
                                 }
                             }
                         }
-                        items.put(fac, fac.getPlacedBlocks());
-                        topFactions.put(fac, value);
                     }
-                }
-            }.runTask(FactionsSystem.getPlugin());
-        });
-        Bukkit.getPluginManager().callEvent(new TopFactionUpdateEvent(getTopFactions()));
+                    //System.out.println(spawnerLocations);
+                });
+
+                //for(Map.Entry<Faction, Location> entry : map.entrySet()) {
+                //    Location loc = entry.getValue();
+                //    Block block = Objects.requireNonNull(loc.getWorld()).getBlockAt(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+                //    System.out.println("D1: " + loc.getChunk().getX() * 16 + " " + loc.getBlockY() + " " + loc.getChunk().getZ() * 16);
+                //    System.out.println("D2: " + loc.getBlockX() + " " + loc.getBlockY() + " " + loc.getBlockZ());
+                //    if (block.getState() instanceof CreatureSpawner) {
+                //        System.out.println("D2");
+                //        final CreatureSpawner spawner = (CreatureSpawner) block.getState();
+                //        if (spawners.containsKey(spawner.getCreatureTypeName().toUpperCase() + "_SPAWNER")) {
+                //            value[0] += spawners.get(spawner.getCreatureTypeName().toUpperCase() + "_SPAWNER");
+                //            if (fac.getPlacedBlocks().get(XMaterial.SPAWNER.parseMaterial()) != null) {
+                //                fac.getPlacedBlocks().replace(XMaterial.SPAWNER.parseMaterial(), fac.getPlacedBlocks().get(XMaterial.SPAWNER.parseMaterial()) + 1);
+                //            } else {
+                //                fac.getPlacedBlocks().put(XMaterial.SPAWNER.parseMaterial(), 1);
+                //            }
+                //        }
+                //    }
+//
+                //}
+
+                items.put(fac, fac.getPlacedBlocks());
+                topFactions.put(fac, value[0]);
+            }
+        }
+
     }
 
     private static void runAsync(final Runnable runnable) {

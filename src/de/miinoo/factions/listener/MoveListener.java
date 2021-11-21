@@ -163,8 +163,6 @@ public class MoveListener implements Listener {
                     } else {
                         player.sendMessage(ErrorMessage.AutoClaim_Error.getMessage());
                     }
-                } else {
-                    player.sendMessage("still in same chunk");
                 }
             }
         });

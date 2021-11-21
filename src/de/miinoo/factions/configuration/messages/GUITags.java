@@ -294,7 +294,14 @@ public enum GUITags {
     Quest_Set_Reward("&eSet reward"),
     Quest_Set_Action("&eSet Action"),
     Quest_Enter_Action("<amount>;<type>"),
-    Quest_Reward_Text("&e$%reward%")
+    Quest_Reward_Text("&e$%reward%"),
+
+    Rank_Leader("Leader"),
+    Rank_General("General"),
+    Rank_Lieutenant("Lieutenant"),
+    Rank_Member("Member"),
+    Rank_Recruit("Recruit")
+
     ;
 
     private String message;

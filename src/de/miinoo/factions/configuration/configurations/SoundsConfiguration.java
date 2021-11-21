@@ -23,4 +23,7 @@ public class SoundsConfiguration extends Configuration {
     public Sound getQuestCompleteSound() {
         return XSound.matchXSound(configuration.getString("Sounds.quest_completed")).orElse(XSound.ENTITY_PLAYER_LEVELUP).parseSound();
     }
+    public Sound getTownhallDieSound() {
+        return XSound.matchXSound(configuration.getString("Sounds.townhall_die")).orElse(XSound.ENTITY_VILLAGER_DEATH).parseSound();
+    }
 }

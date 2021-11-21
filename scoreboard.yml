@@ -3,14 +3,14 @@
 # Example: &r&r -> &r&r&r
 # PlaceHolderAPI Supported!
 Scoreboard:
-  Header: "&b&lScoreboard"
+  Header: "&b&lUltimateFactions"
   Lines:
     - "&r"
-    - "&l&f&m    &r&e&lOnline&l&f&m    "
-    - "&7%online%"
+    - "&6&l| &fOnline: &7%online%"
+    - "&6&l| &fFaction: &7%faction%"
+    - "&6&l| &fPower: &7%power%"
     - "&r&r"
-    - "&l&f&m    &r&e&lFaction&l&f&m    "
-    - "&7%faction%"
+    - "&7Need help?"
+    - "&7visit help.miinoo.dev"
     - "&r&r&r"
-    - "&l&f&m    &r&e&lPower&l&f&m    "
-    - "&7%power%"
+    - "&7~ &6Miinoo_"

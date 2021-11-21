@@ -92,6 +92,7 @@ public class SiegeCMD extends PlayerCommand {
         }
 
         faction.setWarPieces(target, 0);
+        target.setWarPieces(faction, 0);
 
         new BukkitRunnable() {
             int count = (FactionsSystem.getSettings().getSiegeCount() * 60);

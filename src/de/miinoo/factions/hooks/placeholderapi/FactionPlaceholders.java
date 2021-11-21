@@ -49,42 +49,7 @@ public class FactionPlaceholders extends PlaceholderExpansion {
     public String onPlaceholderRequest(Player player, String s) {
         Faction faction = FactionsSystem.getFactions().getFaction(player);
         List<Faction> topFactions = new ArrayList<>(TopUtil.getTopFactions());
-        if (faction == null) {
-            return OtherMessages.PlaceHolder_Faction_Not_Found.getMessage();
-        }
-        if (s.equals("faction_name")) {
-            return faction.getName();
-        }
-        if (s.equals("faction_power")) {
-            return String.valueOf(faction.getPower());
-        }
-        if (s.equals("faction_claims")) {
-            return String.valueOf(faction.getClaimed().size());
-        }
-        if (s.equals("faction_role")) {
-            return faction.getRankOfPlayer(player.getUniqueId()).getName();
-        }
-        if (s.equals("faction_members")) {
-            return String.valueOf(faction.getPlayers().size());
-        }
-        if (s.equals("faction_level")) {
-            return String.valueOf(faction.getLevel());
-        }
-        if (s.equals("faction_leader")) {
-            return String.valueOf(faction.getLeader().getName());
-        }
-        if (s.equals("faction_description")) {
-            return faction.getDescription();
-        }
-        if (s.equals("faction_powercap")) {
-            return String.valueOf(faction.getPowerCap());
-        }
-        if (s.equals("faction_bank")) {
-            return String.valueOf(faction.getBank());
-        }
-        if (s.equals("faction_player")) {
-            return player.getDisplayName();
-        }
+
         if(s.equals("topfaction_1")) {
             if(!topFactions.isEmpty() && topFactions.get(0) != null) {
                 return topFactions.get(0).getName();
@@ -144,6 +109,43 @@ public class FactionPlaceholders extends PlaceholderExpansion {
                 return topFactions.get(9).getName();
             }
             return OtherMessages.TopFaction_None.getMessage();
+        }
+
+        if (faction == null) {
+            return OtherMessages.PlaceHolder_Faction_Not_Found.getMessage();
+        }
+        if (s.equals("faction_name")) {
+            return faction.getName();
+        }
+        if (s.equals("faction_power")) {
+            return String.valueOf(faction.getPower());
+        }
+        if (s.equals("faction_claims")) {
+            return String.valueOf(faction.getClaimed().size());
+        }
+        if (s.equals("faction_role")) {
+            return faction.getRankOfPlayer(player.getUniqueId()).getName();
+        }
+        if (s.equals("faction_members")) {
+            return String.valueOf(faction.getPlayers().size());
+        }
+        if (s.equals("faction_level")) {
+            return String.valueOf(faction.getLevel());
+        }
+        if (s.equals("faction_leader")) {
+            return String.valueOf(faction.getLeader().getName());
+        }
+        if (s.equals("faction_description")) {
+            return faction.getDescription();
+        }
+        if (s.equals("faction_powercap")) {
+            return String.valueOf(faction.getPowerCap());
+        }
+        if (s.equals("faction_bank")) {
+            return String.valueOf(faction.getBank());
+        }
+        if (s.equals("faction_player")) {
+            return player.getDisplayName();
         }
         return null; // if wrong placeholder was used
     }

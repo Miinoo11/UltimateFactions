@@ -21,7 +21,6 @@ public class MoneyReward extends QuestReward implements ConfigurationSerializabl
         super(args);
     }
 
-
     public double getAmount() {
         return amount;
     }

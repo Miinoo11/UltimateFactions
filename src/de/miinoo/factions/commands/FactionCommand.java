@@ -1,6 +1,7 @@
 package de.miinoo.factions.commands;
 
 import de.miinoo.factions.FactionsSystem;
+import de.miinoo.factions.adapter.ServerVersion;
 import de.miinoo.factions.commands.subcommands.*;
 import de.miinoo.factions.core.command.ArgumentParser;
 import de.miinoo.factions.core.command.Command;
@@ -25,7 +26,7 @@ public class FactionCommand extends PlayerCommand {
         addCommand(new InviteCommand());
         addCommand(new JoinCommand());
         addCommand(new LeaveCommand());
-        addCommand(new TopCommand());
+        //addCommand(new TopCommand());
         addCommand(new ChatCommand());
         addCommand(new KickCommand());
         if(FactionsSystem.getSettings().enableHome()) {
@@ -36,8 +37,11 @@ public class FactionCommand extends PlayerCommand {
         addCommand(new SetRankCommand());
         addCommand(new DisbandCommand());
         addCommand(new ClaimCommand());
-        //addCommand(new AutoClaimCommand());
-        //addCommand(new ChunkSeeCommand());
+        addCommand(new AutoClaimCommand());
+        if(!ServerVersion.is1_8_X()) {
+            addCommand(new ChunkSeeCommand());
+        }
+
         addCommand(new UnClaimCommand());
         if(FactionsSystem.getSettings().enableWarps()) {
             addCommand(new WarpCommand());
@@ -73,6 +77,8 @@ public class FactionCommand extends PlayerCommand {
         addCommand(new InvitesCommand());
 
         addCommand(new QuestsCommand());
+
+        addCommand(new PlayerFactionCommand());
 
         //addCommand(new TestCommand());
 

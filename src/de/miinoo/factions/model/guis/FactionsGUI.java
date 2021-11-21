@@ -55,7 +55,7 @@ public class FactionsGUI extends GUI {
 
         UIList<Faction> list = new GUIList<Faction>(9, 3, factions.getFactions(),
                 faction -> new GUIItem(Items.createItem(XMaterial.MAGMA_CREAM.parseMaterial())
-                        .setDisplayName("§c" + faction.getName()).setLore(GUITags.Admin_Leader_Lore.getMessage().replace("%leader%", faction.getLeader().getName())).getItem(), () -> {
+                        .setDisplayName("§c" + faction.getName()).setLore(GUITags.Admin_Leader_Lore.getMessage().replace("%leader%", faction.getLeader() != null ? faction.getLeader().getName() : "Error while loading...")).getItem(), () -> {
                     if(player.hasPermission("ultimatefactions.admin")) {
                         new AdminFactionInfoGUI(player, faction, this).open();
                     } else {

@@ -120,11 +120,17 @@ public enum OtherMessages {
     Help_WarpCommand("Teleports you to a warp"),
     Help_WarpCommandSyntax("<name> [password] | list"),
     Help_WildCommand("Teleports you to a random location"),
+    Help_PlayerFactionCommand("Shows you the faction of a player"),
+    Help_PlayerFactionCommandSyntax("Please use &c/f player &7<&eplayer&7>&c!"),
 
     PvP_Disabled_In_Region("&cPVP is disabled in this region!"),
     Region_Disabled_Action("&cThis is not allowed in this region!"),
 
     PlaceHolder_Faction_Not_Found("N/A"),
+
+    Townhall_Killed("&cYou townhall has been killed!"),
+    Player_No_Faction("&cThis Player is no faction"),
+    Player_Faction("&aThis player is in faction &e%faction%")
     ;
 
     private String message;
